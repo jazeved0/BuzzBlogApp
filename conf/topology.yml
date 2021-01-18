@@ -1,0 +1,31 @@
+# Copyright (C) 2020 Georgia Tech Center for Experimental Research in Computer
+# Systems
+
+load_balancer: "172.17.0.1:8080"
+api_gateway:
+  - "172.17.0.1:8081"
+  - "172.17.0.1:8082"
+account:
+  service:
+    - "172.17.0.1:9090"
+    - "172.17.0.1:9091"
+  database: "172.17.0.1:5433"
+  cache: "172.17.0.1:6479"
+follow:
+  service:
+    - "172.17.0.1:9092"
+like:
+  service:
+    - "172.17.0.1:9093"
+post:
+  service:
+    - "172.17.0.1:9094"
+    - "172.17.0.1:9095"
+  database: "172.17.0.1:5434"
+  cache: "172.17.0.1:6480"
+uniquepair:
+  service:
+    - "172.17.0.1:9096"
+    - "172.17.0.1:9097"
+  database: "172.17.0.1:5435"
+  cache: "172.17.0.1:6481"
