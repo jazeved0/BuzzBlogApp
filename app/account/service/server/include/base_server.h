@@ -5,6 +5,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <chrono>
 
 #include <yaml-cpp/yaml.h>
 
@@ -154,4 +155,29 @@ protected:
   std::string account_db_conn_str;
   std::string post_db_conn_str;
   std::string uniquepair_db_conn_str;
+
+  // TraceHandle is a scoped resource that manages the trace of an operation.
+  // When it goes out of scope, it automatically prints out the timing.
+  class TraceHandle {
+    private:
+      std::chrono::time_point<std::chrono::high_resolution_clock> start;
+      const char* file_name;
+      const char* function_name;
+
+    public:
+      TraceHandle(const char* file_name, const char* function_name)
+          : file_name(file_name), function_name(function_name) {
+        this->start = std::chrono::high_resolution_clock::now();
+      }
+
+      ~TraceHandle() {
+        auto end = std::chrono::high_resolution_clock::now();
+        auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - this->start);
+        std::cout <<
+            "[trace] " << this->file_name <<
+            " " << this->function_name <<
+            " " << ns.count() <<
+            std::endl;
+      }
+  };
 };

@@ -28,6 +28,7 @@ public:
 
   void follow_account(TFollow& _return, const int32_t requester_id,
       const int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__);
     // Add unique pair (follower, followee).
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
@@ -48,6 +49,7 @@ public:
 
   void retrieve_standard_follow(TFollow& _return, const int32_t requester_id,
       const int32_t follow_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__);
     // Get unique pair.
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
@@ -68,6 +70,7 @@ public:
 
   void retrieve_expanded_follow(TFollow& _return, const int32_t requester_id,
       const int32_t follow_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__);
     // Retrieve standard follow.
     retrieve_standard_follow(_return, requester_id, follow_id);
 
@@ -85,6 +88,7 @@ public:
   }
 
   void delete_follow(const int32_t requester_id, const int32_t follow_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__);
     {
       // Get unique pair.
       auto uniquepair_client = get_uniquepair_client();
@@ -115,6 +119,7 @@ public:
 
   void list_follows(std::vector<TFollow>& _return, const int32_t requester_id,
       const int32_t follower_id, const int32_t followee_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__);
     // List unique pairs.
     auto uniquepair_client = get_uniquepair_client();
     std::vector<TUniquepair> uniquepairs;
@@ -167,6 +172,7 @@ public:
 
   bool check_follow(const int32_t requester_id, const int32_t follower_id,
       const int32_t followee_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__);
     bool follow_exists;
     auto uniquepair_client = get_uniquepair_client();
     try {
@@ -182,6 +188,7 @@ public:
 
   int32_t count_followers(const int32_t requester_id,
       const int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__);
     auto uniquepair_client = get_uniquepair_client();
     auto count = uniquepair_client->count_second_elem("follow", account_id);
     uniquepair_client->close();
@@ -190,6 +197,7 @@ public:
 
   int32_t count_followees(const int32_t requester_id,
       const int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__);
     auto uniquepair_client = get_uniquepair_client();
     auto count = uniquepair_client->count_first_elem("follow", account_id);
     uniquepair_client->close();

@@ -39,6 +39,7 @@ public:
 
   void authenticate_user(TAccount& _return, const std::string& username,
       const std::string& password) {
+    auto _trace = BaseServer::TraceHandle("account_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -78,6 +79,7 @@ public:
   void create_account(TAccount& _return, const std::string& username,
       const std::string& password, const std::string& first_name,
       const std::string& last_name) {
+    auto _trace = BaseServer::TraceHandle("account_server", __FUNCTION__);
     // Validate attributes.
     if (!validate_attributes(username, password, first_name, last_name))
       throw TAccountInvalidAttributesException();
@@ -116,6 +118,7 @@ public:
 
   void retrieve_standard_account(TAccount& _return, int32_t requester_id,
       int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("account_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -146,6 +149,7 @@ public:
 
   void retrieve_expanded_account(TAccount& _return, int32_t requester_id,
       int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("account_server", __FUNCTION__);
     // Retrieve standard account.
     retrieve_standard_account(_return, requester_id, account_id);
 
@@ -182,6 +186,7 @@ public:
   void update_account(TAccount& _return, const int32_t requester_id,
         const int32_t account_id, const std::string& password,
         const std::string& first_name, const std::string& last_name) {
+    auto _trace = BaseServer::TraceHandle("account_server", __FUNCTION__);
     // Check if requester is authorized.
     if (requester_id != account_id)
       throw TAccountNotAuthorizedException();
@@ -223,6 +228,7 @@ public:
   }
 
   void delete_account(const int32_t requester_id, const int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("account_server", __FUNCTION__);
     // Check if requester is authorized.
     if (requester_id != account_id)
       throw TAccountNotAuthorizedException();

@@ -28,6 +28,7 @@ public:
 
   void like_post(TLike& _return, const int32_t requester_id,
       const int32_t post_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__);
     // Add unique pair (account, post).
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
@@ -48,6 +49,7 @@ public:
 
   void retrieve_standard_like(TLike& _return, const int32_t requester_id,
       const int32_t like_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__);
     // Get unique pair.
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
@@ -68,6 +70,7 @@ public:
 
   void retrieve_expanded_like(TLike& _return, const int32_t requester_id,
       const int32_t like_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__);
     // Retrieve standard like.
     retrieve_standard_like(_return, requester_id, like_id);
 
@@ -89,6 +92,7 @@ public:
   }
 
   void delete_like(const int32_t requester_id, const int32_t like_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__);
     {
       // Get unique pair.
       auto uniquepair_client = get_uniquepair_client();
@@ -119,6 +123,7 @@ public:
 
   void list_likes(std::vector<TLike>& _return, const int32_t requester_id,
       const int32_t account_id, const int32_t post_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__);
     // List unique pairs.
     auto uniquepair_client = get_uniquepair_client();
     std::vector<TUniquepair> uniquepairs;
@@ -173,6 +178,7 @@ public:
 
   int32_t count_likes_by_account(const int32_t requester_id,
       const int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__);
     auto uniquepair_client = get_uniquepair_client();
     auto count = uniquepair_client->count_first_elem("like", account_id);
     uniquepair_client->close();
@@ -181,6 +187,7 @@ public:
 
   int32_t count_likes_of_post(const int32_t requester_id,
       const int32_t post_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__);
     auto uniquepair_client = get_uniquepair_client();
     auto count = uniquepair_client->count_second_elem("like", post_id);
     uniquepair_client->close();

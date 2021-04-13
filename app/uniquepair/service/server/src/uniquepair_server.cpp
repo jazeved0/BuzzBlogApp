@@ -28,6 +28,7 @@ public:
   }
 
   void get(TUniquepair& _return, const int32_t uniquepair_id) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -57,6 +58,7 @@ public:
 
   void add(TUniquepair& _return, const std::string& domain,
       const int32_t first_elem, const int32_t second_elem) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -87,6 +89,7 @@ public:
   }
 
   void remove(const int32_t uniquepair_id) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -109,6 +112,7 @@ public:
 
   void find(TUniquepair& _return, const std::string& domain,
       const int32_t first_elem, const int32_t second_elem) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -137,6 +141,7 @@ public:
   }
 
   void all(std::vector<TUniquepair>& _return, const std::string& domain) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -169,6 +174,7 @@ public:
 
   void filter_by_first_elem(std::vector<TUniquepair>& _return,
       const std::string& domain, const int32_t first_elem) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -201,6 +207,7 @@ public:
 
   void filter_by_second_elem(std::vector<TUniquepair>& _return,
       const std::string& domain, const int32_t second_elem) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -233,6 +240,7 @@ public:
 
   int32_t count_first_elem(const std::string& domain,
       const int32_t first_elem) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -253,6 +261,7 @@ public:
 
   int32_t count_second_elem(const std::string& domain,
       const int32_t second_elem) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
