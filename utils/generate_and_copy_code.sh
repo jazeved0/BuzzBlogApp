@@ -46,12 +46,10 @@ done
 # Copy service client libraries.
 for service in $SERVICES
 do
-  # C++
   for service_to_copy in $SERVICES
   do
     cp app/$service_to_copy/service/client/src/*.h app/$service/service/server/include/buzzblog
+    cp app/$service_to_copy/service/client/src/*.py app/$service/service/tests/site-packages/buzzblog
   done
-  # Python
-  cp app/$service/service/client/src/*.py app/$service/service/tests/site-packages/buzzblog
   cp app/$service/service/client/src/*.py app/apigateway/server/site-packages/buzzblog
 done
