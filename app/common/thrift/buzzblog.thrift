@@ -75,6 +75,12 @@ struct TUniquepair {
   5: required i32 second_elem;
 }
 
+struct TUniquepairQuery {
+  1: required string domain;
+  2: optional i32 first_elem;
+  3: optional i32 second_elem;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -445,27 +451,13 @@ service TUniquepairService {
       throws (1:TUniquepairNotFoundException e);
 
   /* Params:
-   *   1. domain: domain of the unique pairs to be listed.
+   *   1. query: query parameters to fetch results.
+   *   2. limit: max number of results to be fetched.
+   *   3. offset: index to start fetching results.
    * Returns:
    *   A list of unique pairs in reverse chronological order.
    */
-  list<TUniquepair> all (1:string domain);
-
-  /* Params:
-   *   1. domain: domain of the unique pairs to be listed.
-   *   2. first_elem: first element of the unique pairs to be listed.
-   * Returns:
-   *   A list of unique pairs in reverse chronological order.
-   */
-  list<TUniquepair> filter_by_first_elem (1:string domain, 2:i32 first_elem);
-
-  /* Params:
-   *   1. domain: domain of the unique pairs to be listed.
-   *   2. second_elem: second element of the unique pairs to be listed.
-   * Returns:
-   *   A list of unique pairs in reverse chronological order.
-   */
-  list<TUniquepair> filter_by_second_elem (1:string domain, 2:i32 second_elem);
+  list<TUniquepair> fetch (1:TUniquepairQuery query, 2:i32 limit, 3:i32 offset);
 
   /* Params:
    *   1. domain: domain of the unique pairs to be counted.

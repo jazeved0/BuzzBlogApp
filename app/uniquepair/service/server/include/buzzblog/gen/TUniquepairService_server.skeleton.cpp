@@ -40,19 +40,9 @@ class TUniquepairServiceHandler : virtual public TUniquepairServiceIf {
     printf("find\n");
   }
 
-  void all(std::vector<TUniquepair> & _return, const std::string& domain) {
+  void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset) {
     // Your implementation goes here
-    printf("all\n");
-  }
-
-  void filter_by_first_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t first_elem) {
-    // Your implementation goes here
-    printf("filter_by_first_elem\n");
-  }
-
-  void filter_by_second_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t second_elem) {
-    // Your implementation goes here
-    printf("filter_by_second_elem\n");
+    printf("fetch\n");
   }
 
   int32_t count_first_elem(const std::string& domain, const int32_t first_elem) {

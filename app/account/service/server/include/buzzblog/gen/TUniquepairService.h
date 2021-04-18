@@ -26,9 +26,7 @@ class TUniquepairServiceIf {
   virtual void add(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem) = 0;
   virtual void remove(const int32_t uniquepair_id) = 0;
   virtual void find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem) = 0;
-  virtual void all(std::vector<TUniquepair> & _return, const std::string& domain) = 0;
-  virtual void filter_by_first_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t first_elem) = 0;
-  virtual void filter_by_second_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t second_elem) = 0;
+  virtual void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset) = 0;
   virtual int32_t count_first_elem(const std::string& domain, const int32_t first_elem) = 0;
   virtual int32_t count_second_elem(const std::string& domain, const int32_t second_elem) = 0;
 };
@@ -72,13 +70,7 @@ class TUniquepairServiceNull : virtual public TUniquepairServiceIf {
   void find(TUniquepair& /* _return */, const std::string& /* domain */, const int32_t /* first_elem */, const int32_t /* second_elem */) {
     return;
   }
-  void all(std::vector<TUniquepair> & /* _return */, const std::string& /* domain */) {
-    return;
-  }
-  void filter_by_first_elem(std::vector<TUniquepair> & /* _return */, const std::string& /* domain */, const int32_t /* first_elem */) {
-    return;
-  }
-  void filter_by_second_elem(std::vector<TUniquepair> & /* _return */, const std::string& /* domain */, const int32_t /* second_elem */) {
+  void fetch(std::vector<TUniquepair> & /* _return */, const TUniquepairQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
     return;
   }
   int32_t count_first_elem(const std::string& /* domain */, const int32_t /* first_elem */) {
@@ -559,37 +551,49 @@ class TUniquepairService_find_presult {
 
 };
 
-typedef struct _TUniquepairService_all_args__isset {
-  _TUniquepairService_all_args__isset() : domain(false) {}
-  bool domain :1;
-} _TUniquepairService_all_args__isset;
+typedef struct _TUniquepairService_fetch_args__isset {
+  _TUniquepairService_fetch_args__isset() : query(false), limit(false), offset(false) {}
+  bool query :1;
+  bool limit :1;
+  bool offset :1;
+} _TUniquepairService_fetch_args__isset;
 
-class TUniquepairService_all_args {
+class TUniquepairService_fetch_args {
  public:
 
-  TUniquepairService_all_args(const TUniquepairService_all_args&);
-  TUniquepairService_all_args& operator=(const TUniquepairService_all_args&);
-  TUniquepairService_all_args() : domain() {
+  TUniquepairService_fetch_args(const TUniquepairService_fetch_args&);
+  TUniquepairService_fetch_args& operator=(const TUniquepairService_fetch_args&);
+  TUniquepairService_fetch_args() : limit(0), offset(0) {
   }
 
-  virtual ~TUniquepairService_all_args() noexcept;
-  std::string domain;
+  virtual ~TUniquepairService_fetch_args() noexcept;
+  TUniquepairQuery query;
+  int32_t limit;
+  int32_t offset;
 
-  _TUniquepairService_all_args__isset __isset;
+  _TUniquepairService_fetch_args__isset __isset;
 
-  void __set_domain(const std::string& val);
+  void __set_query(const TUniquepairQuery& val);
 
-  bool operator == (const TUniquepairService_all_args & rhs) const
+  void __set_limit(const int32_t val);
+
+  void __set_offset(const int32_t val);
+
+  bool operator == (const TUniquepairService_fetch_args & rhs) const
   {
-    if (!(domain == rhs.domain))
+    if (!(query == rhs.query))
+      return false;
+    if (!(limit == rhs.limit))
+      return false;
+    if (!(offset == rhs.offset))
       return false;
     return true;
   }
-  bool operator != (const TUniquepairService_all_args &rhs) const {
+  bool operator != (const TUniquepairService_fetch_args &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const TUniquepairService_all_args & ) const;
+  bool operator < (const TUniquepairService_fetch_args & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -597,289 +601,69 @@ class TUniquepairService_all_args {
 };
 
 
-class TUniquepairService_all_pargs {
+class TUniquepairService_fetch_pargs {
  public:
 
 
-  virtual ~TUniquepairService_all_pargs() noexcept;
-  const std::string* domain;
+  virtual ~TUniquepairService_fetch_pargs() noexcept;
+  const TUniquepairQuery* query;
+  const int32_t* limit;
+  const int32_t* offset;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
-typedef struct _TUniquepairService_all_result__isset {
-  _TUniquepairService_all_result__isset() : success(false) {}
+typedef struct _TUniquepairService_fetch_result__isset {
+  _TUniquepairService_fetch_result__isset() : success(false) {}
   bool success :1;
-} _TUniquepairService_all_result__isset;
+} _TUniquepairService_fetch_result__isset;
 
-class TUniquepairService_all_result {
+class TUniquepairService_fetch_result {
  public:
 
-  TUniquepairService_all_result(const TUniquepairService_all_result&);
-  TUniquepairService_all_result& operator=(const TUniquepairService_all_result&);
-  TUniquepairService_all_result() {
+  TUniquepairService_fetch_result(const TUniquepairService_fetch_result&);
+  TUniquepairService_fetch_result& operator=(const TUniquepairService_fetch_result&);
+  TUniquepairService_fetch_result() {
   }
 
-  virtual ~TUniquepairService_all_result() noexcept;
+  virtual ~TUniquepairService_fetch_result() noexcept;
   std::vector<TUniquepair>  success;
 
-  _TUniquepairService_all_result__isset __isset;
+  _TUniquepairService_fetch_result__isset __isset;
 
   void __set_success(const std::vector<TUniquepair> & val);
 
-  bool operator == (const TUniquepairService_all_result & rhs) const
+  bool operator == (const TUniquepairService_fetch_result & rhs) const
   {
     if (!(success == rhs.success))
       return false;
     return true;
   }
-  bool operator != (const TUniquepairService_all_result &rhs) const {
+  bool operator != (const TUniquepairService_fetch_result &rhs) const {
     return !(*this == rhs);
   }
 
-  bool operator < (const TUniquepairService_all_result & ) const;
+  bool operator < (const TUniquepairService_fetch_result & ) const;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
 };
 
-typedef struct _TUniquepairService_all_presult__isset {
-  _TUniquepairService_all_presult__isset() : success(false) {}
+typedef struct _TUniquepairService_fetch_presult__isset {
+  _TUniquepairService_fetch_presult__isset() : success(false) {}
   bool success :1;
-} _TUniquepairService_all_presult__isset;
+} _TUniquepairService_fetch_presult__isset;
 
-class TUniquepairService_all_presult {
+class TUniquepairService_fetch_presult {
  public:
 
 
-  virtual ~TUniquepairService_all_presult() noexcept;
+  virtual ~TUniquepairService_fetch_presult() noexcept;
   std::vector<TUniquepair> * success;
 
-  _TUniquepairService_all_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _TUniquepairService_filter_by_first_elem_args__isset {
-  _TUniquepairService_filter_by_first_elem_args__isset() : domain(false), first_elem(false) {}
-  bool domain :1;
-  bool first_elem :1;
-} _TUniquepairService_filter_by_first_elem_args__isset;
-
-class TUniquepairService_filter_by_first_elem_args {
- public:
-
-  TUniquepairService_filter_by_first_elem_args(const TUniquepairService_filter_by_first_elem_args&);
-  TUniquepairService_filter_by_first_elem_args& operator=(const TUniquepairService_filter_by_first_elem_args&);
-  TUniquepairService_filter_by_first_elem_args() : domain(), first_elem(0) {
-  }
-
-  virtual ~TUniquepairService_filter_by_first_elem_args() noexcept;
-  std::string domain;
-  int32_t first_elem;
-
-  _TUniquepairService_filter_by_first_elem_args__isset __isset;
-
-  void __set_domain(const std::string& val);
-
-  void __set_first_elem(const int32_t val);
-
-  bool operator == (const TUniquepairService_filter_by_first_elem_args & rhs) const
-  {
-    if (!(domain == rhs.domain))
-      return false;
-    if (!(first_elem == rhs.first_elem))
-      return false;
-    return true;
-  }
-  bool operator != (const TUniquepairService_filter_by_first_elem_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const TUniquepairService_filter_by_first_elem_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class TUniquepairService_filter_by_first_elem_pargs {
- public:
-
-
-  virtual ~TUniquepairService_filter_by_first_elem_pargs() noexcept;
-  const std::string* domain;
-  const int32_t* first_elem;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _TUniquepairService_filter_by_first_elem_result__isset {
-  _TUniquepairService_filter_by_first_elem_result__isset() : success(false) {}
-  bool success :1;
-} _TUniquepairService_filter_by_first_elem_result__isset;
-
-class TUniquepairService_filter_by_first_elem_result {
- public:
-
-  TUniquepairService_filter_by_first_elem_result(const TUniquepairService_filter_by_first_elem_result&);
-  TUniquepairService_filter_by_first_elem_result& operator=(const TUniquepairService_filter_by_first_elem_result&);
-  TUniquepairService_filter_by_first_elem_result() {
-  }
-
-  virtual ~TUniquepairService_filter_by_first_elem_result() noexcept;
-  std::vector<TUniquepair>  success;
-
-  _TUniquepairService_filter_by_first_elem_result__isset __isset;
-
-  void __set_success(const std::vector<TUniquepair> & val);
-
-  bool operator == (const TUniquepairService_filter_by_first_elem_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const TUniquepairService_filter_by_first_elem_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const TUniquepairService_filter_by_first_elem_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _TUniquepairService_filter_by_first_elem_presult__isset {
-  _TUniquepairService_filter_by_first_elem_presult__isset() : success(false) {}
-  bool success :1;
-} _TUniquepairService_filter_by_first_elem_presult__isset;
-
-class TUniquepairService_filter_by_first_elem_presult {
- public:
-
-
-  virtual ~TUniquepairService_filter_by_first_elem_presult() noexcept;
-  std::vector<TUniquepair> * success;
-
-  _TUniquepairService_filter_by_first_elem_presult__isset __isset;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-
-};
-
-typedef struct _TUniquepairService_filter_by_second_elem_args__isset {
-  _TUniquepairService_filter_by_second_elem_args__isset() : domain(false), second_elem(false) {}
-  bool domain :1;
-  bool second_elem :1;
-} _TUniquepairService_filter_by_second_elem_args__isset;
-
-class TUniquepairService_filter_by_second_elem_args {
- public:
-
-  TUniquepairService_filter_by_second_elem_args(const TUniquepairService_filter_by_second_elem_args&);
-  TUniquepairService_filter_by_second_elem_args& operator=(const TUniquepairService_filter_by_second_elem_args&);
-  TUniquepairService_filter_by_second_elem_args() : domain(), second_elem(0) {
-  }
-
-  virtual ~TUniquepairService_filter_by_second_elem_args() noexcept;
-  std::string domain;
-  int32_t second_elem;
-
-  _TUniquepairService_filter_by_second_elem_args__isset __isset;
-
-  void __set_domain(const std::string& val);
-
-  void __set_second_elem(const int32_t val);
-
-  bool operator == (const TUniquepairService_filter_by_second_elem_args & rhs) const
-  {
-    if (!(domain == rhs.domain))
-      return false;
-    if (!(second_elem == rhs.second_elem))
-      return false;
-    return true;
-  }
-  bool operator != (const TUniquepairService_filter_by_second_elem_args &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const TUniquepairService_filter_by_second_elem_args & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-
-class TUniquepairService_filter_by_second_elem_pargs {
- public:
-
-
-  virtual ~TUniquepairService_filter_by_second_elem_pargs() noexcept;
-  const std::string* domain;
-  const int32_t* second_elem;
-
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _TUniquepairService_filter_by_second_elem_result__isset {
-  _TUniquepairService_filter_by_second_elem_result__isset() : success(false) {}
-  bool success :1;
-} _TUniquepairService_filter_by_second_elem_result__isset;
-
-class TUniquepairService_filter_by_second_elem_result {
- public:
-
-  TUniquepairService_filter_by_second_elem_result(const TUniquepairService_filter_by_second_elem_result&);
-  TUniquepairService_filter_by_second_elem_result& operator=(const TUniquepairService_filter_by_second_elem_result&);
-  TUniquepairService_filter_by_second_elem_result() {
-  }
-
-  virtual ~TUniquepairService_filter_by_second_elem_result() noexcept;
-  std::vector<TUniquepair>  success;
-
-  _TUniquepairService_filter_by_second_elem_result__isset __isset;
-
-  void __set_success(const std::vector<TUniquepair> & val);
-
-  bool operator == (const TUniquepairService_filter_by_second_elem_result & rhs) const
-  {
-    if (!(success == rhs.success))
-      return false;
-    return true;
-  }
-  bool operator != (const TUniquepairService_filter_by_second_elem_result &rhs) const {
-    return !(*this == rhs);
-  }
-
-  bool operator < (const TUniquepairService_filter_by_second_elem_result & ) const;
-
-  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
-  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
-
-};
-
-typedef struct _TUniquepairService_filter_by_second_elem_presult__isset {
-  _TUniquepairService_filter_by_second_elem_presult__isset() : success(false) {}
-  bool success :1;
-} _TUniquepairService_filter_by_second_elem_presult__isset;
-
-class TUniquepairService_filter_by_second_elem_presult {
- public:
-
-
-  virtual ~TUniquepairService_filter_by_second_elem_presult() noexcept;
-  std::vector<TUniquepair> * success;
-
-  _TUniquepairService_filter_by_second_elem_presult__isset __isset;
+  _TUniquepairService_fetch_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -1144,15 +928,9 @@ class TUniquepairServiceClient : virtual public TUniquepairServiceIf {
   void find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
   void send_find(const std::string& domain, const int32_t first_elem, const int32_t second_elem);
   void recv_find(TUniquepair& _return);
-  void all(std::vector<TUniquepair> & _return, const std::string& domain);
-  void send_all(const std::string& domain);
-  void recv_all(std::vector<TUniquepair> & _return);
-  void filter_by_first_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t first_elem);
-  void send_filter_by_first_elem(const std::string& domain, const int32_t first_elem);
-  void recv_filter_by_first_elem(std::vector<TUniquepair> & _return);
-  void filter_by_second_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t second_elem);
-  void send_filter_by_second_elem(const std::string& domain, const int32_t second_elem);
-  void recv_filter_by_second_elem(std::vector<TUniquepair> & _return);
+  void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
+  void send_fetch(const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
+  void recv_fetch(std::vector<TUniquepair> & _return);
   int32_t count_first_elem(const std::string& domain, const int32_t first_elem);
   void send_count_first_elem(const std::string& domain, const int32_t first_elem);
   int32_t recv_count_first_elem();
@@ -1178,9 +956,7 @@ class TUniquepairServiceProcessor : public ::apache::thrift::TDispatchProcessor 
   void process_add(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_remove(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_find(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_filter_by_first_elem(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
-  void process_filter_by_second_elem(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_fetch(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_count_first_elem(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_count_second_elem(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
@@ -1190,9 +966,7 @@ class TUniquepairServiceProcessor : public ::apache::thrift::TDispatchProcessor 
     processMap_["add"] = &TUniquepairServiceProcessor::process_add;
     processMap_["remove"] = &TUniquepairServiceProcessor::process_remove;
     processMap_["find"] = &TUniquepairServiceProcessor::process_find;
-    processMap_["all"] = &TUniquepairServiceProcessor::process_all;
-    processMap_["filter_by_first_elem"] = &TUniquepairServiceProcessor::process_filter_by_first_elem;
-    processMap_["filter_by_second_elem"] = &TUniquepairServiceProcessor::process_filter_by_second_elem;
+    processMap_["fetch"] = &TUniquepairServiceProcessor::process_fetch;
     processMap_["count_first_elem"] = &TUniquepairServiceProcessor::process_count_first_elem;
     processMap_["count_second_elem"] = &TUniquepairServiceProcessor::process_count_second_elem;
   }
@@ -1262,33 +1036,13 @@ class TUniquepairServiceMultiface : virtual public TUniquepairServiceIf {
     return;
   }
 
-  void all(std::vector<TUniquepair> & _return, const std::string& domain) {
+  void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->all(_return, domain);
+      ifaces_[i]->fetch(_return, query, limit, offset);
     }
-    ifaces_[i]->all(_return, domain);
-    return;
-  }
-
-  void filter_by_first_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t first_elem) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->filter_by_first_elem(_return, domain, first_elem);
-    }
-    ifaces_[i]->filter_by_first_elem(_return, domain, first_elem);
-    return;
-  }
-
-  void filter_by_second_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t second_elem) {
-    size_t sz = ifaces_.size();
-    size_t i = 0;
-    for (; i < (sz - 1); ++i) {
-      ifaces_[i]->filter_by_second_elem(_return, domain, second_elem);
-    }
-    ifaces_[i]->filter_by_second_elem(_return, domain, second_elem);
+    ifaces_[i]->fetch(_return, query, limit, offset);
     return;
   }
 
@@ -1354,15 +1108,9 @@ class TUniquepairServiceConcurrentClient : virtual public TUniquepairServiceIf {
   void find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
   int32_t send_find(const std::string& domain, const int32_t first_elem, const int32_t second_elem);
   void recv_find(TUniquepair& _return, const int32_t seqid);
-  void all(std::vector<TUniquepair> & _return, const std::string& domain);
-  int32_t send_all(const std::string& domain);
-  void recv_all(std::vector<TUniquepair> & _return, const int32_t seqid);
-  void filter_by_first_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t first_elem);
-  int32_t send_filter_by_first_elem(const std::string& domain, const int32_t first_elem);
-  void recv_filter_by_first_elem(std::vector<TUniquepair> & _return, const int32_t seqid);
-  void filter_by_second_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t second_elem);
-  int32_t send_filter_by_second_elem(const std::string& domain, const int32_t second_elem);
-  void recv_filter_by_second_elem(std::vector<TUniquepair> & _return, const int32_t seqid);
+  void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
+  int32_t send_fetch(const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
+  void recv_fetch(std::vector<TUniquepair> & _return, const int32_t seqid);
   int32_t count_first_elem(const std::string& domain, const int32_t first_elem);
   int32_t send_count_first_elem(const std::string& domain, const int32_t first_elem);
   int32_t recv_count_first_elem(const int32_t seqid);

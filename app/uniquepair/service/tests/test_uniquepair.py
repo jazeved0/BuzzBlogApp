@@ -55,54 +55,37 @@ class TestService(unittest.TestCase):
       found_uniquepair = client.find("test_find", first_elem, second_elem)
       self.assertEqual(uniquepair.id, found_uniquepair.id)
 
-  def test_all(self):
+  def test_fetch(self):
     with UniquepairClient(IP_ADDRESS, PORT) as client:
-      # Add uniquepairs.
+      # Add 10 random uniquepairs.
       uniquepairs = []
       for i in range(10):
-        uniquepairs.append(client.add("test_all", random.randint(1, 2 ** 16),
+        uniquepairs.append(client.add("test_fetch", random.randint(1, 2 ** 16),
             random.randint(1, 2 ** 16)))
         # NOTE: 2s of sleep are needed for the consistency of results because
         # creation times are recorded in the database with precision of 1s.
         time.sleep(2)
-      # Retrieve all uniquepairs, reverse the list, and check their ids.
-      retrieved_uniquepairs = client.all("test_all")
-      retrieved_uniquepairs.reverse()
-      for (uniquepair, retrieved_uniquepair) in zip(uniquepairs,
-          retrieved_uniquepairs):
-        self.assertEqual(uniquepair.id, retrieved_uniquepair.id)
-
-  def test_filter_by_first_elem(self):
-    with UniquepairClient(IP_ADDRESS, PORT) as client:
-      # Add a uniquepair whose first element is a certain x.
-      x = random.randint(1, 2 ** 16)
-      uniquepair = client.add("test_filter_by_first_elem", x,
-          random.randint(1, 2 ** 16))
-      # Add random uniquepairs.
-      for i in range(10):
-        client.add("test_filter_by_first_elem", random.randint(1, 2 ** 16),
-            random.randint(1, 2 ** 16))
-      # Filter uniquepairs whose first element is x and check their ids.
-      filtered_uniquepairs = client.filter_by_first_elem(
-          "test_filter_by_first_elem", x)
-      self.assertEqual(1, len(filtered_uniquepairs))
-      self.assertEqual(uniquepair.id, filtered_uniquepairs[0].id)
-
-  def test_filter_by_second_elem(self):
-    with UniquepairClient(IP_ADDRESS, PORT) as client:
-      # Add a uniquepair whose second element is a certain x.
-      x = random.randint(1, 2 ** 16)
-      uniquepair = client.add("test_filter_by_second_elem",
-          random.randint(1, 2 ** 16), x)
-      # Add random uniquepairs.
-      for i in range(10):
-        client.add("test_filter_by_second_elem", random.randint(1, 2 ** 16),
-            random.randint(1, 2 ** 16))
-      # Filter uniquepairs whose second element is x and check their ids.
-      filtered_uniquepairs = client.filter_by_second_elem(
-          "test_filter_by_second_elem", x)
-      self.assertEqual(1, len(filtered_uniquepairs))
-      self.assertEqual(uniquepair.id, filtered_uniquepairs[0].id)
+      # Fetch the 10 first uniquepairs, reverse the list, and check their ids.
+      fetched_uniquepairs = client.fetch(
+          TUniquepairQuery(domain="test_fetch"), 10, 0)
+      fetched_uniquepairs.reverse()
+      for (uniquepair, fetched_uniquepair) in zip(uniquepairs,
+          fetched_uniquepairs):
+        self.assertEqual(uniquepair.id, fetched_uniquepair.id)
+      # Add a uniquepair whose first element is 0.
+      uniquepair = client.add("test_fetch", 0, random.randint(1, 2 ** 16))
+      # Fetch uniquepairs whose first element is 0 and check their ids.
+      fetched_uniquepairs = client.fetch(
+          TUniquepairQuery(domain="test_fetch", first_elem=0), 10, 0)
+      self.assertEqual(1, len(fetched_uniquepairs))
+      self.assertEqual(uniquepair.id, fetched_uniquepairs[0].id)
+      # Add a uniquepair whose second element is 0.
+      uniquepair = client.add("test_fetch", random.randint(1, 2 ** 16), 0)
+      # Fetch uniquepairs whose second element is 0 and check their ids.
+      fetched_uniquepairs = client.fetch(
+          TUniquepairQuery(domain="test_fetch", second_elem=0), 10, 0)
+      self.assertEqual(1, len(fetched_uniquepairs))
+      self.assertEqual(uniquepair.id, fetched_uniquepairs[0].id)
 
   def test_count_first_elem(self):
     with UniquepairClient(IP_ADDRESS, PORT) as client:

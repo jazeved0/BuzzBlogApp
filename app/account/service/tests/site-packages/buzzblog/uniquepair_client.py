@@ -44,16 +44,8 @@ class Client:
     return self._tclient.find(domain=domain, first_elem=first_elem,
         second_elem=second_elem)
 
-  def all(self, domain):
-    return self._tclient.all(domain=domain)
-
-  def filter_by_first_elem(self, domain, first_elem):
-    return self._tclient.filter_by_first_elem(domain=domain,
-        first_elem=first_elem)
-
-  def filter_by_second_elem(self, domain, second_elem):
-    return self._tclient.filter_by_second_elem(domain=domain,
-        second_elem=second_elem)
+  def fetch(self, query, limit, offset):
+    return self._tclient.fetch(query=query, limit=limit, offset=offset)
 
   def count_first_elem(self, domain, first_elem):
     return self._tclient.count_first_elem(domain=domain, first_elem=first_elem)

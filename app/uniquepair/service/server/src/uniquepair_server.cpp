@@ -1,6 +1,7 @@
 // Copyright (C) 2020 Georgia Tech Center for Experimental Research in Computer
 // Systems
 
+#include <sstream>
 #include <string>
 
 #include <cxxopts.hpp>
@@ -24,6 +25,17 @@ using namespace gen;
 
 class TUniquepairServiceHandler : public BaseServer,
     public TUniquepairServiceIf {
+private:
+  std::string build_where_clause(const TUniquepairQuery& query) {
+    std::ostringstream where_clause;
+    where_clause << "domain = '" << query.domain << "'";
+    if (query.__isset.first_elem)
+      where_clause << " AND first_elem = " << query.first_elem;
+    if (query.__isset.second_elem)
+      where_clause << " AND second_elem = " << query.second_elem;
+    return where_clause.str();
+  }
+
 public:
   TUniquepairServiceHandler(const std::string& backend_filepath,
       const std::string& postgres_user, const std::string& postgres_password,
@@ -141,16 +153,19 @@ public:
     _return.second_elem = second_elem;
   }
 
-  void all(std::vector<TUniquepair>& _return, const std::string& domain) {
+  void fetch(std::vector<TUniquepair>& _return, const TUniquepairQuery& query,
+      const int32_t limit, const int32_t offset) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
         "SELECT id, created_at, first_elem, second_elem "
         "FROM Uniquepairs "
-        "WHERE domain = '%s' "
+        "WHERE %s "
         "ORDER BY created_at DESC "
-        "LIMIT 10";
-    sprintf(query_str, query_fmt, domain.c_str());
+        "LIMIT %d "
+        "OFFSET %d";
+    sprintf(query_str, query_fmt, build_where_clause(query).c_str(), limit,
+        offset);
 
     // Execute query.
     pqxx::connection conn(uniquepair_db_conn_str);
@@ -165,73 +180,9 @@ public:
       TUniquepair uniquepair;
       uniquepair.id = row["id"].as<int>();
       uniquepair.created_at = row["created_at"].as<int>();
-      uniquepair.domain = domain;
+      uniquepair.domain = query.domain;
       uniquepair.first_elem = row["first_elem"].as<int>();
       uniquepair.second_elem = row["second_elem"].as<int>();
-      _return.push_back(uniquepair);
-    }
-  }
-
-  void filter_by_first_elem(std::vector<TUniquepair>& _return,
-      const std::string& domain, const int32_t first_elem) {
-    // Build query string.
-    char query_str[1024];
-    const char *query_fmt = \
-        "SELECT id, created_at, second_elem "
-        "FROM Uniquepairs "
-        "WHERE domain = '%s' AND first_elem = %d "
-        "ORDER BY created_at DESC "
-        "LIMIT 10";
-    sprintf(query_str, query_fmt, domain.c_str(), first_elem);
-
-    // Execute query.
-    pqxx::connection conn(uniquepair_db_conn_str);
-    pqxx::work txn(conn);
-    pqxx::result db_res(txn.exec(query_str));
-    txn.commit();
-    conn.disconnect();
-
-    // Build unique pairs.
-    for (auto row : db_res) {
-      // Build unique pair.
-      TUniquepair uniquepair;
-      uniquepair.id = row["id"].as<int>();
-      uniquepair.created_at = row["created_at"].as<int>();
-      uniquepair.domain = domain;
-      uniquepair.first_elem = first_elem;
-      uniquepair.second_elem = row["second_elem"].as<int>();
-      _return.push_back(uniquepair);
-    }
-  }
-
-  void filter_by_second_elem(std::vector<TUniquepair>& _return,
-      const std::string& domain, const int32_t second_elem) {
-    // Build query string.
-    char query_str[1024];
-    const char *query_fmt = \
-        "SELECT id, created_at, first_elem "
-        "FROM Uniquepairs "
-        "WHERE domain = '%s' AND second_elem = %d "
-        "ORDER BY created_at DESC "
-        "LIMIT 10";
-    sprintf(query_str, query_fmt, domain.c_str(), second_elem);
-
-    // Execute query.
-    pqxx::connection conn(uniquepair_db_conn_str);
-    pqxx::work txn(conn);
-    pqxx::result db_res(txn.exec(query_str));
-    txn.commit();
-    conn.disconnect();
-
-    // Build unique pairs.
-    for (auto row : db_res) {
-      // Build unique pair.
-      TUniquepair uniquepair;
-      uniquepair.id = row["id"].as<int>();
-      uniquepair.created_at = row["created_at"].as<int>();
-      uniquepair.domain = domain;
-      uniquepair.first_elem = row["first_elem"].as<int>();
-      uniquepair.second_elem = second_elem;
       _return.push_back(uniquepair);
     }
   }

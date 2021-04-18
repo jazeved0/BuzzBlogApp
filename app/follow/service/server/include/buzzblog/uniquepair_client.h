@@ -68,23 +68,10 @@ namespace uniquepair_service {
       return _return;
     }
 
-    std::vector<TUniquepair> all(const std::string& domain) {
+    std::vector<TUniquepair> fetch(const TUniquepairQuery& query,
+        const int32_t limit, const int32_t offset) {
       std::vector<TUniquepair> _return;
-      _client->all(_return, domain);
-      return _return;
-    }
-
-    std::vector<TUniquepair> filter_by_first_elem(const std::string& domain,
-        const int32_t first_elem) {
-      std::vector<TUniquepair> _return;
-      _client->filter_by_first_elem(_return, domain, first_elem);
-      return _return;
-    }
-
-    std::vector<TUniquepair> filter_by_second_elem(const std::string& domain,
-        const int32_t second_elem) {
-      std::vector<TUniquepair> _return;
-      _client->filter_by_second_elem(_return, domain, second_elem);
+      _client->fetch(_return, query, limit, offset);
       return _return;
     }
 

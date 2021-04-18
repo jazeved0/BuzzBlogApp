@@ -881,11 +881,11 @@ uint32_t TUniquepairService_find_presult::read(::apache::thrift::protocol::TProt
 }
 
 
-TUniquepairService_all_args::~TUniquepairService_all_args() noexcept {
+TUniquepairService_fetch_args::~TUniquepairService_fetch_args() noexcept {
 }
 
 
-uint32_t TUniquepairService_all_args::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t TUniquepairService_fetch_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -907,471 +907,25 @@ uint32_t TUniquepairService_all_args::read(::apache::thrift::protocol::TProtocol
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->domain);
-          this->__isset.domain = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t TUniquepairService_all_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("TUniquepairService_all_args");
-
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->domain);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-
-TUniquepairService_all_pargs::~TUniquepairService_all_pargs() noexcept {
-}
-
-
-uint32_t TUniquepairService_all_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("TUniquepairService_all_pargs");
-
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->domain)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-
-TUniquepairService_all_result::~TUniquepairService_all_result() noexcept {
-}
-
-
-uint32_t TUniquepairService_all_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->success.clear();
-            uint32_t _size77;
-            ::apache::thrift::protocol::TType _etype80;
-            xfer += iprot->readListBegin(_etype80, _size77);
-            this->success.resize(_size77);
-            uint32_t _i81;
-            for (_i81 = 0; _i81 < _size77; ++_i81)
-            {
-              xfer += this->success[_i81].read(iprot);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t TUniquepairService_all_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("TUniquepairService_all_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
-    {
-      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TUniquepair> ::const_iterator _iter82;
-      for (_iter82 = this->success.begin(); _iter82 != this->success.end(); ++_iter82)
-      {
-        xfer += (*_iter82).write(oprot);
-      }
-      xfer += oprot->writeListEnd();
-    }
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-
-TUniquepairService_all_presult::~TUniquepairService_all_presult() noexcept {
-}
-
-
-uint32_t TUniquepairService_all_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            (*(this->success)).clear();
-            uint32_t _size83;
-            ::apache::thrift::protocol::TType _etype86;
-            xfer += iprot->readListBegin(_etype86, _size83);
-            (*(this->success)).resize(_size83);
-            uint32_t _i87;
-            for (_i87 = 0; _i87 < _size83; ++_i87)
-            {
-              xfer += (*(this->success))[_i87].read(iprot);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-
-TUniquepairService_filter_by_first_elem_args::~TUniquepairService_filter_by_first_elem_args() noexcept {
-}
-
-
-uint32_t TUniquepairService_filter_by_first_elem_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->domain);
-          this->__isset.domain = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->query.read(iprot);
+          this->__isset.query = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->first_elem);
-          this->__isset.first_elem = true;
+          xfer += iprot->readI32(this->limit);
+          this->__isset.limit = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t TUniquepairService_filter_by_first_elem_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("TUniquepairService_filter_by_first_elem_args");
-
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->domain);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->first_elem);
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-
-TUniquepairService_filter_by_first_elem_pargs::~TUniquepairService_filter_by_first_elem_pargs() noexcept {
-}
-
-
-uint32_t TUniquepairService_filter_by_first_elem_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
-  uint32_t xfer = 0;
-  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("TUniquepairService_filter_by_first_elem_pargs");
-
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->domain)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32((*(this->first_elem)));
-  xfer += oprot->writeFieldEnd();
-
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-
-TUniquepairService_filter_by_first_elem_result::~TUniquepairService_filter_by_first_elem_result() noexcept {
-}
-
-
-uint32_t TUniquepairService_filter_by_first_elem_result::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            this->success.clear();
-            uint32_t _size88;
-            ::apache::thrift::protocol::TType _etype91;
-            xfer += iprot->readListBegin(_etype91, _size88);
-            this->success.resize(_size88);
-            uint32_t _i92;
-            for (_i92 = 0; _i92 < _size88; ++_i92)
-            {
-              xfer += this->success[_i92].read(iprot);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-uint32_t TUniquepairService_filter_by_first_elem_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
-
-  uint32_t xfer = 0;
-
-  xfer += oprot->writeStructBegin("TUniquepairService_filter_by_first_elem_result");
-
-  if (this->__isset.success) {
-    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
-    {
-      xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TUniquepair> ::const_iterator _iter93;
-      for (_iter93 = this->success.begin(); _iter93 != this->success.end(); ++_iter93)
-      {
-        xfer += (*_iter93).write(oprot);
-      }
-      xfer += oprot->writeListEnd();
-    }
-    xfer += oprot->writeFieldEnd();
-  }
-  xfer += oprot->writeFieldStop();
-  xfer += oprot->writeStructEnd();
-  return xfer;
-}
-
-
-TUniquepairService_filter_by_first_elem_presult::~TUniquepairService_filter_by_first_elem_presult() noexcept {
-}
-
-
-uint32_t TUniquepairService_filter_by_first_elem_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 0:
-        if (ftype == ::apache::thrift::protocol::T_LIST) {
-          {
-            (*(this->success)).clear();
-            uint32_t _size94;
-            ::apache::thrift::protocol::TType _etype97;
-            xfer += iprot->readListBegin(_etype97, _size94);
-            (*(this->success)).resize(_size94);
-            uint32_t _i98;
-            for (_i98 = 0; _i98 < _size94; ++_i98)
-            {
-              xfer += (*(this->success))[_i98].read(iprot);
-            }
-            xfer += iprot->readListEnd();
-          }
-          this->__isset.success = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      default:
-        xfer += iprot->skip(ftype);
-        break;
-    }
-    xfer += iprot->readFieldEnd();
-  }
-
-  xfer += iprot->readStructEnd();
-
-  return xfer;
-}
-
-
-TUniquepairService_filter_by_second_elem_args::~TUniquepairService_filter_by_second_elem_args() noexcept {
-}
-
-
-uint32_t TUniquepairService_filter_by_second_elem_args::read(::apache::thrift::protocol::TProtocol* iprot) {
-
-  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
-  uint32_t xfer = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TType ftype;
-  int16_t fid;
-
-  xfer += iprot->readStructBegin(fname);
-
-  using ::apache::thrift::protocol::TProtocolException;
-
-
-  while (true)
-  {
-    xfer += iprot->readFieldBegin(fname, ftype, fid);
-    if (ftype == ::apache::thrift::protocol::T_STOP) {
-      break;
-    }
-    switch (fid)
-    {
-      case 1:
-        if (ftype == ::apache::thrift::protocol::T_STRING) {
-          xfer += iprot->readString(this->domain);
-          this->__isset.domain = true;
-        } else {
-          xfer += iprot->skip(ftype);
-        }
-        break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->second_elem);
-          this->__isset.second_elem = true;
+          xfer += iprot->readI32(this->offset);
+          this->__isset.offset = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1388,17 +942,21 @@ uint32_t TUniquepairService_filter_by_second_elem_args::read(::apache::thrift::p
   return xfer;
 }
 
-uint32_t TUniquepairService_filter_by_second_elem_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t TUniquepairService_fetch_args::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("TUniquepairService_filter_by_second_elem_args");
+  xfer += oprot->writeStructBegin("TUniquepairService_fetch_args");
 
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString(this->domain);
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->query.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->second_elem);
+  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32(this->limit);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->offset);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1407,21 +965,25 @@ uint32_t TUniquepairService_filter_by_second_elem_args::write(::apache::thrift::
 }
 
 
-TUniquepairService_filter_by_second_elem_pargs::~TUniquepairService_filter_by_second_elem_pargs() noexcept {
+TUniquepairService_fetch_pargs::~TUniquepairService_fetch_pargs() noexcept {
 }
 
 
-uint32_t TUniquepairService_filter_by_second_elem_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t TUniquepairService_fetch_pargs::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
-  xfer += oprot->writeStructBegin("TUniquepairService_filter_by_second_elem_pargs");
+  xfer += oprot->writeStructBegin("TUniquepairService_fetch_pargs");
 
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
-  xfer += oprot->writeString((*(this->domain)));
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->query)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32((*(this->second_elem)));
+  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeI32((*(this->limit)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((*(this->offset)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1430,11 +992,11 @@ uint32_t TUniquepairService_filter_by_second_elem_pargs::write(::apache::thrift:
 }
 
 
-TUniquepairService_filter_by_second_elem_result::~TUniquepairService_filter_by_second_elem_result() noexcept {
+TUniquepairService_fetch_result::~TUniquepairService_fetch_result() noexcept {
 }
 
 
-uint32_t TUniquepairService_filter_by_second_elem_result::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t TUniquepairService_fetch_result::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -1459,14 +1021,14 @@ uint32_t TUniquepairService_filter_by_second_elem_result::read(::apache::thrift:
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size99;
-            ::apache::thrift::protocol::TType _etype102;
-            xfer += iprot->readListBegin(_etype102, _size99);
-            this->success.resize(_size99);
-            uint32_t _i103;
-            for (_i103 = 0; _i103 < _size99; ++_i103)
+            uint32_t _size79;
+            ::apache::thrift::protocol::TType _etype82;
+            xfer += iprot->readListBegin(_etype82, _size79);
+            this->success.resize(_size79);
+            uint32_t _i83;
+            for (_i83 = 0; _i83 < _size79; ++_i83)
             {
-              xfer += this->success[_i103].read(iprot);
+              xfer += this->success[_i83].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1487,20 +1049,20 @@ uint32_t TUniquepairService_filter_by_second_elem_result::read(::apache::thrift:
   return xfer;
 }
 
-uint32_t TUniquepairService_filter_by_second_elem_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
+uint32_t TUniquepairService_fetch_result::write(::apache::thrift::protocol::TProtocol* oprot) const {
 
   uint32_t xfer = 0;
 
-  xfer += oprot->writeStructBegin("TUniquepairService_filter_by_second_elem_result");
+  xfer += oprot->writeStructBegin("TUniquepairService_fetch_result");
 
   if (this->__isset.success) {
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TUniquepair> ::const_iterator _iter104;
-      for (_iter104 = this->success.begin(); _iter104 != this->success.end(); ++_iter104)
+      std::vector<TUniquepair> ::const_iterator _iter84;
+      for (_iter84 = this->success.begin(); _iter84 != this->success.end(); ++_iter84)
       {
-        xfer += (*_iter104).write(oprot);
+        xfer += (*_iter84).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1512,11 +1074,11 @@ uint32_t TUniquepairService_filter_by_second_elem_result::write(::apache::thrift
 }
 
 
-TUniquepairService_filter_by_second_elem_presult::~TUniquepairService_filter_by_second_elem_presult() noexcept {
+TUniquepairService_fetch_presult::~TUniquepairService_fetch_presult() noexcept {
 }
 
 
-uint32_t TUniquepairService_filter_by_second_elem_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
+uint32_t TUniquepairService_fetch_presult::read(::apache::thrift::protocol::TProtocol* iprot) {
 
   ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
   uint32_t xfer = 0;
@@ -1541,14 +1103,14 @@ uint32_t TUniquepairService_filter_by_second_elem_presult::read(::apache::thrift
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size105;
-            ::apache::thrift::protocol::TType _etype108;
-            xfer += iprot->readListBegin(_etype108, _size105);
-            (*(this->success)).resize(_size105);
-            uint32_t _i109;
-            for (_i109 = 0; _i109 < _size105; ++_i109)
+            uint32_t _size85;
+            ::apache::thrift::protocol::TType _etype88;
+            xfer += iprot->readListBegin(_etype88, _size85);
+            (*(this->success)).resize(_size85);
+            uint32_t _i89;
+            for (_i89 = 0; _i89 < _size85; ++_i89)
             {
-              xfer += (*(this->success))[_i109].read(iprot);
+              xfer += (*(this->success))[_i89].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -2218,19 +1780,21 @@ void TUniquepairServiceClient::recv_find(TUniquepair& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "find failed: unknown result");
 }
 
-void TUniquepairServiceClient::all(std::vector<TUniquepair> & _return, const std::string& domain)
+void TUniquepairServiceClient::fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
 {
-  send_all(domain);
-  recv_all(_return);
+  send_fetch(query, limit, offset);
+  recv_fetch(_return);
 }
 
-void TUniquepairServiceClient::send_all(const std::string& domain)
+void TUniquepairServiceClient::send_fetch(const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = 0;
-  oprot_->writeMessageBegin("all", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("fetch", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  TUniquepairService_all_pargs args;
-  args.domain = &domain;
+  TUniquepairService_fetch_pargs args;
+  args.query = &query;
+  args.limit = &limit;
+  args.offset = &offset;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -2238,7 +1802,7 @@ void TUniquepairServiceClient::send_all(const std::string& domain)
   oprot_->getTransport()->flush();
 }
 
-void TUniquepairServiceClient::recv_all(std::vector<TUniquepair> & _return)
+void TUniquepairServiceClient::recv_fetch(std::vector<TUniquepair> & _return)
 {
 
   int32_t rseqid = 0;
@@ -2258,12 +1822,12 @@ void TUniquepairServiceClient::recv_all(std::vector<TUniquepair> & _return)
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  if (fname.compare("all") != 0) {
+  if (fname.compare("fetch") != 0) {
     iprot_->skip(::apache::thrift::protocol::T_STRUCT);
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
-  TUniquepairService_all_presult result;
+  TUniquepairService_fetch_presult result;
   result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
@@ -2273,125 +1837,7 @@ void TUniquepairServiceClient::recv_all(std::vector<TUniquepair> & _return)
     // _return pointer has now been filled
     return;
   }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "all failed: unknown result");
-}
-
-void TUniquepairServiceClient::filter_by_first_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t first_elem)
-{
-  send_filter_by_first_elem(domain, first_elem);
-  recv_filter_by_first_elem(_return);
-}
-
-void TUniquepairServiceClient::send_filter_by_first_elem(const std::string& domain, const int32_t first_elem)
-{
-  int32_t cseqid = 0;
-  oprot_->writeMessageBegin("filter_by_first_elem", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  TUniquepairService_filter_by_first_elem_pargs args;
-  args.domain = &domain;
-  args.first_elem = &first_elem;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-}
-
-void TUniquepairServiceClient::recv_filter_by_first_elem(std::vector<TUniquepair> & _return)
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-    ::apache::thrift::TApplicationException x;
-    x.read(iprot_);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-    throw x;
-  }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  if (fname.compare("filter_by_first_elem") != 0) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  TUniquepairService_filter_by_first_elem_presult result;
-  result.success = &_return;
-  result.read(iprot_);
-  iprot_->readMessageEnd();
-  iprot_->getTransport()->readEnd();
-
-  if (result.__isset.success) {
-    // _return pointer has now been filled
-    return;
-  }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "filter_by_first_elem failed: unknown result");
-}
-
-void TUniquepairServiceClient::filter_by_second_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t second_elem)
-{
-  send_filter_by_second_elem(domain, second_elem);
-  recv_filter_by_second_elem(_return);
-}
-
-void TUniquepairServiceClient::send_filter_by_second_elem(const std::string& domain, const int32_t second_elem)
-{
-  int32_t cseqid = 0;
-  oprot_->writeMessageBegin("filter_by_second_elem", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  TUniquepairService_filter_by_second_elem_pargs args;
-  args.domain = &domain;
-  args.second_elem = &second_elem;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-}
-
-void TUniquepairServiceClient::recv_filter_by_second_elem(std::vector<TUniquepair> & _return)
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  iprot_->readMessageBegin(fname, mtype, rseqid);
-  if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-    ::apache::thrift::TApplicationException x;
-    x.read(iprot_);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-    throw x;
-  }
-  if (mtype != ::apache::thrift::protocol::T_REPLY) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  if (fname.compare("filter_by_second_elem") != 0) {
-    iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-    iprot_->readMessageEnd();
-    iprot_->getTransport()->readEnd();
-  }
-  TUniquepairService_filter_by_second_elem_presult result;
-  result.success = &_return;
-  result.read(iprot_);
-  iprot_->readMessageEnd();
-  iprot_->getTransport()->readEnd();
-
-  if (result.__isset.success) {
-    // _return pointer has now been filled
-    return;
-  }
-  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "filter_by_second_elem failed: unknown result");
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "fetch failed: unknown result");
 }
 
 int32_t TUniquepairServiceClient::count_first_elem(const std::string& domain, const int32_t first_elem)
@@ -2758,38 +2204,38 @@ void TUniquepairServiceProcessor::process_find(int32_t seqid, ::apache::thrift::
   }
 }
 
-void TUniquepairServiceProcessor::process_all(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
+void TUniquepairServiceProcessor::process_fetch(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
 {
   void* ctx = NULL;
   if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("TUniquepairService.all", callContext);
+    ctx = this->eventHandler_->getContext("TUniquepairService.fetch", callContext);
   }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "TUniquepairService.all");
+  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "TUniquepairService.fetch");
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "TUniquepairService.all");
+    this->eventHandler_->preRead(ctx, "TUniquepairService.fetch");
   }
 
-  TUniquepairService_all_args args;
+  TUniquepairService_fetch_args args;
   args.read(iprot);
   iprot->readMessageEnd();
   uint32_t bytes = iprot->getTransport()->readEnd();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "TUniquepairService.all", bytes);
+    this->eventHandler_->postRead(ctx, "TUniquepairService.fetch", bytes);
   }
 
-  TUniquepairService_all_result result;
+  TUniquepairService_fetch_result result;
   try {
-    iface_->all(result.success, args.domain);
+    iface_->fetch(result.success, args.query, args.limit, args.offset);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "TUniquepairService.all");
+      this->eventHandler_->handlerError(ctx, "TUniquepairService.fetch");
     }
 
     ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("all", ::apache::thrift::protocol::T_EXCEPTION, seqid);
+    oprot->writeMessageBegin("fetch", ::apache::thrift::protocol::T_EXCEPTION, seqid);
     x.write(oprot);
     oprot->writeMessageEnd();
     oprot->getTransport()->writeEnd();
@@ -2798,125 +2244,17 @@ void TUniquepairServiceProcessor::process_all(int32_t seqid, ::apache::thrift::p
   }
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "TUniquepairService.all");
+    this->eventHandler_->preWrite(ctx, "TUniquepairService.fetch");
   }
 
-  oprot->writeMessageBegin("all", ::apache::thrift::protocol::T_REPLY, seqid);
+  oprot->writeMessageBegin("fetch", ::apache::thrift::protocol::T_REPLY, seqid);
   result.write(oprot);
   oprot->writeMessageEnd();
   bytes = oprot->getTransport()->writeEnd();
   oprot->getTransport()->flush();
 
   if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "TUniquepairService.all", bytes);
-  }
-}
-
-void TUniquepairServiceProcessor::process_filter_by_first_elem(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
-{
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("TUniquepairService.filter_by_first_elem", callContext);
-  }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "TUniquepairService.filter_by_first_elem");
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "TUniquepairService.filter_by_first_elem");
-  }
-
-  TUniquepairService_filter_by_first_elem_args args;
-  args.read(iprot);
-  iprot->readMessageEnd();
-  uint32_t bytes = iprot->getTransport()->readEnd();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "TUniquepairService.filter_by_first_elem", bytes);
-  }
-
-  TUniquepairService_filter_by_first_elem_result result;
-  try {
-    iface_->filter_by_first_elem(result.success, args.domain, args.first_elem);
-    result.__isset.success = true;
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "TUniquepairService.filter_by_first_elem");
-    }
-
-    ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("filter_by_first_elem", ::apache::thrift::protocol::T_EXCEPTION, seqid);
-    x.write(oprot);
-    oprot->writeMessageEnd();
-    oprot->getTransport()->writeEnd();
-    oprot->getTransport()->flush();
-    return;
-  }
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "TUniquepairService.filter_by_first_elem");
-  }
-
-  oprot->writeMessageBegin("filter_by_first_elem", ::apache::thrift::protocol::T_REPLY, seqid);
-  result.write(oprot);
-  oprot->writeMessageEnd();
-  bytes = oprot->getTransport()->writeEnd();
-  oprot->getTransport()->flush();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "TUniquepairService.filter_by_first_elem", bytes);
-  }
-}
-
-void TUniquepairServiceProcessor::process_filter_by_second_elem(int32_t seqid, ::apache::thrift::protocol::TProtocol* iprot, ::apache::thrift::protocol::TProtocol* oprot, void* callContext)
-{
-  void* ctx = NULL;
-  if (this->eventHandler_.get() != NULL) {
-    ctx = this->eventHandler_->getContext("TUniquepairService.filter_by_second_elem", callContext);
-  }
-  ::apache::thrift::TProcessorContextFreer freer(this->eventHandler_.get(), ctx, "TUniquepairService.filter_by_second_elem");
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preRead(ctx, "TUniquepairService.filter_by_second_elem");
-  }
-
-  TUniquepairService_filter_by_second_elem_args args;
-  args.read(iprot);
-  iprot->readMessageEnd();
-  uint32_t bytes = iprot->getTransport()->readEnd();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postRead(ctx, "TUniquepairService.filter_by_second_elem", bytes);
-  }
-
-  TUniquepairService_filter_by_second_elem_result result;
-  try {
-    iface_->filter_by_second_elem(result.success, args.domain, args.second_elem);
-    result.__isset.success = true;
-  } catch (const std::exception& e) {
-    if (this->eventHandler_.get() != NULL) {
-      this->eventHandler_->handlerError(ctx, "TUniquepairService.filter_by_second_elem");
-    }
-
-    ::apache::thrift::TApplicationException x(e.what());
-    oprot->writeMessageBegin("filter_by_second_elem", ::apache::thrift::protocol::T_EXCEPTION, seqid);
-    x.write(oprot);
-    oprot->writeMessageEnd();
-    oprot->getTransport()->writeEnd();
-    oprot->getTransport()->flush();
-    return;
-  }
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->preWrite(ctx, "TUniquepairService.filter_by_second_elem");
-  }
-
-  oprot->writeMessageBegin("filter_by_second_elem", ::apache::thrift::protocol::T_REPLY, seqid);
-  result.write(oprot);
-  oprot->writeMessageEnd();
-  bytes = oprot->getTransport()->writeEnd();
-  oprot->getTransport()->flush();
-
-  if (this->eventHandler_.get() != NULL) {
-    this->eventHandler_->postWrite(ctx, "TUniquepairService.filter_by_second_elem", bytes);
+    this->eventHandler_->postWrite(ctx, "TUniquepairService.fetch", bytes);
   }
 }
 
@@ -3385,20 +2723,22 @@ void TUniquepairServiceConcurrentClient::recv_find(TUniquepair& _return, const i
   } // end while(true)
 }
 
-void TUniquepairServiceConcurrentClient::all(std::vector<TUniquepair> & _return, const std::string& domain)
+void TUniquepairServiceConcurrentClient::fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
 {
-  int32_t seqid = send_all(domain);
-  recv_all(_return, seqid);
+  int32_t seqid = send_fetch(query, limit, offset);
+  recv_fetch(_return, seqid);
 }
 
-int32_t TUniquepairServiceConcurrentClient::send_all(const std::string& domain)
+int32_t TUniquepairServiceConcurrentClient::send_fetch(const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
-  oprot_->writeMessageBegin("all", ::apache::thrift::protocol::T_CALL, cseqid);
+  oprot_->writeMessageBegin("fetch", ::apache::thrift::protocol::T_CALL, cseqid);
 
-  TUniquepairService_all_pargs args;
-  args.domain = &domain;
+  TUniquepairService_fetch_pargs args;
+  args.query = &query;
+  args.limit = &limit;
+  args.offset = &offset;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -3409,7 +2749,7 @@ int32_t TUniquepairServiceConcurrentClient::send_all(const std::string& domain)
   return cseqid;
 }
 
-void TUniquepairServiceConcurrentClient::recv_all(std::vector<TUniquepair> & _return, const int32_t seqid)
+void TUniquepairServiceConcurrentClient::recv_fetch(std::vector<TUniquepair> & _return, const int32_t seqid)
 {
 
   int32_t rseqid = 0;
@@ -3438,7 +2778,7 @@ void TUniquepairServiceConcurrentClient::recv_all(std::vector<TUniquepair> & _re
         iprot_->readMessageEnd();
         iprot_->getTransport()->readEnd();
       }
-      if (fname.compare("all") != 0) {
+      if (fname.compare("fetch") != 0) {
         iprot_->skip(::apache::thrift::protocol::T_STRUCT);
         iprot_->readMessageEnd();
         iprot_->getTransport()->readEnd();
@@ -3447,7 +2787,7 @@ void TUniquepairServiceConcurrentClient::recv_all(std::vector<TUniquepair> & _re
         using ::apache::thrift::protocol::TProtocolException;
         throw TProtocolException(TProtocolException::INVALID_DATA);
       }
-      TUniquepairService_all_presult result;
+      TUniquepairService_fetch_presult result;
       result.success = &_return;
       result.read(iprot_);
       iprot_->readMessageEnd();
@@ -3459,177 +2799,7 @@ void TUniquepairServiceConcurrentClient::recv_all(std::vector<TUniquepair> & _re
         return;
       }
       // in a bad state, don't commit
-      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "all failed: unknown result");
-    }
-    // seqid != rseqid
-    this->sync_->updatePending(fname, mtype, rseqid);
-
-    // this will temporarily unlock the readMutex, and let other clients get work done
-    this->sync_->waitForWork(seqid);
-  } // end while(true)
-}
-
-void TUniquepairServiceConcurrentClient::filter_by_first_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t first_elem)
-{
-  int32_t seqid = send_filter_by_first_elem(domain, first_elem);
-  recv_filter_by_first_elem(_return, seqid);
-}
-
-int32_t TUniquepairServiceConcurrentClient::send_filter_by_first_elem(const std::string& domain, const int32_t first_elem)
-{
-  int32_t cseqid = this->sync_->generateSeqId();
-  ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
-  oprot_->writeMessageBegin("filter_by_first_elem", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  TUniquepairService_filter_by_first_elem_pargs args;
-  args.domain = &domain;
-  args.first_elem = &first_elem;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-
-  sentry.commit();
-  return cseqid;
-}
-
-void TUniquepairServiceConcurrentClient::recv_filter_by_first_elem(std::vector<TUniquepair> & _return, const int32_t seqid)
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  // the read mutex gets dropped and reacquired as part of waitForWork()
-  // The destructor of this sentry wakes up other clients
-  ::apache::thrift::async::TConcurrentRecvSentry sentry(this->sync_.get(), seqid);
-
-  while(true) {
-    if(!this->sync_->getPending(fname, mtype, rseqid)) {
-      iprot_->readMessageBegin(fname, mtype, rseqid);
-    }
-    if(seqid == rseqid) {
-      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-        ::apache::thrift::TApplicationException x;
-        x.read(iprot_);
-        iprot_->readMessageEnd();
-        iprot_->getTransport()->readEnd();
-        sentry.commit();
-        throw x;
-      }
-      if (mtype != ::apache::thrift::protocol::T_REPLY) {
-        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-        iprot_->readMessageEnd();
-        iprot_->getTransport()->readEnd();
-      }
-      if (fname.compare("filter_by_first_elem") != 0) {
-        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-        iprot_->readMessageEnd();
-        iprot_->getTransport()->readEnd();
-
-        // in a bad state, don't commit
-        using ::apache::thrift::protocol::TProtocolException;
-        throw TProtocolException(TProtocolException::INVALID_DATA);
-      }
-      TUniquepairService_filter_by_first_elem_presult result;
-      result.success = &_return;
-      result.read(iprot_);
-      iprot_->readMessageEnd();
-      iprot_->getTransport()->readEnd();
-
-      if (result.__isset.success) {
-        // _return pointer has now been filled
-        sentry.commit();
-        return;
-      }
-      // in a bad state, don't commit
-      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "filter_by_first_elem failed: unknown result");
-    }
-    // seqid != rseqid
-    this->sync_->updatePending(fname, mtype, rseqid);
-
-    // this will temporarily unlock the readMutex, and let other clients get work done
-    this->sync_->waitForWork(seqid);
-  } // end while(true)
-}
-
-void TUniquepairServiceConcurrentClient::filter_by_second_elem(std::vector<TUniquepair> & _return, const std::string& domain, const int32_t second_elem)
-{
-  int32_t seqid = send_filter_by_second_elem(domain, second_elem);
-  recv_filter_by_second_elem(_return, seqid);
-}
-
-int32_t TUniquepairServiceConcurrentClient::send_filter_by_second_elem(const std::string& domain, const int32_t second_elem)
-{
-  int32_t cseqid = this->sync_->generateSeqId();
-  ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
-  oprot_->writeMessageBegin("filter_by_second_elem", ::apache::thrift::protocol::T_CALL, cseqid);
-
-  TUniquepairService_filter_by_second_elem_pargs args;
-  args.domain = &domain;
-  args.second_elem = &second_elem;
-  args.write(oprot_);
-
-  oprot_->writeMessageEnd();
-  oprot_->getTransport()->writeEnd();
-  oprot_->getTransport()->flush();
-
-  sentry.commit();
-  return cseqid;
-}
-
-void TUniquepairServiceConcurrentClient::recv_filter_by_second_elem(std::vector<TUniquepair> & _return, const int32_t seqid)
-{
-
-  int32_t rseqid = 0;
-  std::string fname;
-  ::apache::thrift::protocol::TMessageType mtype;
-
-  // the read mutex gets dropped and reacquired as part of waitForWork()
-  // The destructor of this sentry wakes up other clients
-  ::apache::thrift::async::TConcurrentRecvSentry sentry(this->sync_.get(), seqid);
-
-  while(true) {
-    if(!this->sync_->getPending(fname, mtype, rseqid)) {
-      iprot_->readMessageBegin(fname, mtype, rseqid);
-    }
-    if(seqid == rseqid) {
-      if (mtype == ::apache::thrift::protocol::T_EXCEPTION) {
-        ::apache::thrift::TApplicationException x;
-        x.read(iprot_);
-        iprot_->readMessageEnd();
-        iprot_->getTransport()->readEnd();
-        sentry.commit();
-        throw x;
-      }
-      if (mtype != ::apache::thrift::protocol::T_REPLY) {
-        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-        iprot_->readMessageEnd();
-        iprot_->getTransport()->readEnd();
-      }
-      if (fname.compare("filter_by_second_elem") != 0) {
-        iprot_->skip(::apache::thrift::protocol::T_STRUCT);
-        iprot_->readMessageEnd();
-        iprot_->getTransport()->readEnd();
-
-        // in a bad state, don't commit
-        using ::apache::thrift::protocol::TProtocolException;
-        throw TProtocolException(TProtocolException::INVALID_DATA);
-      }
-      TUniquepairService_filter_by_second_elem_presult result;
-      result.success = &_return;
-      result.read(iprot_);
-      iprot_->readMessageEnd();
-      iprot_->getTransport()->readEnd();
-
-      if (result.__isset.success) {
-        // _return pointer has now been filled
-        sentry.commit();
-        return;
-      }
-      // in a bad state, don't commit
-      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "filter_by_second_elem failed: unknown result");
+      throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "fetch failed: unknown result");
     }
     // seqid != rseqid
     this->sync_->updatePending(fname, mtype, rseqid);

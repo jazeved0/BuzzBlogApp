@@ -119,32 +119,18 @@ public:
 
   void list_follows(std::vector<TFollow>& _return, const int32_t requester_id,
       const int32_t follower_id, const int32_t followee_id) {
-    // List unique pairs.
+    // Build query struct.
+    TUniquepairQuery query;
+    query.__set_domain("follow");
+    if (follower_id > 0)
+      query.__set_first_elem(follower_id);
+    if (followee_id > 0)
+      query.__set_second_elem(followee_id);
+
+    // Fetch unique pairs.
     auto uniquepair_client = get_uniquepair_client();
-    std::vector<TUniquepair> uniquepairs;
-    if (follower_id < 0 && followee_id < 0) {
-      // List all unique pairs.
-      uniquepairs = uniquepair_client->all("follow");
-    }
-    else if (follower_id >= 0 && followee_id < 0) {
-      // List unique pairs filtered by the 1st element.
-      uniquepairs = uniquepair_client->filter_by_first_elem("follow",
-          follower_id);
-    }
-    else if (follower_id < 0 && followee_id >= 0) {
-      // List unique pairs filtered by the 2nd element.
-      uniquepairs = uniquepair_client->filter_by_second_elem("follow",
-          followee_id);
-    }
-    else {
-      // Find unique pair.
-      try {
-        uniquepairs.push_back(uniquepair_client->find("follow", follower_id,
-            followee_id));
-      }
-      catch (TUniquepairNotFoundException e) {
-      }
-    }
+    std::vector<TUniquepair> uniquepairs = uniquepair_client->fetch(query, 128,
+        0);
     uniquepair_client->close();
 
     // Build follows.

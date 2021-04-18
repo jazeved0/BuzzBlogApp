@@ -31,6 +31,8 @@ class TLike;
 
 class TUniquepair;
 
+class TUniquepairQuery;
+
 class TAccountInvalidCredentialsException;
 
 class TAccountDeactivatedException;
@@ -444,6 +446,63 @@ class TUniquepair : public virtual ::apache::thrift::TBase {
 void swap(TUniquepair &a, TUniquepair &b);
 
 std::ostream& operator<<(std::ostream& out, const TUniquepair& obj);
+
+typedef struct _TUniquepairQuery__isset {
+  _TUniquepairQuery__isset() : first_elem(false), second_elem(false) {}
+  bool first_elem :1;
+  bool second_elem :1;
+} _TUniquepairQuery__isset;
+
+class TUniquepairQuery : public virtual ::apache::thrift::TBase {
+ public:
+
+  TUniquepairQuery(const TUniquepairQuery&);
+  TUniquepairQuery& operator=(const TUniquepairQuery&);
+  TUniquepairQuery() : domain(), first_elem(0), second_elem(0) {
+  }
+
+  virtual ~TUniquepairQuery() noexcept;
+  std::string domain;
+  int32_t first_elem;
+  int32_t second_elem;
+
+  _TUniquepairQuery__isset __isset;
+
+  void __set_domain(const std::string& val);
+
+  void __set_first_elem(const int32_t val);
+
+  void __set_second_elem(const int32_t val);
+
+  bool operator == (const TUniquepairQuery & rhs) const
+  {
+    if (!(domain == rhs.domain))
+      return false;
+    if (__isset.first_elem != rhs.__isset.first_elem)
+      return false;
+    else if (__isset.first_elem && !(first_elem == rhs.first_elem))
+      return false;
+    if (__isset.second_elem != rhs.__isset.second_elem)
+      return false;
+    else if (__isset.second_elem && !(second_elem == rhs.second_elem))
+      return false;
+    return true;
+  }
+  bool operator != (const TUniquepairQuery &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const TUniquepairQuery & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(TUniquepairQuery &a, TUniquepairQuery &b);
+
+std::ostream& operator<<(std::ostream& out, const TUniquepairQuery& obj);
 
 
 class TAccountInvalidCredentialsException : public ::apache::thrift::TException {
