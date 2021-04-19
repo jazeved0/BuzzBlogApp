@@ -47,9 +47,5 @@ class Client:
   def fetch(self, query, limit, offset):
     return self._tclient.fetch(query=query, limit=limit, offset=offset)
 
-  def count_first_elem(self, domain, first_elem):
-    return self._tclient.count_first_elem(domain=domain, first_elem=first_elem)
-
-  def count_second_elem(self, domain, second_elem):
-    return self._tclient.count_second_elem(domain=domain,
-        second_elem=second_elem)
+  def count(self, query):
+    return self._tclient.count(query=query)

@@ -187,35 +187,14 @@ public:
     }
   }
 
-  int32_t count_first_elem(const std::string& domain,
-      const int32_t first_elem) {
+  int32_t count(const TUniquepairQuery& query) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
         "SELECT COUNT(*) "
         "FROM Uniquepairs "
-        "WHERE domain = '%s' AND first_elem = %d";
-    sprintf(query_str, query_fmt, domain.c_str(), first_elem);
-
-    // Execute query.
-    pqxx::connection conn(uniquepair_db_conn_str);
-    pqxx::work txn(conn);
-    pqxx::result db_res(txn.exec(query_str));
-    txn.commit();
-    conn.disconnect();
-
-    return db_res[0][0].as<int>();
-  }
-
-  int32_t count_second_elem(const std::string& domain,
-      const int32_t second_elem) {
-    // Build query string.
-    char query_str[1024];
-    const char *query_fmt = \
-        "SELECT COUNT(*) "
-        "FROM Uniquepairs "
-        "WHERE domain = '%s' AND second_elem = %d";
-    sprintf(query_str, query_fmt, domain.c_str(), second_elem);
+        "WHERE %s";
+    sprintf(query_str, query_fmt, build_where_clause(query).c_str());
 
     // Execute query.
     pqxx::connection conn(uniquepair_db_conn_str);

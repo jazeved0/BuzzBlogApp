@@ -460,18 +460,9 @@ service TUniquepairService {
   list<TUniquepair> fetch (1:TUniquepairQuery query, 2:i32 limit, 3:i32 offset);
 
   /* Params:
-   *   1. domain: domain of the unique pairs to be counted.
-   *   2. first_elem: first element of the unique pairs to be counted.
+   *   1. query: query parameters to count results.
    * Returns:
-   *   The number of unique pairs with the provided first element.
+   *   The number of unique pairs.
    */
-  i32 count_first_elem (1:string domain, 2:i32 first_elem);
-
-  /* Params:
-   *   1. domain: domain of the unique pairs to be counted.
-   *   2. second_elem: second element of the unique pairs to be counted.
-   * Returns:
-   *   The number of unique pairs with the provided second element.
-   */
-  i32 count_second_elem (1:string domain, 2:i32 second_elem);
+  i32 count (1:TUniquepairQuery query);
 }

@@ -87,31 +87,22 @@ class TestService(unittest.TestCase):
       self.assertEqual(1, len(fetched_uniquepairs))
       self.assertEqual(uniquepair.id, fetched_uniquepairs[0].id)
 
-  def test_count_first_elem(self):
+  def test_count(self):
     with UniquepairClient(IP_ADDRESS, PORT) as client:
-      # Add a uniquepair whose first element is a certain x.
-      x = random.randint(1, 2 ** 16)
-      uniquepair = client.add("test_count_first_elem", x,
-          random.randint(1, 2 ** 16))
-      # Add random uniquepairs.
+      # Add 10 random uniquepairs.
       for i in range(10):
-        client.add("test_count_first_elem", random.randint(1, 2 ** 16),
+        client.add("test_count", random.randint(1, 2 ** 16),
             random.randint(1, 2 ** 16))
-      # Count uniquepairs whose first element is x.
-      self.assertEqual(1, client.count_first_elem("test_count_first_elem", x))
-
-  def test_count_second_elem(self):
-    with UniquepairClient(IP_ADDRESS, PORT) as client:
-      # Add a uniquepair whose second element is a certain x.
-      x = random.randint(1, 2 ** 16)
-      uniquepair = client.add("test_count_second_elem",
-          random.randint(1, 2 ** 16), x)
-      # Add random uniquepairs.
-      for i in range(10):
-        client.add("test_count_second_elem", random.randint(1, 2 ** 16),
-            random.randint(1, 2 ** 16))
-      # Count uniquepairs whose second element is x.
-      self.assertEqual(1, client.count_second_elem("test_count_second_elem", x))
+      # Add a uniquepair whose first element is 0.
+      client.add("test_count", 0, random.randint(1, 2 ** 16))
+      # Add a uniquepair whose second element is 0.
+      client.add("test_count", random.randint(1, 2 ** 16), 0)
+      # Count uniquepairs whose first element is 0.
+      self.assertEqual(1, client.count(TUniquepairQuery(domain="test_count",
+          first_elem=0)))
+      # Count uniquepairs whose second element is 0.
+      self.assertEqual(1, client.count(TUniquepairQuery(domain="test_count",
+          second_elem=0)))
 
 
 if __name__ == "__main__":

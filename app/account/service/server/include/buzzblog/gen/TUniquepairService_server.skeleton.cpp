@@ -45,14 +45,9 @@ class TUniquepairServiceHandler : virtual public TUniquepairServiceIf {
     printf("fetch\n");
   }
 
-  int32_t count_first_elem(const std::string& domain, const int32_t first_elem) {
+  int32_t count(const TUniquepairQuery& query) {
     // Your implementation goes here
-    printf("count_first_elem\n");
-  }
-
-  int32_t count_second_elem(const std::string& domain, const int32_t second_elem) {
-    // Your implementation goes here
-    printf("count_second_elem\n");
+    printf("count\n");
   }
 
 };

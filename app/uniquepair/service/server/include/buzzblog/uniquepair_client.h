@@ -75,14 +75,8 @@ namespace uniquepair_service {
       return _return;
     }
 
-    int32_t count_first_elem(const std::string& domain,
-        const int32_t first_elem) {
-      return _client->count_first_elem(domain, first_elem);
-    }
-
-    int32_t count_second_elem(const std::string& domain,
-        const int32_t second_elem) {
-      return _client->count_second_elem(domain, second_elem);
+    int32_t count(const TUniquepairQuery& query) {
+      return _client->count(query);
     }
   };
 }

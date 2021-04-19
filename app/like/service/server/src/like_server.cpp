@@ -165,16 +165,28 @@ public:
 
   int32_t count_likes_by_account(const int32_t requester_id,
       const int32_t account_id) {
+    // Build query struct.
+    TUniquepairQuery query;
+    query.__set_domain("like");
+    query.__set_first_elem(account_id);
+
+    // Count unique pairs.
     auto uniquepair_client = get_uniquepair_client();
-    auto count = uniquepair_client->count_first_elem("like", account_id);
+    auto count = uniquepair_client->count(query);
     uniquepair_client->close();
     return count;
   }
 
   int32_t count_likes_of_post(const int32_t requester_id,
       const int32_t post_id) {
+    // Build query struct.
+    TUniquepairQuery query;
+    query.__set_domain("like");
+    query.__set_second_elem(post_id);
+
+    // Count unique pairs.
     auto uniquepair_client = get_uniquepair_client();
-    auto count = uniquepair_client->count_second_elem("like", post_id);
+    auto count = uniquepair_client->count(query);
     uniquepair_client->close();
     return count;
   }
