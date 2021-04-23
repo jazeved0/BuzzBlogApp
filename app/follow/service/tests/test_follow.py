@@ -12,8 +12,8 @@ from buzzblog.follow_client import Client as FollowClient
 
 
 IP_ADDRESS = "localhost"
-ACCOUNT_PORT = 9091
-FOLLOW_PORT = 9092
+ACCOUNT_PORT = 9090
+FOLLOW_PORT = 9091
 
 
 def random_id(size=16, chars=string.ascii_letters + string.digits):

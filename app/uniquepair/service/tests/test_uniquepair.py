@@ -10,7 +10,7 @@ from buzzblog.uniquepair_client import Client as UniquepairClient
 
 
 IP_ADDRESS = "localhost"
-PORT = 9095
+PORT = 9094
 
 
 class TestService(unittest.TestCase):

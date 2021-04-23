@@ -36,27 +36,20 @@ docker run \
     --detach \
     nginx:1.18.0
 
-# Deploy API Gateway (2 uWSGI servers).
+# Deploy API Gateway (1 uWSGI server).
 cd app/apigateway/server
 docker build -t apigateway:latest .
 cd ../../..
 docker run \
-    --name apigateway1 \
+    --name apigateway \
     --publish 8080:81 \
     --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
     --volume $(pwd)/conf/uwsgi.ini:/etc/uwsgi/uwsgi.ini \
     --detach \
     apigateway:latest
-docker run \
-    --name apigateway2 \
-    --publish 8081:81 \
-    --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
-    --volume $(pwd)/conf/uwsgi.ini:/etc/uwsgi/uwsgi.ini \
-    --detach \
-    apigateway:latest
 
-# Deploy Account Service (1 PostgreSQL database server + 2 Thrift multithreaded
-# servers).
+# Deploy Account Service (1 PostgreSQL database server + 1 Thrift multithreaded
+# server).
 docker volume create pg_account
 docker run \
     --name account_database \
@@ -75,21 +68,9 @@ cd app/account/service/server
 docker build -t account:latest .
 cd ../../../..
 docker run \
-    --name account_service1 \
+    --name account_service \
     --publish 9090:9090 \
     --env port=9090 \
-    --env threads=8 \
-    --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
-    --env postgres_user=postgres \
-    --env postgres_password=postgres \
-    --env postgres_dbname=postgres \
-    --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
-    --detach \
-    account:latest
-docker run \
-    --name account_service2 \
-    --publish 9091:9091 \
-    --env port=9091 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \
@@ -105,8 +86,8 @@ docker build -t follow:latest .
 cd ../../../..
 docker run \
     --name follow_service \
-    --publish 9092:9092 \
-    --env port=9092 \
+    --publish 9091:9091 \
+    --env port=9091 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \
@@ -122,8 +103,8 @@ docker build -t like:latest .
 cd ../../../..
 docker run \
     --name like_service \
-    --publish 9093:9093 \
-    --env port=9093 \
+    --publish 9092:9092 \
+    --env port=9092 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \
@@ -154,8 +135,8 @@ docker build -t post:latest .
 cd ../../../..
 docker run \
     --name post_service \
-    --publish 9094:9094 \
-    --env port=9094 \
+    --publish 9093:9093 \
+    --env port=9093 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \
@@ -186,8 +167,8 @@ docker build -t uniquepair:latest .
 cd ../../../..
 docker run \
     --name uniquepair_service \
-    --publish 9095:9095 \
-    --env port=9095 \
+    --publish 9094:9094 \
+    --env port=9094 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \

@@ -2,8 +2,8 @@
 This running example shows how to deploy BuzzBlog in your local machine with
 a simple topology:
 * Load Balancer: 1 NGINX server
-* API Gateway: 2 uWSGI servers
-* Account service: 2 Thrift multithreaded servers
+* API Gateway: 1 uWSGI server
+* Account service: 1 Thrift multithreaded server
 * Account database: 1 PostgreSQL database server
 * Follow service: 1 Thrift multithreaded server
 * Like service: 1 Thrift multithreaded server
@@ -24,21 +24,20 @@ discover which servers they should connect to.
 account:
   service:
     - "172.17.0.1:9090"
-    - "172.17.0.1:9091"
   database: "172.17.0.1:5433"
 follow:
   service:
-    - "172.17.0.1:9092"
+    - "172.17.0.1:9091"
 like:
   service:
-    - "172.17.0.1:9093"
+    - "172.17.0.1:9092"
 post:
   service:
-    - "172.17.0.1:9094"
+    - "172.17.0.1:9093"
   database: "172.17.0.1:5434"
 uniquepair:
   service:
-    - "172.17.0.1:9095"
+    - "172.17.0.1:9094"
   database: "172.17.0.1:5435"
 ```
 
@@ -46,9 +45,8 @@ uniquepair:
 In `conf/nginx.conf`, configure the NGINX server used as a load balancer. Here
 we set the server to listen on port 80, use 8 worker processes, and limit the
 number of simultaneous connections that can be opened by a worker process to
-512. Also, define the hostnames and ports of the API Gateway servers to which
-client requests are forwarded (here we use `172.17.0.1:8080` and
-`172.17.0.1:8081`).
+512. Also, define the hostname and port of the API Gateway server to which
+client requests are forwarded (here we use `172.17.0.1:8080`).
 ```
 worker_processes 8;
 
@@ -62,7 +60,6 @@ http {
   keepalive_timeout 0;
   upstream backend {
     server 172.17.0.1:8080;
-    server 172.17.0.1:8081;
   }
   server {
     listen 80;
@@ -107,22 +104,14 @@ sudo docker run \
 cd app/apigateway/server
 sudo docker build -t apigateway:latest .
 ```
-3. Run two Docker containers based on the newly built image. Here we name these
-containers `apigateway1` and `apigateway2`, publish their port 81 to the host
-ports 8080 and 8081, respectively, and bind-mount `conf/backend.yml` and
-`conf/uwsgi.ini` configuration files in both.
+3. Run a Docker container based on the newly built image. Here we name the
+container `apigateway`, publish its port 81 to the host port 8080, and
+bind-mount `conf/backend.yml` and `conf/uwsgi.ini` configuration files.
 ```
 cd ../../..
 sudo docker run \
-    --name apigateway1 \
+    --name apigateway \
     --publish 8080:81 \
-    --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
-    --volume $(pwd)/conf/uwsgi.ini:/etc/uwsgi/uwsgi.ini \
-    --detach \
-    apigateway:latest
-sudo docker run \
-    --name apigateway2 \
-    --publish 8081:81 \
     --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
     --volume $(pwd)/conf/uwsgi.ini:/etc/uwsgi/uwsgi.ini \
     --detach \
@@ -165,28 +154,16 @@ psql -U postgres -h localhost -p 5433 -f app/account/database/account_schema.sql
 cd app/account/service/server
 sudo docker build -t account:latest .
 ```
-6. Run two Docker containers based on the newly built image. Here we name these
-containers `account_service1` and `account_service2`, publish their ports 9090
-and 9091, respectively, to the same host ports, set the Thrift servers to use 8
-threads, and bind-mount the `conf/backend.yml` configuration file in both.
+6. Run a Docker container based on the newly built image. Here we name the
+container `account_service`, publish its port 9090 to the same host port, set
+the Thrift server to use 8 threads, and bind-mount the `conf/backend.yml`
+configuration file.
 ```
 cd ../../../..
 sudo docker run \
-    --name account_service1 \
+    --name account_service \
     --publish 9090:9090 \
     --env port=9090 \
-    --env threads=8 \
-    --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
-    --env postgres_user=postgres \
-    --env postgres_password=postgres \
-    --env postgres_dbname=postgres \
-    --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
-    --detach \
-    account:latest
-sudo docker run \
-    --name account_service2 \
-    --publish 9091:9091 \
-    --env port=9091 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \
@@ -208,15 +185,15 @@ cd app/follow/service/server
 sudo docker build -t follow:latest .
 ```
 3. Run a Docker container based on the newly built image. Here we name this
-container `follow_service`, publish its port 9092 to the same host port, set
+container `follow_service`, publish its port 9091 to the same host port, set
 the Thrift server to use 8 threads, and bind-mount the `conf/backend.yml`
 configuration file.
 ```
 cd ../../../..
 sudo docker run \
     --name follow_service \
-    --publish 9092:9092 \
-    --env port=9092 \
+    --publish 9091:9091 \
+    --env port=9091 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \
@@ -238,15 +215,15 @@ cd app/like/service/server
 sudo docker build -t like:latest .
 ```
 3. Run a Docker container based on the newly built image. Here we name this
-container `like_service`, publish its port 9093 to the same host port, set
+container `like_service`, publish its port 9092 to the same host port, set
 the Thrift server to use 8 threads, and bind-mount the `conf/backend.yml`
 configuration file.
 ```
 cd ../../../..
 sudo docker run \
     --name like_service \
-    --publish 9093:9093 \
-    --env port=9093 \
+    --publish 9092:9092 \
+    --env port=9092 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \
@@ -294,15 +271,15 @@ cd app/post/service/server
 sudo docker build -t post:latest .
 ```
 6. Run a Docker container based on the newly built image. Here we name this
-container `post_service`, publish its port 9094 to the same host port, set
+container `post_service`, publish its port 9093 to the same host port, set
 the Thrift server to use 8 threads, and bind-mount the `conf/backend.yml`
 configuration file.
 ```
 cd ../../../..
 sudo docker run \
     --name post_service \
-    --publish 9094:9094 \
-    --env port=9094 \
+    --publish 9093:9093 \
+    --env port=9093 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \
@@ -350,15 +327,15 @@ cd app/uniquepair/service/server
 sudo docker build -t uniquepair:latest .
 ```
 6. Run a Docker container based on the newly built image. Here we name this
-container `uniquepair_service`, publish its port 9095 to the same host port, set
+container `uniquepair_service`, publish its port 9094 to the same host port, set
 the Thrift server to use 8 threads, and bind-mount the `conf/backend.yml`
 configuration file.
 ```
 cd ../../../..
 sudo docker run \
     --name uniquepair_service \
-    --publish 9095:9095 \
-    --env port=9095 \
+    --publish 9094:9094 \
+    --env port=9094 \
     --env threads=8 \
     --env backend_filepath=/etc/opt/BuzzBlogApp/backend.yml \
     --env postgres_user=postgres \

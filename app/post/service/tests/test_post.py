@@ -9,7 +9,7 @@ from buzzblog.post_client import Client as PostClient
 
 
 IP_ADDRESS = "localhost"
-PORT = 9094
+PORT = 9093
 
 
 class TestService(unittest.TestCase):

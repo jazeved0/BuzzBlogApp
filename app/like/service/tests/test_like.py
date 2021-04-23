@@ -9,7 +9,7 @@ from buzzblog.like_client import Client as LikeClient
 
 
 IP_ADDRESS = "localhost"
-PORT = 9093
+PORT = 9092
 
 
 class TestService(unittest.TestCase):
