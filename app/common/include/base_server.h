@@ -27,89 +27,99 @@ protected:
     // Parse configuration.
     std::cout << "Initializing BaseServer:" << std::endl;
     auto backend = YAML::LoadFile(backend_filepath);
-    auto account_service = backend["account"]["service"];
-    auto account_db = backend["account"]["database"].as<std::string>();
-    auto follow_service = backend["follow"]["service"];
-    auto like_service = backend["like"]["service"];
-    auto post_service = backend["post"]["service"];
-    auto post_db = backend["post"]["database"].as<std::string>();
-    auto uniquepair_service = backend["uniquepair"]["service"];
-    auto uniquepair_db = backend["uniquepair"]["database"].as<std::string>();
-    // Load account service configuration.
-    for (auto it = account_service.begin(); it != account_service.end(); it++) {
-      auto server = it->as<std::string>();
-      auto hostname = server.substr(0, server.find(":"));
-      auto port = std::stoi(server.substr(server.find(":") + 1));
-      this->account_service.push_back(std::make_pair(hostname, port));
-      std::cout << "\tAdded account service on " << \
-          hostname << ":" << port << std::endl;
+    if (backend["account"]) {
+      // Load account service configuration.
+      auto account_service = backend["account"]["service"];
+      for (auto it = account_service.begin(); it != account_service.end(); it++) {
+        auto server = it->as<std::string>();
+        auto hostname = server.substr(0, server.find(":"));
+        auto port = std::stoi(server.substr(server.find(":") + 1));
+        this->account_service.push_back(std::make_pair(hostname, port));
+        std::cout << "\tAdded account service on " << \
+            hostname << ":" << port << std::endl;
+      }
+      // Build account database connection string.
+      auto account_db = backend["account"]["database"].as<std::string>();
+      auto account_db_host = account_db.substr(0, account_db.find(":"));
+      auto account_db_port = std::stoi(
+          account_db.substr(account_db.find(":") + 1));
+      sprintf(conn_cstr, conn_fmt, postgres_user.c_str(),
+          postgres_password.c_str(), account_db_host.c_str(), account_db_port,
+          postgres_dbname.c_str());
+      account_db_conn_str = std::string(conn_cstr);
+      std::cout << "\tAdded account database on: " << \
+          account_db_host << ":" << account_db_port << std::endl;
     }
-    // Load follow service configuration.
-    for (auto it = follow_service.begin(); it != follow_service.end(); it++) {
-      auto server = it->as<std::string>();
-      auto hostname = server.substr(0, server.find(":"));
-      auto port = std::stoi(server.substr(server.find(":") + 1));
-      this->follow_service.push_back(std::make_pair(hostname, port));
-      std::cout << "\tAdded follow service on " << \
-          hostname << ":" << port << std::endl;
+    if (backend["follow"]) {
+      // Load follow service configuration.
+      auto follow_service = backend["follow"]["service"];
+      for (auto it = follow_service.begin(); it != follow_service.end(); it++) {
+        auto server = it->as<std::string>();
+        auto hostname = server.substr(0, server.find(":"));
+        auto port = std::stoi(server.substr(server.find(":") + 1));
+        this->follow_service.push_back(std::make_pair(hostname, port));
+        std::cout << "\tAdded follow service on " << \
+            hostname << ":" << port << std::endl;
+      }
     }
-    // Load like service configuration.
-    for (auto it = like_service.begin(); it != like_service.end(); it++) {
-      auto server = it->as<std::string>();
-      auto hostname = server.substr(0, server.find(":"));
-      auto port = std::stoi(server.substr(server.find(":") + 1));
-      this->like_service.push_back(std::make_pair(hostname, port));
-      std::cout << "\tAdded like service on " << \
-          hostname << ":" << port << std::endl;
+    if (backend["like"]) {
+      // Load like service configuration.
+      auto like_service = backend["like"]["service"];
+      for (auto it = like_service.begin(); it != like_service.end(); it++) {
+        auto server = it->as<std::string>();
+        auto hostname = server.substr(0, server.find(":"));
+        auto port = std::stoi(server.substr(server.find(":") + 1));
+        this->like_service.push_back(std::make_pair(hostname, port));
+        std::cout << "\tAdded like service on " << \
+            hostname << ":" << port << std::endl;
+      }
     }
-    // Load post service configuration.
-    for (auto it = post_service.begin(); it != post_service.end(); it++) {
-      auto server = it->as<std::string>();
-      auto hostname = server.substr(0, server.find(":"));
-      auto port = std::stoi(server.substr(server.find(":") + 1));
-      this->post_service.push_back(std::make_pair(hostname, port));
-      std::cout << "\tAdded post service on " << \
-          hostname << ":" << port << std::endl;
+    if (backend["post"]) {
+      // Load post service configuration.
+      auto post_service = backend["post"]["service"];
+      for (auto it = post_service.begin(); it != post_service.end(); it++) {
+        auto server = it->as<std::string>();
+        auto hostname = server.substr(0, server.find(":"));
+        auto port = std::stoi(server.substr(server.find(":") + 1));
+        this->post_service.push_back(std::make_pair(hostname, port));
+        std::cout << "\tAdded post service on " << \
+            hostname << ":" << port << std::endl;
+      }
+      // Build post database connection string.
+      auto post_db = backend["post"]["database"].as<std::string>();
+      auto post_db_host = post_db.substr(0, post_db.find(":"));
+      auto post_db_port = std::stoi(post_db.substr(post_db.find(":") + 1));
+      sprintf(conn_cstr, conn_fmt, postgres_user.c_str(),
+          postgres_password.c_str(), post_db_host.c_str(), post_db_port,
+          postgres_dbname.c_str());
+      post_db_conn_str = std::string(conn_cstr);
+      std::cout << "\tAdded post database on: " << \
+          post_db_host << ":" << post_db_port << std::endl;
     }
-    // Load uniquepair service configuration.
-    for (auto it = uniquepair_service.begin(); it != uniquepair_service.end();
-        it++) {
-      auto server = it->as<std::string>();
-      auto hostname = server.substr(0, server.find(":"));
-      auto port = std::stoi(server.substr(server.find(":") + 1));
-      this->uniquepair_service.push_back(std::make_pair(hostname, port));
-      std::cout << "\tAdded uniquepair service on " << \
-          hostname << ":" << port << std::endl;
+    if (backend["uniquepair"]) {
+      // Load uniquepair service configuration.
+      auto uniquepair_service = backend["uniquepair"]["service"];
+      for (auto it = uniquepair_service.begin(); it != uniquepair_service.end();
+          it++) {
+        auto server = it->as<std::string>();
+        auto hostname = server.substr(0, server.find(":"));
+        auto port = std::stoi(server.substr(server.find(":") + 1));
+        this->uniquepair_service.push_back(std::make_pair(hostname, port));
+        std::cout << "\tAdded uniquepair service on " << \
+            hostname << ":" << port << std::endl;
+      }
+      // Build uniquepair database connection string.
+      auto uniquepair_db = backend["uniquepair"]["database"].as<std::string>();
+      auto uniquepair_db_host = uniquepair_db.substr(0, uniquepair_db.find(":"));
+      auto uniquepair_db_port = std::stoi(
+          uniquepair_db.substr(uniquepair_db.find(":") + 1));
+      sprintf(conn_cstr, conn_fmt, postgres_user.c_str(),
+          postgres_password.c_str(), uniquepair_db_host.c_str(),
+          uniquepair_db_port, postgres_dbname.c_str());
+      uniquepair_db_conn_str = std::string(conn_cstr);
+      std::cout << "\tAdded uniquepair database on: " << \
+          uniquepair_db_host << ":" << uniquepair_db_port << std::endl;
     }
-    // Build account database connection string.
-    auto account_db_host = account_db.substr(0, account_db.find(":"));
-    auto account_db_port = std::stoi(
-        account_db.substr(account_db.find(":") + 1));
-    sprintf(conn_cstr, conn_fmt, postgres_user.c_str(),
-        postgres_password.c_str(), account_db_host.c_str(), account_db_port,
-        postgres_dbname.c_str());
-    account_db_conn_str = std::string(conn_cstr);
-    std::cout << "\tAdded account database on: " << \
-        account_db_host << ":" << account_db_port << std::endl;
-    // Build post database connection string.
-    auto post_db_host = post_db.substr(0, post_db.find(":"));
-    auto post_db_port = std::stoi(post_db.substr(post_db.find(":") + 1));
-    sprintf(conn_cstr, conn_fmt, postgres_user.c_str(),
-        postgres_password.c_str(), post_db_host.c_str(), post_db_port,
-        postgres_dbname.c_str());
-    post_db_conn_str = std::string(conn_cstr);
-    std::cout << "\tAdded post database on: " << \
-        post_db_host << ":" << post_db_port << std::endl;
-    // Build uniquepair database connection string.
-    auto uniquepair_db_host = uniquepair_db.substr(0, uniquepair_db.find(":"));
-    auto uniquepair_db_port = std::stoi(
-        uniquepair_db.substr(uniquepair_db.find(":") + 1));
-    sprintf(conn_cstr, conn_fmt, postgres_user.c_str(),
-        postgres_password.c_str(), uniquepair_db_host.c_str(),
-        uniquepair_db_port, postgres_dbname.c_str());
-    uniquepair_db_conn_str = std::string(conn_cstr);
-    std::cout << "\tAdded uniquepair database on: " << \
-        uniquepair_db_host << ":" << uniquepair_db_port << std::endl;
   }
 
   std::unique_ptr<account_service::Client> get_account_client() {
