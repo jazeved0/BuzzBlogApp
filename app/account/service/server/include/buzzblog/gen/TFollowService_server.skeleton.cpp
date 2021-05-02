@@ -40,7 +40,7 @@ class TFollowServiceHandler : virtual public TFollowServiceIf {
     printf("delete_follow\n");
   }
 
-  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const int32_t follower_id, const int32_t followee_id) {
+  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset) {
     // Your implementation goes here
     printf("list_follows\n");
   }

@@ -564,6 +564,122 @@ void TFollow::printTo(std::ostream& out) const {
 }
 
 
+TFollowQuery::~TFollowQuery() noexcept {
+}
+
+
+void TFollowQuery::__set_follower_id(const int32_t val) {
+  this->follower_id = val;
+__isset.follower_id = true;
+}
+
+void TFollowQuery::__set_followee_id(const int32_t val) {
+  this->followee_id = val;
+__isset.followee_id = true;
+}
+std::ostream& operator<<(std::ostream& out, const TFollowQuery& obj)
+{
+  obj.printTo(out);
+  return out;
+}
+
+
+uint32_t TFollowQuery::read(::apache::thrift::protocol::TProtocol* iprot) {
+
+  ::apache::thrift::protocol::TInputRecursionTracker tracker(*iprot);
+  uint32_t xfer = 0;
+  std::string fname;
+  ::apache::thrift::protocol::TType ftype;
+  int16_t fid;
+
+  xfer += iprot->readStructBegin(fname);
+
+  using ::apache::thrift::protocol::TProtocolException;
+
+
+  while (true)
+  {
+    xfer += iprot->readFieldBegin(fname, ftype, fid);
+    if (ftype == ::apache::thrift::protocol::T_STOP) {
+      break;
+    }
+    switch (fid)
+    {
+      case 1:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->follower_id);
+          this->__isset.follower_id = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->followee_id);
+          this->__isset.followee_id = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      default:
+        xfer += iprot->skip(ftype);
+        break;
+    }
+    xfer += iprot->readFieldEnd();
+  }
+
+  xfer += iprot->readStructEnd();
+
+  return xfer;
+}
+
+uint32_t TFollowQuery::write(::apache::thrift::protocol::TProtocol* oprot) const {
+  uint32_t xfer = 0;
+  ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
+  xfer += oprot->writeStructBegin("TFollowQuery");
+
+  if (this->__isset.follower_id) {
+    xfer += oprot->writeFieldBegin("follower_id", ::apache::thrift::protocol::T_I32, 1);
+    xfer += oprot->writeI32(this->follower_id);
+    xfer += oprot->writeFieldEnd();
+  }
+  if (this->__isset.followee_id) {
+    xfer += oprot->writeFieldBegin("followee_id", ::apache::thrift::protocol::T_I32, 2);
+    xfer += oprot->writeI32(this->followee_id);
+    xfer += oprot->writeFieldEnd();
+  }
+  xfer += oprot->writeFieldStop();
+  xfer += oprot->writeStructEnd();
+  return xfer;
+}
+
+void swap(TFollowQuery &a, TFollowQuery &b) {
+  using ::std::swap;
+  swap(a.follower_id, b.follower_id);
+  swap(a.followee_id, b.followee_id);
+  swap(a.__isset, b.__isset);
+}
+
+TFollowQuery::TFollowQuery(const TFollowQuery& other4) {
+  follower_id = other4.follower_id;
+  followee_id = other4.followee_id;
+  __isset = other4.__isset;
+}
+TFollowQuery& TFollowQuery::operator=(const TFollowQuery& other5) {
+  follower_id = other5.follower_id;
+  followee_id = other5.followee_id;
+  __isset = other5.__isset;
+  return *this;
+}
+void TFollowQuery::printTo(std::ostream& out) const {
+  using ::apache::thrift::to_string;
+  out << "TFollowQuery(";
+  out << "follower_id="; (__isset.follower_id ? (out << to_string(follower_id)) : (out << "<null>"));
+  out << ", " << "followee_id="; (__isset.followee_id ? (out << to_string(followee_id)) : (out << "<null>"));
+  out << ")";
+}
+
+
 TPost::~TPost() noexcept {
 }
 
@@ -760,25 +876,25 @@ void swap(TPost &a, TPost &b) {
   swap(a.__isset, b.__isset);
 }
 
-TPost::TPost(const TPost& other4) {
-  id = other4.id;
-  created_at = other4.created_at;
-  active = other4.active;
-  text = other4.text;
-  author_id = other4.author_id;
-  author = other4.author;
-  n_likes = other4.n_likes;
-  __isset = other4.__isset;
+TPost::TPost(const TPost& other6) {
+  id = other6.id;
+  created_at = other6.created_at;
+  active = other6.active;
+  text = other6.text;
+  author_id = other6.author_id;
+  author = other6.author;
+  n_likes = other6.n_likes;
+  __isset = other6.__isset;
 }
-TPost& TPost::operator=(const TPost& other5) {
-  id = other5.id;
-  created_at = other5.created_at;
-  active = other5.active;
-  text = other5.text;
-  author_id = other5.author_id;
-  author = other5.author;
-  n_likes = other5.n_likes;
-  __isset = other5.__isset;
+TPost& TPost::operator=(const TPost& other7) {
+  id = other7.id;
+  created_at = other7.created_at;
+  active = other7.active;
+  text = other7.text;
+  author_id = other7.author_id;
+  author = other7.author;
+  n_likes = other7.n_likes;
+  __isset = other7.__isset;
   return *this;
 }
 void TPost::printTo(std::ostream& out) const {
@@ -972,21 +1088,21 @@ void swap(TLike &a, TLike &b) {
   swap(a.post, b.post);
 }
 
-TLike::TLike(const TLike& other6) {
-  id = other6.id;
-  created_at = other6.created_at;
-  account_id = other6.account_id;
-  post_id = other6.post_id;
-  account = other6.account;
-  post = other6.post;
+TLike::TLike(const TLike& other8) {
+  id = other8.id;
+  created_at = other8.created_at;
+  account_id = other8.account_id;
+  post_id = other8.post_id;
+  account = other8.account;
+  post = other8.post;
 }
-TLike& TLike::operator=(const TLike& other7) {
-  id = other7.id;
-  created_at = other7.created_at;
-  account_id = other7.account_id;
-  post_id = other7.post_id;
-  account = other7.account;
-  post = other7.post;
+TLike& TLike::operator=(const TLike& other9) {
+  id = other9.id;
+  created_at = other9.created_at;
+  account_id = other9.account_id;
+  post_id = other9.post_id;
+  account = other9.account;
+  post = other9.post;
   return *this;
 }
 void TLike::printTo(std::ostream& out) const {
@@ -1159,19 +1275,19 @@ void swap(TUniquepair &a, TUniquepair &b) {
   swap(a.second_elem, b.second_elem);
 }
 
-TUniquepair::TUniquepair(const TUniquepair& other8) {
-  id = other8.id;
-  created_at = other8.created_at;
-  domain = other8.domain;
-  first_elem = other8.first_elem;
-  second_elem = other8.second_elem;
+TUniquepair::TUniquepair(const TUniquepair& other10) {
+  id = other10.id;
+  created_at = other10.created_at;
+  domain = other10.domain;
+  first_elem = other10.first_elem;
+  second_elem = other10.second_elem;
 }
-TUniquepair& TUniquepair::operator=(const TUniquepair& other9) {
-  id = other9.id;
-  created_at = other9.created_at;
-  domain = other9.domain;
-  first_elem = other9.first_elem;
-  second_elem = other9.second_elem;
+TUniquepair& TUniquepair::operator=(const TUniquepair& other11) {
+  id = other11.id;
+  created_at = other11.created_at;
+  domain = other11.domain;
+  first_elem = other11.first_elem;
+  second_elem = other11.second_elem;
   return *this;
 }
 void TUniquepair::printTo(std::ostream& out) const {
@@ -1302,17 +1418,17 @@ void swap(TUniquepairQuery &a, TUniquepairQuery &b) {
   swap(a.__isset, b.__isset);
 }
 
-TUniquepairQuery::TUniquepairQuery(const TUniquepairQuery& other10) {
-  domain = other10.domain;
-  first_elem = other10.first_elem;
-  second_elem = other10.second_elem;
-  __isset = other10.__isset;
+TUniquepairQuery::TUniquepairQuery(const TUniquepairQuery& other12) {
+  domain = other12.domain;
+  first_elem = other12.first_elem;
+  second_elem = other12.second_elem;
+  __isset = other12.__isset;
 }
-TUniquepairQuery& TUniquepairQuery::operator=(const TUniquepairQuery& other11) {
-  domain = other11.domain;
-  first_elem = other11.first_elem;
-  second_elem = other11.second_elem;
-  __isset = other11.__isset;
+TUniquepairQuery& TUniquepairQuery::operator=(const TUniquepairQuery& other13) {
+  domain = other13.domain;
+  first_elem = other13.first_elem;
+  second_elem = other13.second_elem;
+  __isset = other13.__isset;
   return *this;
 }
 void TUniquepairQuery::printTo(std::ostream& out) const {
@@ -1379,11 +1495,11 @@ void swap(TAccountInvalidCredentialsException &a, TAccountInvalidCredentialsExce
   (void) b;
 }
 
-TAccountInvalidCredentialsException::TAccountInvalidCredentialsException(const TAccountInvalidCredentialsException& other12) : TException() {
-  (void) other12;
+TAccountInvalidCredentialsException::TAccountInvalidCredentialsException(const TAccountInvalidCredentialsException& other14) : TException() {
+  (void) other14;
 }
-TAccountInvalidCredentialsException& TAccountInvalidCredentialsException::operator=(const TAccountInvalidCredentialsException& other13) {
-  (void) other13;
+TAccountInvalidCredentialsException& TAccountInvalidCredentialsException::operator=(const TAccountInvalidCredentialsException& other15) {
+  (void) other15;
   return *this;
 }
 void TAccountInvalidCredentialsException::printTo(std::ostream& out) const {
@@ -1458,11 +1574,11 @@ void swap(TAccountDeactivatedException &a, TAccountDeactivatedException &b) {
   (void) b;
 }
 
-TAccountDeactivatedException::TAccountDeactivatedException(const TAccountDeactivatedException& other14) : TException() {
-  (void) other14;
+TAccountDeactivatedException::TAccountDeactivatedException(const TAccountDeactivatedException& other16) : TException() {
+  (void) other16;
 }
-TAccountDeactivatedException& TAccountDeactivatedException::operator=(const TAccountDeactivatedException& other15) {
-  (void) other15;
+TAccountDeactivatedException& TAccountDeactivatedException::operator=(const TAccountDeactivatedException& other17) {
+  (void) other17;
   return *this;
 }
 void TAccountDeactivatedException::printTo(std::ostream& out) const {
@@ -1537,11 +1653,11 @@ void swap(TAccountInvalidAttributesException &a, TAccountInvalidAttributesExcept
   (void) b;
 }
 
-TAccountInvalidAttributesException::TAccountInvalidAttributesException(const TAccountInvalidAttributesException& other16) : TException() {
-  (void) other16;
+TAccountInvalidAttributesException::TAccountInvalidAttributesException(const TAccountInvalidAttributesException& other18) : TException() {
+  (void) other18;
 }
-TAccountInvalidAttributesException& TAccountInvalidAttributesException::operator=(const TAccountInvalidAttributesException& other17) {
-  (void) other17;
+TAccountInvalidAttributesException& TAccountInvalidAttributesException::operator=(const TAccountInvalidAttributesException& other19) {
+  (void) other19;
   return *this;
 }
 void TAccountInvalidAttributesException::printTo(std::ostream& out) const {
@@ -1616,11 +1732,11 @@ void swap(TAccountUsernameAlreadyExistsException &a, TAccountUsernameAlreadyExis
   (void) b;
 }
 
-TAccountUsernameAlreadyExistsException::TAccountUsernameAlreadyExistsException(const TAccountUsernameAlreadyExistsException& other18) : TException() {
-  (void) other18;
+TAccountUsernameAlreadyExistsException::TAccountUsernameAlreadyExistsException(const TAccountUsernameAlreadyExistsException& other20) : TException() {
+  (void) other20;
 }
-TAccountUsernameAlreadyExistsException& TAccountUsernameAlreadyExistsException::operator=(const TAccountUsernameAlreadyExistsException& other19) {
-  (void) other19;
+TAccountUsernameAlreadyExistsException& TAccountUsernameAlreadyExistsException::operator=(const TAccountUsernameAlreadyExistsException& other21) {
+  (void) other21;
   return *this;
 }
 void TAccountUsernameAlreadyExistsException::printTo(std::ostream& out) const {
@@ -1695,11 +1811,11 @@ void swap(TAccountNotFoundException &a, TAccountNotFoundException &b) {
   (void) b;
 }
 
-TAccountNotFoundException::TAccountNotFoundException(const TAccountNotFoundException& other20) : TException() {
-  (void) other20;
+TAccountNotFoundException::TAccountNotFoundException(const TAccountNotFoundException& other22) : TException() {
+  (void) other22;
 }
-TAccountNotFoundException& TAccountNotFoundException::operator=(const TAccountNotFoundException& other21) {
-  (void) other21;
+TAccountNotFoundException& TAccountNotFoundException::operator=(const TAccountNotFoundException& other23) {
+  (void) other23;
   return *this;
 }
 void TAccountNotFoundException::printTo(std::ostream& out) const {
@@ -1774,11 +1890,11 @@ void swap(TAccountNotAuthorizedException &a, TAccountNotAuthorizedException &b) 
   (void) b;
 }
 
-TAccountNotAuthorizedException::TAccountNotAuthorizedException(const TAccountNotAuthorizedException& other22) : TException() {
-  (void) other22;
+TAccountNotAuthorizedException::TAccountNotAuthorizedException(const TAccountNotAuthorizedException& other24) : TException() {
+  (void) other24;
 }
-TAccountNotAuthorizedException& TAccountNotAuthorizedException::operator=(const TAccountNotAuthorizedException& other23) {
-  (void) other23;
+TAccountNotAuthorizedException& TAccountNotAuthorizedException::operator=(const TAccountNotAuthorizedException& other25) {
+  (void) other25;
   return *this;
 }
 void TAccountNotAuthorizedException::printTo(std::ostream& out) const {
@@ -1853,11 +1969,11 @@ void swap(TFollowAlreadyExistsException &a, TFollowAlreadyExistsException &b) {
   (void) b;
 }
 
-TFollowAlreadyExistsException::TFollowAlreadyExistsException(const TFollowAlreadyExistsException& other24) : TException() {
-  (void) other24;
+TFollowAlreadyExistsException::TFollowAlreadyExistsException(const TFollowAlreadyExistsException& other26) : TException() {
+  (void) other26;
 }
-TFollowAlreadyExistsException& TFollowAlreadyExistsException::operator=(const TFollowAlreadyExistsException& other25) {
-  (void) other25;
+TFollowAlreadyExistsException& TFollowAlreadyExistsException::operator=(const TFollowAlreadyExistsException& other27) {
+  (void) other27;
   return *this;
 }
 void TFollowAlreadyExistsException::printTo(std::ostream& out) const {
@@ -1932,11 +2048,11 @@ void swap(TFollowNotFoundException &a, TFollowNotFoundException &b) {
   (void) b;
 }
 
-TFollowNotFoundException::TFollowNotFoundException(const TFollowNotFoundException& other26) : TException() {
-  (void) other26;
+TFollowNotFoundException::TFollowNotFoundException(const TFollowNotFoundException& other28) : TException() {
+  (void) other28;
 }
-TFollowNotFoundException& TFollowNotFoundException::operator=(const TFollowNotFoundException& other27) {
-  (void) other27;
+TFollowNotFoundException& TFollowNotFoundException::operator=(const TFollowNotFoundException& other29) {
+  (void) other29;
   return *this;
 }
 void TFollowNotFoundException::printTo(std::ostream& out) const {
@@ -2011,11 +2127,11 @@ void swap(TFollowNotAuthorizedException &a, TFollowNotAuthorizedException &b) {
   (void) b;
 }
 
-TFollowNotAuthorizedException::TFollowNotAuthorizedException(const TFollowNotAuthorizedException& other28) : TException() {
-  (void) other28;
+TFollowNotAuthorizedException::TFollowNotAuthorizedException(const TFollowNotAuthorizedException& other30) : TException() {
+  (void) other30;
 }
-TFollowNotAuthorizedException& TFollowNotAuthorizedException::operator=(const TFollowNotAuthorizedException& other29) {
-  (void) other29;
+TFollowNotAuthorizedException& TFollowNotAuthorizedException::operator=(const TFollowNotAuthorizedException& other31) {
+  (void) other31;
   return *this;
 }
 void TFollowNotAuthorizedException::printTo(std::ostream& out) const {
@@ -2090,11 +2206,11 @@ void swap(TLikeAlreadyExistsException &a, TLikeAlreadyExistsException &b) {
   (void) b;
 }
 
-TLikeAlreadyExistsException::TLikeAlreadyExistsException(const TLikeAlreadyExistsException& other30) : TException() {
-  (void) other30;
+TLikeAlreadyExistsException::TLikeAlreadyExistsException(const TLikeAlreadyExistsException& other32) : TException() {
+  (void) other32;
 }
-TLikeAlreadyExistsException& TLikeAlreadyExistsException::operator=(const TLikeAlreadyExistsException& other31) {
-  (void) other31;
+TLikeAlreadyExistsException& TLikeAlreadyExistsException::operator=(const TLikeAlreadyExistsException& other33) {
+  (void) other33;
   return *this;
 }
 void TLikeAlreadyExistsException::printTo(std::ostream& out) const {
@@ -2169,11 +2285,11 @@ void swap(TLikeNotFoundException &a, TLikeNotFoundException &b) {
   (void) b;
 }
 
-TLikeNotFoundException::TLikeNotFoundException(const TLikeNotFoundException& other32) : TException() {
-  (void) other32;
+TLikeNotFoundException::TLikeNotFoundException(const TLikeNotFoundException& other34) : TException() {
+  (void) other34;
 }
-TLikeNotFoundException& TLikeNotFoundException::operator=(const TLikeNotFoundException& other33) {
-  (void) other33;
+TLikeNotFoundException& TLikeNotFoundException::operator=(const TLikeNotFoundException& other35) {
+  (void) other35;
   return *this;
 }
 void TLikeNotFoundException::printTo(std::ostream& out) const {
@@ -2248,11 +2364,11 @@ void swap(TLikeNotAuthorizedException &a, TLikeNotAuthorizedException &b) {
   (void) b;
 }
 
-TLikeNotAuthorizedException::TLikeNotAuthorizedException(const TLikeNotAuthorizedException& other34) : TException() {
-  (void) other34;
+TLikeNotAuthorizedException::TLikeNotAuthorizedException(const TLikeNotAuthorizedException& other36) : TException() {
+  (void) other36;
 }
-TLikeNotAuthorizedException& TLikeNotAuthorizedException::operator=(const TLikeNotAuthorizedException& other35) {
-  (void) other35;
+TLikeNotAuthorizedException& TLikeNotAuthorizedException::operator=(const TLikeNotAuthorizedException& other37) {
+  (void) other37;
   return *this;
 }
 void TLikeNotAuthorizedException::printTo(std::ostream& out) const {
@@ -2327,11 +2443,11 @@ void swap(TPostInvalidAttributesException &a, TPostInvalidAttributesException &b
   (void) b;
 }
 
-TPostInvalidAttributesException::TPostInvalidAttributesException(const TPostInvalidAttributesException& other36) : TException() {
-  (void) other36;
+TPostInvalidAttributesException::TPostInvalidAttributesException(const TPostInvalidAttributesException& other38) : TException() {
+  (void) other38;
 }
-TPostInvalidAttributesException& TPostInvalidAttributesException::operator=(const TPostInvalidAttributesException& other37) {
-  (void) other37;
+TPostInvalidAttributesException& TPostInvalidAttributesException::operator=(const TPostInvalidAttributesException& other39) {
+  (void) other39;
   return *this;
 }
 void TPostInvalidAttributesException::printTo(std::ostream& out) const {
@@ -2406,11 +2522,11 @@ void swap(TPostNotFoundException &a, TPostNotFoundException &b) {
   (void) b;
 }
 
-TPostNotFoundException::TPostNotFoundException(const TPostNotFoundException& other38) : TException() {
-  (void) other38;
+TPostNotFoundException::TPostNotFoundException(const TPostNotFoundException& other40) : TException() {
+  (void) other40;
 }
-TPostNotFoundException& TPostNotFoundException::operator=(const TPostNotFoundException& other39) {
-  (void) other39;
+TPostNotFoundException& TPostNotFoundException::operator=(const TPostNotFoundException& other41) {
+  (void) other41;
   return *this;
 }
 void TPostNotFoundException::printTo(std::ostream& out) const {
@@ -2485,11 +2601,11 @@ void swap(TPostNotAuthorizedException &a, TPostNotAuthorizedException &b) {
   (void) b;
 }
 
-TPostNotAuthorizedException::TPostNotAuthorizedException(const TPostNotAuthorizedException& other40) : TException() {
-  (void) other40;
+TPostNotAuthorizedException::TPostNotAuthorizedException(const TPostNotAuthorizedException& other42) : TException() {
+  (void) other42;
 }
-TPostNotAuthorizedException& TPostNotAuthorizedException::operator=(const TPostNotAuthorizedException& other41) {
-  (void) other41;
+TPostNotAuthorizedException& TPostNotAuthorizedException::operator=(const TPostNotAuthorizedException& other43) {
+  (void) other43;
   return *this;
 }
 void TPostNotAuthorizedException::printTo(std::ostream& out) const {
@@ -2564,11 +2680,11 @@ void swap(TUniquepairNotFoundException &a, TUniquepairNotFoundException &b) {
   (void) b;
 }
 
-TUniquepairNotFoundException::TUniquepairNotFoundException(const TUniquepairNotFoundException& other42) : TException() {
-  (void) other42;
+TUniquepairNotFoundException::TUniquepairNotFoundException(const TUniquepairNotFoundException& other44) : TException() {
+  (void) other44;
 }
-TUniquepairNotFoundException& TUniquepairNotFoundException::operator=(const TUniquepairNotFoundException& other43) {
-  (void) other43;
+TUniquepairNotFoundException& TUniquepairNotFoundException::operator=(const TUniquepairNotFoundException& other45) {
+  (void) other45;
   return *this;
 }
 void TUniquepairNotFoundException::printTo(std::ostream& out) const {
@@ -2643,11 +2759,11 @@ void swap(TUniquepairAlreadyExistsException &a, TUniquepairAlreadyExistsExceptio
   (void) b;
 }
 
-TUniquepairAlreadyExistsException::TUniquepairAlreadyExistsException(const TUniquepairAlreadyExistsException& other44) : TException() {
-  (void) other44;
+TUniquepairAlreadyExistsException::TUniquepairAlreadyExistsException(const TUniquepairAlreadyExistsException& other46) : TException() {
+  (void) other46;
 }
-TUniquepairAlreadyExistsException& TUniquepairAlreadyExistsException::operator=(const TUniquepairAlreadyExistsException& other45) {
-  (void) other45;
+TUniquepairAlreadyExistsException& TUniquepairAlreadyExistsException::operator=(const TUniquepairAlreadyExistsException& other47) {
+  (void) other47;
   return *this;
 }
 void TUniquepairAlreadyExistsException::printTo(std::ostream& out) const {

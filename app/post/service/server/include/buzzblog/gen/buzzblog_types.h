@@ -25,6 +25,8 @@ class TAccount;
 
 class TFollow;
 
+class TFollowQuery;
+
 class TPost;
 
 class TLike;
@@ -252,6 +254,58 @@ class TFollow : public virtual ::apache::thrift::TBase {
 void swap(TFollow &a, TFollow &b);
 
 std::ostream& operator<<(std::ostream& out, const TFollow& obj);
+
+typedef struct _TFollowQuery__isset {
+  _TFollowQuery__isset() : follower_id(false), followee_id(false) {}
+  bool follower_id :1;
+  bool followee_id :1;
+} _TFollowQuery__isset;
+
+class TFollowQuery : public virtual ::apache::thrift::TBase {
+ public:
+
+  TFollowQuery(const TFollowQuery&);
+  TFollowQuery& operator=(const TFollowQuery&);
+  TFollowQuery() : follower_id(0), followee_id(0) {
+  }
+
+  virtual ~TFollowQuery() noexcept;
+  int32_t follower_id;
+  int32_t followee_id;
+
+  _TFollowQuery__isset __isset;
+
+  void __set_follower_id(const int32_t val);
+
+  void __set_followee_id(const int32_t val);
+
+  bool operator == (const TFollowQuery & rhs) const
+  {
+    if (__isset.follower_id != rhs.__isset.follower_id)
+      return false;
+    else if (__isset.follower_id && !(follower_id == rhs.follower_id))
+      return false;
+    if (__isset.followee_id != rhs.__isset.followee_id)
+      return false;
+    else if (__isset.followee_id && !(followee_id == rhs.followee_id))
+      return false;
+    return true;
+  }
+  bool operator != (const TFollowQuery &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const TFollowQuery & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(TFollowQuery &a, TFollowQuery &b);
+
+std::ostream& operator<<(std::ostream& out, const TFollowQuery& obj);
 
 typedef struct _TPost__isset {
   _TPost__isset() : author(false), n_likes(false) {}

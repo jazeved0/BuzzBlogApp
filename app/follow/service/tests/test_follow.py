@@ -103,8 +103,11 @@ class TestService(unittest.TestCase):
         # creation times are recorded in the database with precision of 1s.
         time.sleep(2)
       # Retrieve those follows, reverse the list, and check their ids.
-      retrieved_follows = client.list_follows(accounts[0].id, accounts[0].id,
-          -1)
+      query = TFollowQuery(follower_id=accounts[0].id)
+      limit = 10
+      offset = 0
+      retrieved_follows = client.list_follows(accounts[0].id, query, limit,
+          offset)
       retrieved_follows.reverse()
       for (follow, retrieved_follow) in zip(follows, retrieved_follows):
         self.assertEqual(follow.id, retrieved_follow.id)

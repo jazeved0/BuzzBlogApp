@@ -26,7 +26,7 @@ class TFollowServiceIf {
   virtual void retrieve_standard_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id) = 0;
   virtual void retrieve_expanded_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id) = 0;
   virtual void delete_follow(const int32_t requester_id, const int32_t follow_id) = 0;
-  virtual void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const int32_t follower_id, const int32_t followee_id) = 0;
+  virtual void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset) = 0;
   virtual bool check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id) = 0;
   virtual int32_t count_followers(const int32_t requester_id, const int32_t account_id) = 0;
   virtual int32_t count_followees(const int32_t requester_id, const int32_t account_id) = 0;
@@ -71,7 +71,7 @@ class TFollowServiceNull : virtual public TFollowServiceIf {
   void delete_follow(const int32_t /* requester_id */, const int32_t /* follow_id */) {
     return;
   }
-  void list_follows(std::vector<TFollow> & /* _return */, const int32_t /* requester_id */, const int32_t /* follower_id */, const int32_t /* followee_id */) {
+  void list_follows(std::vector<TFollow> & /* _return */, const int32_t /* requester_id */, const TFollowQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
     return;
   }
   bool check_follow(const int32_t /* requester_id */, const int32_t /* follower_id */, const int32_t /* followee_id */) {
@@ -573,10 +573,11 @@ class TFollowService_delete_follow_presult {
 };
 
 typedef struct _TFollowService_list_follows_args__isset {
-  _TFollowService_list_follows_args__isset() : requester_id(false), follower_id(false), followee_id(false) {}
+  _TFollowService_list_follows_args__isset() : requester_id(false), query(false), limit(false), offset(false) {}
   bool requester_id :1;
-  bool follower_id :1;
-  bool followee_id :1;
+  bool query :1;
+  bool limit :1;
+  bool offset :1;
 } _TFollowService_list_follows_args__isset;
 
 class TFollowService_list_follows_args {
@@ -584,29 +585,34 @@ class TFollowService_list_follows_args {
 
   TFollowService_list_follows_args(const TFollowService_list_follows_args&);
   TFollowService_list_follows_args& operator=(const TFollowService_list_follows_args&);
-  TFollowService_list_follows_args() : requester_id(0), follower_id(0), followee_id(0) {
+  TFollowService_list_follows_args() : requester_id(0), limit(0), offset(0) {
   }
 
   virtual ~TFollowService_list_follows_args() noexcept;
   int32_t requester_id;
-  int32_t follower_id;
-  int32_t followee_id;
+  TFollowQuery query;
+  int32_t limit;
+  int32_t offset;
 
   _TFollowService_list_follows_args__isset __isset;
 
   void __set_requester_id(const int32_t val);
 
-  void __set_follower_id(const int32_t val);
+  void __set_query(const TFollowQuery& val);
 
-  void __set_followee_id(const int32_t val);
+  void __set_limit(const int32_t val);
+
+  void __set_offset(const int32_t val);
 
   bool operator == (const TFollowService_list_follows_args & rhs) const
   {
     if (!(requester_id == rhs.requester_id))
       return false;
-    if (!(follower_id == rhs.follower_id))
+    if (!(query == rhs.query))
       return false;
-    if (!(followee_id == rhs.followee_id))
+    if (!(limit == rhs.limit))
+      return false;
+    if (!(offset == rhs.offset))
       return false;
     return true;
   }
@@ -628,8 +634,9 @@ class TFollowService_list_follows_pargs {
 
   virtual ~TFollowService_list_follows_pargs() noexcept;
   const int32_t* requester_id;
-  const int32_t* follower_id;
-  const int32_t* followee_id;
+  const TFollowQuery* query;
+  const int32_t* limit;
+  const int32_t* offset;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -1075,8 +1082,8 @@ class TFollowServiceClient : virtual public TFollowServiceIf {
   void delete_follow(const int32_t requester_id, const int32_t follow_id);
   void send_delete_follow(const int32_t requester_id, const int32_t follow_id);
   void recv_delete_follow();
-  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
-  void send_list_follows(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
+  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset);
+  void send_list_follows(const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_follows(std::vector<TFollow> & _return);
   bool check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
   void send_check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
@@ -1188,13 +1195,13 @@ class TFollowServiceMultiface : virtual public TFollowServiceIf {
     ifaces_[i]->delete_follow(requester_id, follow_id);
   }
 
-  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const int32_t follower_id, const int32_t followee_id) {
+  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->list_follows(_return, requester_id, follower_id, followee_id);
+      ifaces_[i]->list_follows(_return, requester_id, query, limit, offset);
     }
-    ifaces_[i]->list_follows(_return, requester_id, follower_id, followee_id);
+    ifaces_[i]->list_follows(_return, requester_id, query, limit, offset);
     return;
   }
 
@@ -1269,8 +1276,8 @@ class TFollowServiceConcurrentClient : virtual public TFollowServiceIf {
   void delete_follow(const int32_t requester_id, const int32_t follow_id);
   int32_t send_delete_follow(const int32_t requester_id, const int32_t follow_id);
   void recv_delete_follow(const int32_t seqid);
-  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
-  int32_t send_list_follows(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
+  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset);
+  int32_t send_list_follows(const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_follows(std::vector<TFollow> & _return, const int32_t seqid);
   bool check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
   int32_t send_check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);

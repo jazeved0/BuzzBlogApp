@@ -118,19 +118,19 @@ public:
   }
 
   void list_follows(std::vector<TFollow>& _return, const int32_t requester_id,
-      const int32_t follower_id, const int32_t followee_id) {
+      const TFollowQuery& query, const int32_t limit, const int32_t offset) {
     // Build query struct.
-    TUniquepairQuery query;
-    query.__set_domain("follow");
-    if (follower_id > 0)
-      query.__set_first_elem(follower_id);
-    if (followee_id > 0)
-      query.__set_second_elem(followee_id);
+    TUniquepairQuery uniquepair_query;
+    uniquepair_query.__set_domain("follow");
+    if (query.__isset.follower_id)
+      uniquepair_query.__set_first_elem(query.follower_id);
+    if (query.__isset.followee_id)
+      uniquepair_query.__set_second_elem(query.followee_id);
 
     // Fetch unique pairs.
     auto uniquepair_client = get_uniquepair_client();
-    std::vector<TUniquepair> uniquepairs = uniquepair_client->fetch(query, 128,
-        0);
+    std::vector<TUniquepair> uniquepairs = uniquepair_client->fetch(
+        uniquepair_query, limit, offset);
     uniquepair_client->close();
 
     // Build follows.

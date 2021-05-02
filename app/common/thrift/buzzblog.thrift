@@ -42,6 +42,11 @@ struct TFollow {
   6: optional TAccount followee;
 }
 
+struct TFollowQuery {
+  1: optional i32 follower_id;
+  2: optional i32 followee_id;
+}
+
 struct TPost {
   // Standard
   1: required i32 id;
@@ -253,15 +258,14 @@ service TFollowService {
 
   /* Params:
    *   1. requester_id: id of the account making the request.
-   *   2. follower_id: filter follows by id of the follower account. Any
-   *                   negative value disables this filter.
-   *   3. followee_id: filter follows by id of the followee account. Any
-   *                   negative value disables this filter.
+   *   2. query: query parameters to fetch results.
+   *   3. limit: max number of results to be fetched.
+   *   4. offset: index to start fetching results.
    * Returns:
    *   A list of follows (expanded mode) in reverse chronological order.
    */
-  list<TFollow> list_follows (1:i32 requester_id, 2:i32 follower_id,
-      3:i32 followee_id)
+  list<TFollow> list_follows (1:i32 requester_id, 2:TFollowQuery query,
+      3:i32 limit, 4:i32 offset)
       throws (1:TAccountNotFoundException e);
 
   /* Params:

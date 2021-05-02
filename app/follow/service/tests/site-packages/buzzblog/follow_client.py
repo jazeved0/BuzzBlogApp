@@ -46,9 +46,9 @@ class Client:
     return self._tclient.delete_follow(requester_id=requester_id,
         follow_id=follow_id)
 
-  def list_follows(self, requester_id, follower_id, followee_id):
+  def list_follows(self, requester_id, query, limit, offset):
     return self._tclient.list_follows(requester_id=requester_id,
-        follower_id=follower_id, followee_id=followee_id)
+        query=query, limit=limit, offset=offset)
 
   def check_follow(self, requester_id, follower_id, followee_id):
     return self._tclient.check_follow(requester_id=requester_id,

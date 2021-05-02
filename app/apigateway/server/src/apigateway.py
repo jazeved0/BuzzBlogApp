@@ -247,14 +247,17 @@ def delete_follow(follow_id):
 @app.route("/follow", methods=["GET"])
 @auth.login_required
 def list_follows():
+  limit = 10
+  offset = 0
   follower_id = int(flask.request.args["follower_id"]) \
-      if "follower_id" in flask.request.args else -1
+      if "follower_id" in flask.request.args else None
   followee_id = int(flask.request.args["followee_id"]) \
-      if "followee_id" in flask.request.args else -1
+      if "followee_id" in flask.request.args else None
+  query = TFollowQuery(follower_id=follower_id, followee_id=followee_id)
   with thrift_client_factory.get_follow_client() as follow_client:
     try:
       follows = follow_client.list_follows(requester_id=auth.current_user().id,
-          follower_id=follower_id, followee_id=followee_id)
+          query=query, limit=limit, offset=offset)
     except TAccountNotFoundException:
       return ({}, 400)
   return flask.jsonify([{

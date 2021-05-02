@@ -71,9 +71,9 @@ namespace follow_service {
     }
 
     std::vector<TFollow> list_follows(const int32_t requester_id,
-        const int32_t follower_id, const int32_t followee_id) {
+        const TFollowQuery& query, const int32_t limit, const int32_t offset) {
       std::vector<TFollow> _return;
-      _client->list_follows(_return, requester_id, follower_id, followee_id);
+      _client->list_follows(_return, requester_id, query, limit, offset);
       return _return;
     }
 

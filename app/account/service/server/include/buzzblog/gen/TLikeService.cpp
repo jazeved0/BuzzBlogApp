@@ -1081,14 +1081,14 @@ uint32_t TLikeService_list_likes_result::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size57;
-            ::apache::thrift::protocol::TType _etype60;
-            xfer += iprot->readListBegin(_etype60, _size57);
-            this->success.resize(_size57);
-            uint32_t _i61;
-            for (_i61 = 0; _i61 < _size57; ++_i61)
+            uint32_t _size59;
+            ::apache::thrift::protocol::TType _etype62;
+            xfer += iprot->readListBegin(_etype62, _size59);
+            this->success.resize(_size59);
+            uint32_t _i63;
+            for (_i63 = 0; _i63 < _size59; ++_i63)
             {
-              xfer += this->success[_i61].read(iprot);
+              xfer += this->success[_i63].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1135,10 +1135,10 @@ uint32_t TLikeService_list_likes_result::write(::apache::thrift::protocol::TProt
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TLike> ::const_iterator _iter62;
-      for (_iter62 = this->success.begin(); _iter62 != this->success.end(); ++_iter62)
+      std::vector<TLike> ::const_iterator _iter64;
+      for (_iter64 = this->success.begin(); _iter64 != this->success.end(); ++_iter64)
       {
-        xfer += (*_iter62).write(oprot);
+        xfer += (*_iter64).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1187,14 +1187,14 @@ uint32_t TLikeService_list_likes_presult::read(::apache::thrift::protocol::TProt
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size63;
-            ::apache::thrift::protocol::TType _etype66;
-            xfer += iprot->readListBegin(_etype66, _size63);
-            (*(this->success)).resize(_size63);
-            uint32_t _i67;
-            for (_i67 = 0; _i67 < _size63; ++_i67)
+            uint32_t _size65;
+            ::apache::thrift::protocol::TType _etype68;
+            xfer += iprot->readListBegin(_etype68, _size65);
+            (*(this->success)).resize(_size65);
+            uint32_t _i69;
+            for (_i69 = 0; _i69 < _size65; ++_i69)
             {
-              xfer += (*(this->success))[_i67].read(iprot);
+              xfer += (*(this->success))[_i69].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
