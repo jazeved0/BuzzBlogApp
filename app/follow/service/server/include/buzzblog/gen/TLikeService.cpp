@@ -975,17 +975,25 @@ uint32_t TLikeService_list_likes_args::read(::apache::thrift::protocol::TProtoco
         }
         break;
       case 2:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->account_id);
-          this->__isset.account_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->query.read(iprot);
+          this->__isset.query = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
       case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->post_id);
-          this->__isset.post_id = true;
+          xfer += iprot->readI32(this->limit);
+          this->__isset.limit = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->offset);
+          this->__isset.offset = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1011,12 +1019,16 @@ uint32_t TLikeService_list_likes_args::write(::apache::thrift::protocol::TProtoc
   xfer += oprot->writeI32(this->requester_id);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->account_id);
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
+  xfer += this->query.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 3);
-  xfer += oprot->writeI32(this->post_id);
+  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->limit);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32(this->offset);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1038,12 +1050,16 @@ uint32_t TLikeService_list_likes_pargs::write(::apache::thrift::protocol::TProto
   xfer += oprot->writeI32((*(this->requester_id)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32((*(this->account_id)));
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
+  xfer += (*(this->query)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 3);
-  xfer += oprot->writeI32((*(this->post_id)));
+  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((*(this->limit)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32((*(this->offset)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1081,14 +1097,14 @@ uint32_t TLikeService_list_likes_result::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size59;
-            ::apache::thrift::protocol::TType _etype62;
-            xfer += iprot->readListBegin(_etype62, _size59);
-            this->success.resize(_size59);
-            uint32_t _i63;
-            for (_i63 = 0; _i63 < _size59; ++_i63)
+            uint32_t _size61;
+            ::apache::thrift::protocol::TType _etype64;
+            xfer += iprot->readListBegin(_etype64, _size61);
+            this->success.resize(_size61);
+            uint32_t _i65;
+            for (_i65 = 0; _i65 < _size61; ++_i65)
             {
-              xfer += this->success[_i63].read(iprot);
+              xfer += this->success[_i65].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1135,10 +1151,10 @@ uint32_t TLikeService_list_likes_result::write(::apache::thrift::protocol::TProt
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TLike> ::const_iterator _iter64;
-      for (_iter64 = this->success.begin(); _iter64 != this->success.end(); ++_iter64)
+      std::vector<TLike> ::const_iterator _iter66;
+      for (_iter66 = this->success.begin(); _iter66 != this->success.end(); ++_iter66)
       {
-        xfer += (*_iter64).write(oprot);
+        xfer += (*_iter66).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1187,14 +1203,14 @@ uint32_t TLikeService_list_likes_presult::read(::apache::thrift::protocol::TProt
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size65;
-            ::apache::thrift::protocol::TType _etype68;
-            xfer += iprot->readListBegin(_etype68, _size65);
-            (*(this->success)).resize(_size65);
-            uint32_t _i69;
-            for (_i69 = 0; _i69 < _size65; ++_i69)
+            uint32_t _size67;
+            ::apache::thrift::protocol::TType _etype70;
+            xfer += iprot->readListBegin(_etype70, _size67);
+            (*(this->success)).resize(_size67);
+            uint32_t _i71;
+            for (_i71 = 0; _i71 < _size67; ++_i71)
             {
-              xfer += (*(this->success))[_i69].read(iprot);
+              xfer += (*(this->success))[_i71].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1889,21 +1905,22 @@ void TLikeServiceClient::recv_delete_like()
   return;
 }
 
-void TLikeServiceClient::list_likes(std::vector<TLike> & _return, const int32_t requester_id, const int32_t account_id, const int32_t post_id)
+void TLikeServiceClient::list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset)
 {
-  send_list_likes(requester_id, account_id, post_id);
+  send_list_likes(requester_id, query, limit, offset);
   recv_list_likes(_return);
 }
 
-void TLikeServiceClient::send_list_likes(const int32_t requester_id, const int32_t account_id, const int32_t post_id)
+void TLikeServiceClient::send_list_likes(const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("list_likes", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_list_likes_pargs args;
   args.requester_id = &requester_id;
-  args.account_id = &account_id;
-  args.post_id = &post_id;
+  args.query = &query;
+  args.limit = &limit;
+  args.offset = &offset;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -2351,7 +2368,7 @@ void TLikeServiceProcessor::process_list_likes(int32_t seqid, ::apache::thrift::
 
   TLikeService_list_likes_result result;
   try {
-    iface_->list_likes(result.success, args.requester_id, args.account_id, args.post_id);
+    iface_->list_likes(result.success, args.requester_id, args.query, args.limit, args.offset);
     result.__isset.success = true;
   } catch (TAccountNotFoundException &e1) {
     result.e1 = e1;
@@ -2865,13 +2882,13 @@ void TLikeServiceConcurrentClient::recv_delete_like(const int32_t seqid)
   } // end while(true)
 }
 
-void TLikeServiceConcurrentClient::list_likes(std::vector<TLike> & _return, const int32_t requester_id, const int32_t account_id, const int32_t post_id)
+void TLikeServiceConcurrentClient::list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset)
 {
-  int32_t seqid = send_list_likes(requester_id, account_id, post_id);
+  int32_t seqid = send_list_likes(requester_id, query, limit, offset);
   recv_list_likes(_return, seqid);
 }
 
-int32_t TLikeServiceConcurrentClient::send_list_likes(const int32_t requester_id, const int32_t account_id, const int32_t post_id)
+int32_t TLikeServiceConcurrentClient::send_list_likes(const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
@@ -2879,8 +2896,9 @@ int32_t TLikeServiceConcurrentClient::send_list_likes(const int32_t requester_id
 
   TLikeService_list_likes_pargs args;
   args.requester_id = &requester_id;
-  args.account_id = &account_id;
-  args.post_id = &post_id;
+  args.query = &query;
+  args.limit = &limit;
+  args.offset = &offset;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();

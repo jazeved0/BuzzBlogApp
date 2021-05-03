@@ -70,9 +70,9 @@ namespace like_service {
     }
 
     std::vector<TLike> list_likes(const int32_t requester_id,
-        const int32_t account_id, const int32_t post_id) {
+        const TLikeQuery& query, const int32_t limit, const int32_t offset) {
       std::vector<TLike> _return;
-      _client->list_likes(_return, requester_id, account_id, post_id);
+      _client->list_likes(_return, requester_id, query, limit, offset);
       return _return;
     }
 

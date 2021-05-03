@@ -31,6 +31,8 @@ class TPost;
 
 class TLike;
 
+class TLikeQuery;
+
 class TUniquepair;
 
 class TUniquepairQuery;
@@ -444,6 +446,58 @@ class TLike : public virtual ::apache::thrift::TBase {
 void swap(TLike &a, TLike &b);
 
 std::ostream& operator<<(std::ostream& out, const TLike& obj);
+
+typedef struct _TLikeQuery__isset {
+  _TLikeQuery__isset() : account_id(false), post_id(false) {}
+  bool account_id :1;
+  bool post_id :1;
+} _TLikeQuery__isset;
+
+class TLikeQuery : public virtual ::apache::thrift::TBase {
+ public:
+
+  TLikeQuery(const TLikeQuery&);
+  TLikeQuery& operator=(const TLikeQuery&);
+  TLikeQuery() : account_id(0), post_id(0) {
+  }
+
+  virtual ~TLikeQuery() noexcept;
+  int32_t account_id;
+  int32_t post_id;
+
+  _TLikeQuery__isset __isset;
+
+  void __set_account_id(const int32_t val);
+
+  void __set_post_id(const int32_t val);
+
+  bool operator == (const TLikeQuery & rhs) const
+  {
+    if (__isset.account_id != rhs.__isset.account_id)
+      return false;
+    else if (__isset.account_id && !(account_id == rhs.account_id))
+      return false;
+    if (__isset.post_id != rhs.__isset.post_id)
+      return false;
+    else if (__isset.post_id && !(post_id == rhs.post_id))
+      return false;
+    return true;
+  }
+  bool operator != (const TLikeQuery &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const TLikeQuery & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(TLikeQuery &a, TLikeQuery &b);
+
+std::ostream& operator<<(std::ostream& out, const TLikeQuery& obj);
 
 
 class TUniquepair : public virtual ::apache::thrift::TBase {

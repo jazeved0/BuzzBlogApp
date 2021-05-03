@@ -44,9 +44,9 @@ class Client:
   def delete_like(self, requester_id, like_id):
     return self._tclient.delete_like(requester_id=requester_id, like_id=like_id)
 
-  def list_likes(self, requester_id, account_id, post_id):
+  def list_likes(self, requester_id, query, limit, offset):
     return self._tclient.list_likes(requester_id=requester_id,
-        account_id=account_id, post_id=post_id)
+        query=query, limit=limit, offset=offset)
 
   def count_likes_by_account(self, requester_id, account_id):
     return self._tclient.count_likes_by_account(requester_id=requester_id,

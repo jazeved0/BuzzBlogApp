@@ -72,6 +72,11 @@ struct TLike {
   6: required TPost post;
 }
 
+struct TLikeQuery {
+  1: optional i32 account_id;
+  2: optional i32 post_id;
+}
+
 struct TUniquepair {
   1: required i32 id;
   2: required i32 created_at;
@@ -334,15 +339,14 @@ service TLikeService {
 
   /* Params:
    *   1. requester_id: id of the account making the request.
-   *   2. account_id: filter likes by id of the account. Any negative value
-   *                  disables this filter.
-   *   3. post_id: filter likes by id of the post. Any negative value disables
-   *               this filter.
+   *   2. query: query parameters to fetch results.
+   *   3. limit: max number of results to be fetched.
+   *   4. offset: index to start fetching results.
    * Returns:
    *   A list of likes (expanded mode) in reverse chronological order.
    */
-  list<TLike> list_likes (1:i32 requester_id, 2:i32 account_id,
-      3:i32 post_id)
+  list<TLike> list_likes (1:i32 requester_id, 2:TLikeQuery query, 3:i32 limit,
+      4:i32 offset)
       throws (1:TAccountNotFoundException e1,
               2:TPostNotFoundException e2);
 

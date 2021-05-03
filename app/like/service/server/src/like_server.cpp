@@ -122,19 +122,19 @@ public:
   }
 
   void list_likes(std::vector<TLike>& _return, const int32_t requester_id,
-      const int32_t account_id, const int32_t post_id) {
+      const TLikeQuery& query, const int32_t limit, const int32_t offset) {
     // Build query struct.
-    TUniquepairQuery query;
-    query.__set_domain("like");
-    if (account_id > 0)
-      query.__set_first_elem(account_id);
-    if (post_id > 0)
-      query.__set_second_elem(post_id);
+    TUniquepairQuery uniquepair_query;
+    uniquepair_query.__set_domain("like");
+    if (query.__isset.account_id)
+      uniquepair_query.__set_first_elem(query.account_id);
+    if (query.__isset.post_id)
+      uniquepair_query.__set_second_elem(query.post_id);
 
     // Fetch unique pairs.
     auto uniquepair_client = get_uniquepair_client();
-    std::vector<TUniquepair> uniquepairs = uniquepair_client->fetch(query, 128,
-        0);
+    std::vector<TUniquepair> uniquepairs = uniquepair_client->fetch(
+        uniquepair_query, limit, offset);
     uniquepair_client->close();
 
     // Build likes.

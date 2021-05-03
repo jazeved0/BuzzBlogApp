@@ -40,7 +40,7 @@ class TLikeServiceHandler : virtual public TLikeServiceIf {
     printf("delete_like\n");
   }
 
-  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const int32_t account_id, const int32_t post_id) {
+  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset) {
     // Your implementation goes here
     printf("list_likes\n");
   }

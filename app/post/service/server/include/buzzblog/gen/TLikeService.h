@@ -26,7 +26,7 @@ class TLikeServiceIf {
   virtual void retrieve_standard_like(TLike& _return, const int32_t requester_id, const int32_t like_id) = 0;
   virtual void retrieve_expanded_like(TLike& _return, const int32_t requester_id, const int32_t like_id) = 0;
   virtual void delete_like(const int32_t requester_id, const int32_t like_id) = 0;
-  virtual void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const int32_t account_id, const int32_t post_id) = 0;
+  virtual void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset) = 0;
   virtual int32_t count_likes_by_account(const int32_t requester_id, const int32_t account_id) = 0;
   virtual int32_t count_likes_of_post(const int32_t requester_id, const int32_t post_id) = 0;
 };
@@ -70,7 +70,7 @@ class TLikeServiceNull : virtual public TLikeServiceIf {
   void delete_like(const int32_t /* requester_id */, const int32_t /* like_id */) {
     return;
   }
-  void list_likes(std::vector<TLike> & /* _return */, const int32_t /* requester_id */, const int32_t /* account_id */, const int32_t /* post_id */) {
+  void list_likes(std::vector<TLike> & /* _return */, const int32_t /* requester_id */, const TLikeQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
     return;
   }
   int32_t count_likes_by_account(const int32_t /* requester_id */, const int32_t /* account_id */) {
@@ -576,10 +576,11 @@ class TLikeService_delete_like_presult {
 };
 
 typedef struct _TLikeService_list_likes_args__isset {
-  _TLikeService_list_likes_args__isset() : requester_id(false), account_id(false), post_id(false) {}
+  _TLikeService_list_likes_args__isset() : requester_id(false), query(false), limit(false), offset(false) {}
   bool requester_id :1;
-  bool account_id :1;
-  bool post_id :1;
+  bool query :1;
+  bool limit :1;
+  bool offset :1;
 } _TLikeService_list_likes_args__isset;
 
 class TLikeService_list_likes_args {
@@ -587,29 +588,34 @@ class TLikeService_list_likes_args {
 
   TLikeService_list_likes_args(const TLikeService_list_likes_args&);
   TLikeService_list_likes_args& operator=(const TLikeService_list_likes_args&);
-  TLikeService_list_likes_args() : requester_id(0), account_id(0), post_id(0) {
+  TLikeService_list_likes_args() : requester_id(0), limit(0), offset(0) {
   }
 
   virtual ~TLikeService_list_likes_args() noexcept;
   int32_t requester_id;
-  int32_t account_id;
-  int32_t post_id;
+  TLikeQuery query;
+  int32_t limit;
+  int32_t offset;
 
   _TLikeService_list_likes_args__isset __isset;
 
   void __set_requester_id(const int32_t val);
 
-  void __set_account_id(const int32_t val);
+  void __set_query(const TLikeQuery& val);
 
-  void __set_post_id(const int32_t val);
+  void __set_limit(const int32_t val);
+
+  void __set_offset(const int32_t val);
 
   bool operator == (const TLikeService_list_likes_args & rhs) const
   {
     if (!(requester_id == rhs.requester_id))
       return false;
-    if (!(account_id == rhs.account_id))
+    if (!(query == rhs.query))
       return false;
-    if (!(post_id == rhs.post_id))
+    if (!(limit == rhs.limit))
+      return false;
+    if (!(offset == rhs.offset))
       return false;
     return true;
   }
@@ -631,8 +637,9 @@ class TLikeService_list_likes_pargs {
 
   virtual ~TLikeService_list_likes_pargs() noexcept;
   const int32_t* requester_id;
-  const int32_t* account_id;
-  const int32_t* post_id;
+  const TLikeQuery* query;
+  const int32_t* limit;
+  const int32_t* offset;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -968,8 +975,8 @@ class TLikeServiceClient : virtual public TLikeServiceIf {
   void delete_like(const int32_t requester_id, const int32_t like_id);
   void send_delete_like(const int32_t requester_id, const int32_t like_id);
   void recv_delete_like();
-  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const int32_t account_id, const int32_t post_id);
-  void send_list_likes(const int32_t requester_id, const int32_t account_id, const int32_t post_id);
+  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset);
+  void send_list_likes(const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_likes(std::vector<TLike> & _return);
   int32_t count_likes_by_account(const int32_t requester_id, const int32_t account_id);
   void send_count_likes_by_account(const int32_t requester_id, const int32_t account_id);
@@ -1076,13 +1083,13 @@ class TLikeServiceMultiface : virtual public TLikeServiceIf {
     ifaces_[i]->delete_like(requester_id, like_id);
   }
 
-  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const int32_t account_id, const int32_t post_id) {
+  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->list_likes(_return, requester_id, account_id, post_id);
+      ifaces_[i]->list_likes(_return, requester_id, query, limit, offset);
     }
-    ifaces_[i]->list_likes(_return, requester_id, account_id, post_id);
+    ifaces_[i]->list_likes(_return, requester_id, query, limit, offset);
     return;
   }
 
@@ -1148,8 +1155,8 @@ class TLikeServiceConcurrentClient : virtual public TLikeServiceIf {
   void delete_like(const int32_t requester_id, const int32_t like_id);
   int32_t send_delete_like(const int32_t requester_id, const int32_t like_id);
   void recv_delete_like(const int32_t seqid);
-  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const int32_t account_id, const int32_t post_id);
-  int32_t send_list_likes(const int32_t requester_id, const int32_t account_id, const int32_t post_id);
+  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset);
+  int32_t send_list_likes(const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_likes(std::vector<TLike> & _return, const int32_t seqid);
   int32_t count_likes_by_account(const int32_t requester_id, const int32_t account_id);
   int32_t send_count_likes_by_account(const int32_t requester_id, const int32_t account_id);

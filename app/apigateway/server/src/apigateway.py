@@ -483,14 +483,17 @@ def delete_like(like_id):
 @app.route("/like", methods=["GET"])
 @auth.login_required
 def list_likes():
+  limit = 10
+  offset = 0
   account_id = int(flask.request.args["account_id"]) \
-      if "account_id" in flask.request.args else -1
+      if "account_id" in flask.request.args else None
   post_id = int(flask.request.args["post_id"]) \
-      if "post_id" in flask.request.args else -1
+      if "post_id" in flask.request.args else None
+  query = TLikeQuery(account_id=account_id, post_id=post_id)
   with thrift_client_factory.get_like_client() as like_client:
     try:
       likes = like_client.list_likes(requester_id=auth.current_user().id,
-          account_id=account_id, post_id=post_id)
+          query=query, limit=limit, offset=offset)
     except TAccountNotFoundException:
       return ({}, 400)
     except TPostNotFoundException:
