@@ -160,15 +160,19 @@
 
 ## List follows
 * **Endpoint**: `GET /follow`
+* **Parameters**:
+  - `limit`
+  - `offset`
 * **Filters**
   - `follower_id`
   - `followee_id`
 * **HTTP Response Codes**:
   - `200`: (Ok) Everything worked as expected
+  - `400`: (Bad Request) Missing or invalid parameter
   - `401`: (Unauthorized) No valid username/password pair provided
   - `500`: (Internal Server Error) Something went wrong on server's end
-* **Returns**: A list of at most 10 follow objects (expanded mode) in reverse
-               chronological order.
+* **Returns**: A list of follow objects (expanded mode) in reverse chronological
+               order.
 ```
 [
   {
@@ -266,14 +270,18 @@
 
 ## List posts
 * **Endpoint**: `GET /post`
+* **Parameters**:
+  - `limit`
+  - `offset`
 * **Filters**
   - `author_id`
 * **HTTP Response Codes**:
   - `200`: (Ok) Everything worked as expected
+  - `400`: (Bad Request) Missing or invalid parameter
   - `401`: (Unauthorized) No valid username/password pair provided
   - `500`: (Internal Server Error) Something went wrong on server's end
-* **Returns**: A list of at most 10 post objects (expanded mode) in reverse
-               chronological order.
+* **Returns**: A list of post objects (expanded mode) in reverse chronological
+               order.
 ```
 [
   {
@@ -381,15 +389,19 @@
 
 ## List likes
 * **Endpoint**: `GET /like`
+* **Parameters**:
+  - `limit`
+  - `offset`
 * **Filters**
   - `account_id`
   - `post_id`
 * **HTTP Response Codes**:
   - `200`: (Ok) Everything worked as expected
+  - `400`: (Bad Request) Missing or invalid parameter
   - `401`: (Unauthorized) No valid username/password pair provided
   - `500`: (Internal Server Error) Something went wrong on server's end
-* **Returns**: A list of at most 10 like objects (expanded mode) in reverse
-               chronological order.
+* **Returns**: A list of like objects (expanded mode) in reverse chronological
+               order.
 ```
 [
   {

@@ -247,8 +247,12 @@ def delete_follow(follow_id):
 @app.route("/follow", methods=["GET"])
 @auth.login_required
 def list_follows():
-  limit = 10
-  offset = 0
+  params = flask.request.get_json()
+  try:
+    limit = params["limit"]
+    offset = params["offset"]
+  except KeyError:
+    return ({}, 400)
   follower_id = int(flask.request.args["follower_id"]) \
       if "follower_id" in flask.request.args else None
   followee_id = int(flask.request.args["followee_id"]) \
@@ -363,8 +367,12 @@ def delete_post(post_id):
 @app.route("/post", methods=["GET"])
 @auth.login_required
 def list_posts():
-  limit = 10
-  offset = 0
+  params = flask.request.get_json()
+  try:
+    limit = params["limit"]
+    offset = params["offset"]
+  except KeyError:
+    return ({}, 400)
   author_id = int(flask.request.args["author_id"]) \
       if "author_id" in flask.request.args else None
   query = TPostQuery(author_id=author_id)
@@ -486,8 +494,12 @@ def delete_like(like_id):
 @app.route("/like", methods=["GET"])
 @auth.login_required
 def list_likes():
-  limit = 10
-  offset = 0
+  params = flask.request.get_json()
+  try:
+    limit = params["limit"]
+    offset = params["offset"]
+  except KeyError:
+    return ({}, 400)
   account_id = int(flask.request.args["account_id"]) \
       if "account_id" in flask.request.args else None
   post_id = int(flask.request.args["post_id"]) \
