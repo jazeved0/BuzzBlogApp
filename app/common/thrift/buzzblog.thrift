@@ -60,6 +60,10 @@ struct TPost {
   7: optional i32 n_likes;
 }
 
+struct TPostQuery {
+  1: optional i32 author_id;
+}
+
 struct TLike {
   // Standard
   1: required i32 id;
@@ -406,12 +410,14 @@ service TPostService {
 
   /* Params:
    *   1. requester_id: id of the account making the request.
-   *   2. author_id: filter posts by id of the author account. Any negative
-   *                 value disables this filter.
+   *   2. query: query parameters to fetch results.
+   *   3. limit: max number of results to be fetched.
+   *   4. offset: index to start fetching results.
    * Returns:
    *   A list of posts (expanded mode) in reverse chronological order.
    */
-  list<TPost> list_posts (1:i32 requester_id, 2:i32 author_id)
+  list<TPost> list_posts (1:i32 requester_id, 2:TPostQuery query, 3:i32 limit,
+      4:i32 offset)
       throws (1:TAccountNotFoundException e);
 
   /* Params:

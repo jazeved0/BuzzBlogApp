@@ -29,6 +29,8 @@ class TFollowQuery;
 
 class TPost;
 
+class TPostQuery;
+
 class TLike;
 
 class TLikeQuery;
@@ -385,6 +387,50 @@ class TPost : public virtual ::apache::thrift::TBase {
 void swap(TPost &a, TPost &b);
 
 std::ostream& operator<<(std::ostream& out, const TPost& obj);
+
+typedef struct _TPostQuery__isset {
+  _TPostQuery__isset() : author_id(false) {}
+  bool author_id :1;
+} _TPostQuery__isset;
+
+class TPostQuery : public virtual ::apache::thrift::TBase {
+ public:
+
+  TPostQuery(const TPostQuery&);
+  TPostQuery& operator=(const TPostQuery&);
+  TPostQuery() : author_id(0) {
+  }
+
+  virtual ~TPostQuery() noexcept;
+  int32_t author_id;
+
+  _TPostQuery__isset __isset;
+
+  void __set_author_id(const int32_t val);
+
+  bool operator == (const TPostQuery & rhs) const
+  {
+    if (__isset.author_id != rhs.__isset.author_id)
+      return false;
+    else if (__isset.author_id && !(author_id == rhs.author_id))
+      return false;
+    return true;
+  }
+  bool operator != (const TPostQuery &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const TPostQuery & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(TPostQuery &a, TPostQuery &b);
+
+std::ostream& operator<<(std::ostream& out, const TPostQuery& obj);
 
 
 class TLike : public virtual ::apache::thrift::TBase {

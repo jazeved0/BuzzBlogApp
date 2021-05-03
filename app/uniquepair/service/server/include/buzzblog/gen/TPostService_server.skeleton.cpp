@@ -40,7 +40,7 @@ class TPostServiceHandler : virtual public TPostServiceIf {
     printf("delete_post\n");
   }
 
-  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const int32_t author_id) {
+  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset) {
     // Your implementation goes here
     printf("list_posts\n");
   }

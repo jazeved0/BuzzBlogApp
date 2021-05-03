@@ -363,12 +363,15 @@ def delete_post(post_id):
 @app.route("/post", methods=["GET"])
 @auth.login_required
 def list_posts():
+  limit = 10
+  offset = 0
   author_id = int(flask.request.args["author_id"]) \
-      if "author_id" in flask.request.args else -1
+      if "author_id" in flask.request.args else None
+  query = TPostQuery(author_id=author_id)
   with thrift_client_factory.get_post_client() as post_client:
     try:
       posts = post_client.list_posts(requester_id=auth.current_user().id,
-          author_id=author_id)
+          query=query, limit=limit, offset=offset)
     except TAccountNotFoundException:
       return ({}, 400)
   return flask.jsonify([{

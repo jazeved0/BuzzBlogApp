@@ -26,7 +26,7 @@ class TPostServiceIf {
   virtual void retrieve_standard_post(TPost& _return, const int32_t requester_id, const int32_t post_id) = 0;
   virtual void retrieve_expanded_post(TPost& _return, const int32_t requester_id, const int32_t post_id) = 0;
   virtual void delete_post(const int32_t requester_id, const int32_t post_id) = 0;
-  virtual void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const int32_t author_id) = 0;
+  virtual void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset) = 0;
   virtual int32_t count_posts_by_author(const int32_t requester_id, const int32_t author_id) = 0;
 };
 
@@ -69,7 +69,7 @@ class TPostServiceNull : virtual public TPostServiceIf {
   void delete_post(const int32_t /* requester_id */, const int32_t /* post_id */) {
     return;
   }
-  void list_posts(std::vector<TPost> & /* _return */, const int32_t /* requester_id */, const int32_t /* author_id */) {
+  void list_posts(std::vector<TPost> & /* _return */, const int32_t /* requester_id */, const TPostQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
     return;
   }
   int32_t count_posts_by_author(const int32_t /* requester_id */, const int32_t /* author_id */) {
@@ -563,9 +563,11 @@ class TPostService_delete_post_presult {
 };
 
 typedef struct _TPostService_list_posts_args__isset {
-  _TPostService_list_posts_args__isset() : requester_id(false), author_id(false) {}
+  _TPostService_list_posts_args__isset() : requester_id(false), query(false), limit(false), offset(false) {}
   bool requester_id :1;
-  bool author_id :1;
+  bool query :1;
+  bool limit :1;
+  bool offset :1;
 } _TPostService_list_posts_args__isset;
 
 class TPostService_list_posts_args {
@@ -573,24 +575,34 @@ class TPostService_list_posts_args {
 
   TPostService_list_posts_args(const TPostService_list_posts_args&);
   TPostService_list_posts_args& operator=(const TPostService_list_posts_args&);
-  TPostService_list_posts_args() : requester_id(0), author_id(0) {
+  TPostService_list_posts_args() : requester_id(0), limit(0), offset(0) {
   }
 
   virtual ~TPostService_list_posts_args() noexcept;
   int32_t requester_id;
-  int32_t author_id;
+  TPostQuery query;
+  int32_t limit;
+  int32_t offset;
 
   _TPostService_list_posts_args__isset __isset;
 
   void __set_requester_id(const int32_t val);
 
-  void __set_author_id(const int32_t val);
+  void __set_query(const TPostQuery& val);
+
+  void __set_limit(const int32_t val);
+
+  void __set_offset(const int32_t val);
 
   bool operator == (const TPostService_list_posts_args & rhs) const
   {
     if (!(requester_id == rhs.requester_id))
       return false;
-    if (!(author_id == rhs.author_id))
+    if (!(query == rhs.query))
+      return false;
+    if (!(limit == rhs.limit))
+      return false;
+    if (!(offset == rhs.offset))
       return false;
     return true;
   }
@@ -612,7 +624,9 @@ class TPostService_list_posts_pargs {
 
   virtual ~TPostService_list_posts_pargs() noexcept;
   const int32_t* requester_id;
-  const int32_t* author_id;
+  const TPostQuery* query;
+  const int32_t* limit;
+  const int32_t* offset;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -829,8 +843,8 @@ class TPostServiceClient : virtual public TPostServiceIf {
   void delete_post(const int32_t requester_id, const int32_t post_id);
   void send_delete_post(const int32_t requester_id, const int32_t post_id);
   void recv_delete_post();
-  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const int32_t author_id);
-  void send_list_posts(const int32_t requester_id, const int32_t author_id);
+  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset);
+  void send_list_posts(const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_posts(std::vector<TPost> & _return);
   int32_t count_posts_by_author(const int32_t requester_id, const int32_t author_id);
   void send_count_posts_by_author(const int32_t requester_id, const int32_t author_id);
@@ -932,13 +946,13 @@ class TPostServiceMultiface : virtual public TPostServiceIf {
     ifaces_[i]->delete_post(requester_id, post_id);
   }
 
-  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const int32_t author_id) {
+  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->list_posts(_return, requester_id, author_id);
+      ifaces_[i]->list_posts(_return, requester_id, query, limit, offset);
     }
-    ifaces_[i]->list_posts(_return, requester_id, author_id);
+    ifaces_[i]->list_posts(_return, requester_id, query, limit, offset);
     return;
   }
 
@@ -995,8 +1009,8 @@ class TPostServiceConcurrentClient : virtual public TPostServiceIf {
   void delete_post(const int32_t requester_id, const int32_t post_id);
   int32_t send_delete_post(const int32_t requester_id, const int32_t post_id);
   void recv_delete_post(const int32_t seqid);
-  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const int32_t author_id);
-  int32_t send_list_posts(const int32_t requester_id, const int32_t author_id);
+  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset);
+  int32_t send_list_posts(const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_posts(std::vector<TPost> & _return, const int32_t seqid);
   int32_t count_posts_by_author(const int32_t requester_id, const int32_t author_id);
   int32_t send_count_posts_by_author(const int32_t requester_id, const int32_t author_id);

@@ -28,6 +28,14 @@ private:
     return (text.size() > 0 && text.size() <= 200);
   }
 
+  std::string build_where_clause(const TPostQuery& query) {
+    std::ostringstream where_clause;
+    where_clause << "active = true";
+    if (query.__isset.author_id)
+      where_clause << " AND author_id = " << query.author_id;
+    return where_clause.str();
+  }
+
 public:
   TPostServiceHandler(const std::string& backend_filepath,
       const std::string& postgres_user, const std::string& postgres_password,
@@ -143,25 +151,18 @@ public:
   }
 
   void list_posts(std::vector<TPost>& _return, const int32_t requester_id,
-      const int32_t author_id) {
+      const TPostQuery& query, const int32_t limit, const int32_t offset) {
     // Build query string.
     char query_str[1024];
-    if (author_id < 0) {
-      strcpy(query_str,
-          "SELECT id, created_at, active, text, author_id "
-          "FROM Posts "
-          "ORDER BY created_at DESC "
-          "LIMIT 10");
-    }
-    else {
-      const char *query_fmt = \
-          "SELECT id, created_at, active, text, author_id "
-          "FROM Posts "
-          "WHERE author_id = %d "
-          "ORDER BY created_at DESC "
-          "LIMIT 10";
-      sprintf(query_str, query_fmt, author_id);
-    }
+    const char *query_fmt = \
+        "SELECT id, created_at, active, text, author_id "
+        "FROM Posts "
+        "WHERE %s "
+        "ORDER BY created_at DESC "
+        "LIMIT %d "
+        "OFFSET %d";
+    sprintf(query_str, query_fmt, build_where_clause(query).c_str(), limit,
+        offset);
 
     // Execute query.
     pqxx::connection conn(post_db_conn_str);

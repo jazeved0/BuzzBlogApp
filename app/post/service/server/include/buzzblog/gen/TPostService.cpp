@@ -955,9 +955,25 @@ uint32_t TPostService_list_posts_args::read(::apache::thrift::protocol::TProtoco
         }
         break;
       case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->query.read(iprot);
+          this->__isset.query = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->author_id);
-          this->__isset.author_id = true;
+          xfer += iprot->readI32(this->limit);
+          this->__isset.limit = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 4:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->offset);
+          this->__isset.offset = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -983,8 +999,16 @@ uint32_t TPostService_list_posts_args::write(::apache::thrift::protocol::TProtoc
   xfer += oprot->writeI32(this->requester_id);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("author_id", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32(this->author_id);
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
+  xfer += this->query.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32(this->limit);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32(this->offset);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1006,8 +1030,16 @@ uint32_t TPostService_list_posts_pargs::write(::apache::thrift::protocol::TProto
   xfer += oprot->writeI32((*(this->requester_id)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("author_id", ::apache::thrift::protocol::T_I32, 2);
-  xfer += oprot->writeI32((*(this->author_id)));
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
+  xfer += (*(this->query)).write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeI32((*(this->limit)));
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 4);
+  xfer += oprot->writeI32((*(this->offset)));
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldStop();
@@ -1045,14 +1077,14 @@ uint32_t TPostService_list_posts_result::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size72;
-            ::apache::thrift::protocol::TType _etype75;
-            xfer += iprot->readListBegin(_etype75, _size72);
-            this->success.resize(_size72);
-            uint32_t _i76;
-            for (_i76 = 0; _i76 < _size72; ++_i76)
+            uint32_t _size74;
+            ::apache::thrift::protocol::TType _etype77;
+            xfer += iprot->readListBegin(_etype77, _size74);
+            this->success.resize(_size74);
+            uint32_t _i78;
+            for (_i78 = 0; _i78 < _size74; ++_i78)
             {
-              xfer += this->success[_i76].read(iprot);
+              xfer += this->success[_i78].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1091,10 +1123,10 @@ uint32_t TPostService_list_posts_result::write(::apache::thrift::protocol::TProt
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TPost> ::const_iterator _iter77;
-      for (_iter77 = this->success.begin(); _iter77 != this->success.end(); ++_iter77)
+      std::vector<TPost> ::const_iterator _iter79;
+      for (_iter79 = this->success.begin(); _iter79 != this->success.end(); ++_iter79)
       {
-        xfer += (*_iter77).write(oprot);
+        xfer += (*_iter79).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1139,14 +1171,14 @@ uint32_t TPostService_list_posts_presult::read(::apache::thrift::protocol::TProt
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size78;
-            ::apache::thrift::protocol::TType _etype81;
-            xfer += iprot->readListBegin(_etype81, _size78);
-            (*(this->success)).resize(_size78);
-            uint32_t _i82;
-            for (_i82 = 0; _i82 < _size78; ++_i82)
+            uint32_t _size80;
+            ::apache::thrift::protocol::TType _etype83;
+            xfer += iprot->readListBegin(_etype83, _size80);
+            (*(this->success)).resize(_size80);
+            uint32_t _i84;
+            for (_i84 = 0; _i84 < _size80; ++_i84)
             {
-              xfer += (*(this->success))[_i82].read(iprot);
+              xfer += (*(this->success))[_i84].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1627,20 +1659,22 @@ void TPostServiceClient::recv_delete_post()
   return;
 }
 
-void TPostServiceClient::list_posts(std::vector<TPost> & _return, const int32_t requester_id, const int32_t author_id)
+void TPostServiceClient::list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset)
 {
-  send_list_posts(requester_id, author_id);
+  send_list_posts(requester_id, query, limit, offset);
   recv_list_posts(_return);
 }
 
-void TPostServiceClient::send_list_posts(const int32_t requester_id, const int32_t author_id)
+void TPostServiceClient::send_list_posts(const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("list_posts", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_list_posts_pargs args;
   args.requester_id = &requester_id;
-  args.author_id = &author_id;
+  args.query = &query;
+  args.limit = &limit;
+  args.offset = &offset;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();
@@ -2023,7 +2057,7 @@ void TPostServiceProcessor::process_list_posts(int32_t seqid, ::apache::thrift::
 
   TPostService_list_posts_result result;
   try {
-    iface_->list_posts(result.success, args.requester_id, args.author_id);
+    iface_->list_posts(result.success, args.requester_id, args.query, args.limit, args.offset);
     result.__isset.success = true;
   } catch (TAccountNotFoundException &e) {
     result.e = e;
@@ -2476,13 +2510,13 @@ void TPostServiceConcurrentClient::recv_delete_post(const int32_t seqid)
   } // end while(true)
 }
 
-void TPostServiceConcurrentClient::list_posts(std::vector<TPost> & _return, const int32_t requester_id, const int32_t author_id)
+void TPostServiceConcurrentClient::list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset)
 {
-  int32_t seqid = send_list_posts(requester_id, author_id);
+  int32_t seqid = send_list_posts(requester_id, query, limit, offset);
   recv_list_posts(_return, seqid);
 }
 
-int32_t TPostServiceConcurrentClient::send_list_posts(const int32_t requester_id, const int32_t author_id)
+int32_t TPostServiceConcurrentClient::send_list_posts(const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
@@ -2490,7 +2524,9 @@ int32_t TPostServiceConcurrentClient::send_list_posts(const int32_t requester_id
 
   TPostService_list_posts_pargs args;
   args.requester_id = &requester_id;
-  args.author_id = &author_id;
+  args.query = &query;
+  args.limit = &limit;
+  args.offset = &offset;
   args.write(oprot_);
 
   oprot_->writeMessageEnd();

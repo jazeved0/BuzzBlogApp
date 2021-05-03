@@ -44,6 +44,6 @@ class Client:
   def delete_post(self, requester_id, post_id):
     return self._tclient.delete_post(requester_id=requester_id, post_id=post_id)
 
-  def list_posts(self, requester_id, author_id):
+  def list_posts(self, requester_id, query, limit, offset):
     return self._tclient.list_posts(requester_id=requester_id,
-        author_id=author_id)
+        query=query, limit=limit, offset=offset)

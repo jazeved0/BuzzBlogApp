@@ -69,9 +69,9 @@ namespace post_service {
     }
 
     std::vector<TPost> list_posts(const int32_t requester_id,
-        const int32_t author_id) {
+        const TPostQuery& query, const int32_t limit, const int32_t offset) {
       std::vector<TPost> _return;
-      _client->list_posts(_return, requester_id, author_id);
+      _client->list_posts(_return, requester_id, query, limit, offset);
       return _return;
     }
 
