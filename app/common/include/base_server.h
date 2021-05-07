@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include <chrono>
-#include <mutex>
+#include <sstream>
 
 #include <yaml-cpp/yaml.h>
 
@@ -164,7 +164,6 @@ protected:
       std::chrono::time_point<std::chrono::high_resolution_clock> start;
       const char* file_name;
       const char* function_name;
-      static std::mutex mutex;
       static std::chrono::time_point<std::chrono::high_resolution_clock> ts_base;
 
     public:
@@ -177,18 +176,17 @@ protected:
         auto end = std::chrono::high_resolution_clock::now();
         auto ts = std::chrono::duration_cast<std::chrono::nanoseconds>(this->start - ts_base);
         auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - this->start);
-        mutex.lock();
-        std::cout <<
+        auto log = std::stringstream();
+        log <<
             "[trace] " << ts.count() <<
             " " << this->file_name <<
             " " << this->function_name <<
             " " << ns.count() <<
             std::endl;
-        mutex.unlock();
+        std::cout << log.str();
       }
   };
 };
 
-std::mutex BaseServer::TraceHandle::mutex;
 std::chrono::time_point<std::chrono::high_resolution_clock> BaseServer::TraceHandle::ts_base
   = std::chrono::high_resolution_clock::now();
