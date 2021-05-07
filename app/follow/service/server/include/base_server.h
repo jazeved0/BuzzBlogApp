@@ -157,6 +157,8 @@ protected:
   std::string post_db_conn_str;
   std::string uniquepair_db_conn_str;
 
+  #define ENABLE_TRACING 1
+
   // TraceHandle is a scoped resource that manages the trace of an operation.
   // When it goes out of scope, it automatically prints out the timing.
   class TraceHandle {
@@ -169,21 +171,25 @@ protected:
     public:
       TraceHandle(const char* file_name, const char* function_name)
           : file_name(file_name), function_name(function_name) {
-        this->start = std::chrono::high_resolution_clock::now();
+        #if ENABLE_TRACING
+          this->start = std::chrono::high_resolution_clock::now();
+        #endif
       }
 
       ~TraceHandle() {
-        auto end = std::chrono::high_resolution_clock::now();
-        auto ts = std::chrono::duration_cast<std::chrono::nanoseconds>(this->start - ts_base);
-        auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - this->start);
-        auto log = std::stringstream();
-        log <<
-            "[trace] " << ts.count() <<
-            " " << this->file_name <<
-            " " << this->function_name <<
-            " " << ns.count() <<
-            std::endl;
-        std::cout << log.str();
+        #if ENABLE_TRACING
+          auto end = std::chrono::high_resolution_clock::now();
+          auto ts = std::chrono::duration_cast<std::chrono::nanoseconds>(this->start - ts_base);
+          auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - this->start);
+          auto log = std::stringstream();
+          log <<
+              "[trace] " << ts.count() <<
+              " " << this->file_name <<
+              " " << this->function_name <<
+              " " << ns.count() <<
+              std::endl;
+          std::cout << log.str();
+        #endif
       }
   };
 };
