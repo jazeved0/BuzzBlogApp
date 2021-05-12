@@ -22,14 +22,14 @@ namespace gen {
 class TFollowServiceIf {
  public:
   virtual ~TFollowServiceIf() {}
-  virtual void follow_account(TFollow& _return, const int32_t requester_id, const int32_t account_id) = 0;
-  virtual void retrieve_standard_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id) = 0;
-  virtual void retrieve_expanded_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id) = 0;
-  virtual void delete_follow(const int32_t requester_id, const int32_t follow_id) = 0;
-  virtual void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset) = 0;
-  virtual bool check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id) = 0;
-  virtual int32_t count_followers(const int32_t requester_id, const int32_t account_id) = 0;
-  virtual int32_t count_followees(const int32_t requester_id, const int32_t account_id) = 0;
+  virtual void follow_account(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t account_id) = 0;
+  virtual void retrieve_standard_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id) = 0;
+  virtual void retrieve_expanded_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id) = 0;
+  virtual void delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id) = 0;
+  virtual void list_follows(std::vector<TFollow> & _return, const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset) = 0;
+  virtual bool check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id) = 0;
+  virtual int32_t count_followers(const TRequestMetadata& request_metadata, const int32_t account_id) = 0;
+  virtual int32_t count_followees(const TRequestMetadata& request_metadata, const int32_t account_id) = 0;
 };
 
 class TFollowServiceIfFactory {
@@ -59,38 +59,38 @@ class TFollowServiceIfSingletonFactory : virtual public TFollowServiceIfFactory 
 class TFollowServiceNull : virtual public TFollowServiceIf {
  public:
   virtual ~TFollowServiceNull() {}
-  void follow_account(TFollow& /* _return */, const int32_t /* requester_id */, const int32_t /* account_id */) {
+  void follow_account(TFollow& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* account_id */) {
     return;
   }
-  void retrieve_standard_follow(TFollow& /* _return */, const int32_t /* requester_id */, const int32_t /* follow_id */) {
+  void retrieve_standard_follow(TFollow& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* follow_id */) {
     return;
   }
-  void retrieve_expanded_follow(TFollow& /* _return */, const int32_t /* requester_id */, const int32_t /* follow_id */) {
+  void retrieve_expanded_follow(TFollow& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* follow_id */) {
     return;
   }
-  void delete_follow(const int32_t /* requester_id */, const int32_t /* follow_id */) {
+  void delete_follow(const TRequestMetadata& /* request_metadata */, const int32_t /* follow_id */) {
     return;
   }
-  void list_follows(std::vector<TFollow> & /* _return */, const int32_t /* requester_id */, const TFollowQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
+  void list_follows(std::vector<TFollow> & /* _return */, const TRequestMetadata& /* request_metadata */, const TFollowQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
     return;
   }
-  bool check_follow(const int32_t /* requester_id */, const int32_t /* follower_id */, const int32_t /* followee_id */) {
+  bool check_follow(const TRequestMetadata& /* request_metadata */, const int32_t /* follower_id */, const int32_t /* followee_id */) {
     bool _return = false;
     return _return;
   }
-  int32_t count_followers(const int32_t /* requester_id */, const int32_t /* account_id */) {
+  int32_t count_followers(const TRequestMetadata& /* request_metadata */, const int32_t /* account_id */) {
     int32_t _return = 0;
     return _return;
   }
-  int32_t count_followees(const int32_t /* requester_id */, const int32_t /* account_id */) {
+  int32_t count_followees(const TRequestMetadata& /* request_metadata */, const int32_t /* account_id */) {
     int32_t _return = 0;
     return _return;
   }
 };
 
 typedef struct _TFollowService_follow_account_args__isset {
-  _TFollowService_follow_account_args__isset() : requester_id(false), account_id(false) {}
-  bool requester_id :1;
+  _TFollowService_follow_account_args__isset() : request_metadata(false), account_id(false) {}
+  bool request_metadata :1;
   bool account_id :1;
 } _TFollowService_follow_account_args__isset;
 
@@ -99,22 +99,22 @@ class TFollowService_follow_account_args {
 
   TFollowService_follow_account_args(const TFollowService_follow_account_args&);
   TFollowService_follow_account_args& operator=(const TFollowService_follow_account_args&);
-  TFollowService_follow_account_args() : requester_id(0), account_id(0) {
+  TFollowService_follow_account_args() : account_id(0) {
   }
 
   virtual ~TFollowService_follow_account_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t account_id;
 
   _TFollowService_follow_account_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_account_id(const int32_t val);
 
   bool operator == (const TFollowService_follow_account_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(account_id == rhs.account_id))
       return false;
@@ -137,7 +137,7 @@ class TFollowService_follow_account_pargs {
 
 
   virtual ~TFollowService_follow_account_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* account_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -208,8 +208,8 @@ class TFollowService_follow_account_presult {
 };
 
 typedef struct _TFollowService_retrieve_standard_follow_args__isset {
-  _TFollowService_retrieve_standard_follow_args__isset() : requester_id(false), follow_id(false) {}
-  bool requester_id :1;
+  _TFollowService_retrieve_standard_follow_args__isset() : request_metadata(false), follow_id(false) {}
+  bool request_metadata :1;
   bool follow_id :1;
 } _TFollowService_retrieve_standard_follow_args__isset;
 
@@ -218,22 +218,22 @@ class TFollowService_retrieve_standard_follow_args {
 
   TFollowService_retrieve_standard_follow_args(const TFollowService_retrieve_standard_follow_args&);
   TFollowService_retrieve_standard_follow_args& operator=(const TFollowService_retrieve_standard_follow_args&);
-  TFollowService_retrieve_standard_follow_args() : requester_id(0), follow_id(0) {
+  TFollowService_retrieve_standard_follow_args() : follow_id(0) {
   }
 
   virtual ~TFollowService_retrieve_standard_follow_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t follow_id;
 
   _TFollowService_retrieve_standard_follow_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_follow_id(const int32_t val);
 
   bool operator == (const TFollowService_retrieve_standard_follow_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(follow_id == rhs.follow_id))
       return false;
@@ -256,7 +256,7 @@ class TFollowService_retrieve_standard_follow_pargs {
 
 
   virtual ~TFollowService_retrieve_standard_follow_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* follow_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -327,8 +327,8 @@ class TFollowService_retrieve_standard_follow_presult {
 };
 
 typedef struct _TFollowService_retrieve_expanded_follow_args__isset {
-  _TFollowService_retrieve_expanded_follow_args__isset() : requester_id(false), follow_id(false) {}
-  bool requester_id :1;
+  _TFollowService_retrieve_expanded_follow_args__isset() : request_metadata(false), follow_id(false) {}
+  bool request_metadata :1;
   bool follow_id :1;
 } _TFollowService_retrieve_expanded_follow_args__isset;
 
@@ -337,22 +337,22 @@ class TFollowService_retrieve_expanded_follow_args {
 
   TFollowService_retrieve_expanded_follow_args(const TFollowService_retrieve_expanded_follow_args&);
   TFollowService_retrieve_expanded_follow_args& operator=(const TFollowService_retrieve_expanded_follow_args&);
-  TFollowService_retrieve_expanded_follow_args() : requester_id(0), follow_id(0) {
+  TFollowService_retrieve_expanded_follow_args() : follow_id(0) {
   }
 
   virtual ~TFollowService_retrieve_expanded_follow_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t follow_id;
 
   _TFollowService_retrieve_expanded_follow_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_follow_id(const int32_t val);
 
   bool operator == (const TFollowService_retrieve_expanded_follow_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(follow_id == rhs.follow_id))
       return false;
@@ -375,7 +375,7 @@ class TFollowService_retrieve_expanded_follow_pargs {
 
 
   virtual ~TFollowService_retrieve_expanded_follow_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* follow_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -454,8 +454,8 @@ class TFollowService_retrieve_expanded_follow_presult {
 };
 
 typedef struct _TFollowService_delete_follow_args__isset {
-  _TFollowService_delete_follow_args__isset() : requester_id(false), follow_id(false) {}
-  bool requester_id :1;
+  _TFollowService_delete_follow_args__isset() : request_metadata(false), follow_id(false) {}
+  bool request_metadata :1;
   bool follow_id :1;
 } _TFollowService_delete_follow_args__isset;
 
@@ -464,22 +464,22 @@ class TFollowService_delete_follow_args {
 
   TFollowService_delete_follow_args(const TFollowService_delete_follow_args&);
   TFollowService_delete_follow_args& operator=(const TFollowService_delete_follow_args&);
-  TFollowService_delete_follow_args() : requester_id(0), follow_id(0) {
+  TFollowService_delete_follow_args() : follow_id(0) {
   }
 
   virtual ~TFollowService_delete_follow_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t follow_id;
 
   _TFollowService_delete_follow_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_follow_id(const int32_t val);
 
   bool operator == (const TFollowService_delete_follow_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(follow_id == rhs.follow_id))
       return false;
@@ -502,7 +502,7 @@ class TFollowService_delete_follow_pargs {
 
 
   virtual ~TFollowService_delete_follow_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* follow_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -573,8 +573,8 @@ class TFollowService_delete_follow_presult {
 };
 
 typedef struct _TFollowService_list_follows_args__isset {
-  _TFollowService_list_follows_args__isset() : requester_id(false), query(false), limit(false), offset(false) {}
-  bool requester_id :1;
+  _TFollowService_list_follows_args__isset() : request_metadata(false), query(false), limit(false), offset(false) {}
+  bool request_metadata :1;
   bool query :1;
   bool limit :1;
   bool offset :1;
@@ -585,18 +585,18 @@ class TFollowService_list_follows_args {
 
   TFollowService_list_follows_args(const TFollowService_list_follows_args&);
   TFollowService_list_follows_args& operator=(const TFollowService_list_follows_args&);
-  TFollowService_list_follows_args() : requester_id(0), limit(0), offset(0) {
+  TFollowService_list_follows_args() : limit(0), offset(0) {
   }
 
   virtual ~TFollowService_list_follows_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   TFollowQuery query;
   int32_t limit;
   int32_t offset;
 
   _TFollowService_list_follows_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_query(const TFollowQuery& val);
 
@@ -606,7 +606,7 @@ class TFollowService_list_follows_args {
 
   bool operator == (const TFollowService_list_follows_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(query == rhs.query))
       return false;
@@ -633,7 +633,7 @@ class TFollowService_list_follows_pargs {
 
 
   virtual ~TFollowService_list_follows_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const TFollowQuery* query;
   const int32_t* limit;
   const int32_t* offset;
@@ -706,8 +706,8 @@ class TFollowService_list_follows_presult {
 };
 
 typedef struct _TFollowService_check_follow_args__isset {
-  _TFollowService_check_follow_args__isset() : requester_id(false), follower_id(false), followee_id(false) {}
-  bool requester_id :1;
+  _TFollowService_check_follow_args__isset() : request_metadata(false), follower_id(false), followee_id(false) {}
+  bool request_metadata :1;
   bool follower_id :1;
   bool followee_id :1;
 } _TFollowService_check_follow_args__isset;
@@ -717,17 +717,17 @@ class TFollowService_check_follow_args {
 
   TFollowService_check_follow_args(const TFollowService_check_follow_args&);
   TFollowService_check_follow_args& operator=(const TFollowService_check_follow_args&);
-  TFollowService_check_follow_args() : requester_id(0), follower_id(0), followee_id(0) {
+  TFollowService_check_follow_args() : follower_id(0), followee_id(0) {
   }
 
   virtual ~TFollowService_check_follow_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t follower_id;
   int32_t followee_id;
 
   _TFollowService_check_follow_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_follower_id(const int32_t val);
 
@@ -735,7 +735,7 @@ class TFollowService_check_follow_args {
 
   bool operator == (const TFollowService_check_follow_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(follower_id == rhs.follower_id))
       return false;
@@ -760,7 +760,7 @@ class TFollowService_check_follow_pargs {
 
 
   virtual ~TFollowService_check_follow_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* follower_id;
   const int32_t* followee_id;
 
@@ -824,8 +824,8 @@ class TFollowService_check_follow_presult {
 };
 
 typedef struct _TFollowService_count_followers_args__isset {
-  _TFollowService_count_followers_args__isset() : requester_id(false), account_id(false) {}
-  bool requester_id :1;
+  _TFollowService_count_followers_args__isset() : request_metadata(false), account_id(false) {}
+  bool request_metadata :1;
   bool account_id :1;
 } _TFollowService_count_followers_args__isset;
 
@@ -834,22 +834,22 @@ class TFollowService_count_followers_args {
 
   TFollowService_count_followers_args(const TFollowService_count_followers_args&);
   TFollowService_count_followers_args& operator=(const TFollowService_count_followers_args&);
-  TFollowService_count_followers_args() : requester_id(0), account_id(0) {
+  TFollowService_count_followers_args() : account_id(0) {
   }
 
   virtual ~TFollowService_count_followers_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t account_id;
 
   _TFollowService_count_followers_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_account_id(const int32_t val);
 
   bool operator == (const TFollowService_count_followers_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(account_id == rhs.account_id))
       return false;
@@ -872,7 +872,7 @@ class TFollowService_count_followers_pargs {
 
 
   virtual ~TFollowService_count_followers_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* account_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -935,8 +935,8 @@ class TFollowService_count_followers_presult {
 };
 
 typedef struct _TFollowService_count_followees_args__isset {
-  _TFollowService_count_followees_args__isset() : requester_id(false), account_id(false) {}
-  bool requester_id :1;
+  _TFollowService_count_followees_args__isset() : request_metadata(false), account_id(false) {}
+  bool request_metadata :1;
   bool account_id :1;
 } _TFollowService_count_followees_args__isset;
 
@@ -945,22 +945,22 @@ class TFollowService_count_followees_args {
 
   TFollowService_count_followees_args(const TFollowService_count_followees_args&);
   TFollowService_count_followees_args& operator=(const TFollowService_count_followees_args&);
-  TFollowService_count_followees_args() : requester_id(0), account_id(0) {
+  TFollowService_count_followees_args() : account_id(0) {
   }
 
   virtual ~TFollowService_count_followees_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t account_id;
 
   _TFollowService_count_followees_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_account_id(const int32_t val);
 
   bool operator == (const TFollowService_count_followees_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(account_id == rhs.account_id))
       return false;
@@ -983,7 +983,7 @@ class TFollowService_count_followees_pargs {
 
 
   virtual ~TFollowService_count_followees_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* account_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -1070,29 +1070,29 @@ class TFollowServiceClient : virtual public TFollowServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void follow_account(TFollow& _return, const int32_t requester_id, const int32_t account_id);
-  void send_follow_account(const int32_t requester_id, const int32_t account_id);
+  void follow_account(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t account_id);
+  void send_follow_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   void recv_follow_account(TFollow& _return);
-  void retrieve_standard_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id);
-  void send_retrieve_standard_follow(const int32_t requester_id, const int32_t follow_id);
+  void retrieve_standard_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id);
+  void send_retrieve_standard_follow(const TRequestMetadata& request_metadata, const int32_t follow_id);
   void recv_retrieve_standard_follow(TFollow& _return);
-  void retrieve_expanded_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id);
-  void send_retrieve_expanded_follow(const int32_t requester_id, const int32_t follow_id);
+  void retrieve_expanded_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id);
+  void send_retrieve_expanded_follow(const TRequestMetadata& request_metadata, const int32_t follow_id);
   void recv_retrieve_expanded_follow(TFollow& _return);
-  void delete_follow(const int32_t requester_id, const int32_t follow_id);
-  void send_delete_follow(const int32_t requester_id, const int32_t follow_id);
+  void delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id);
+  void send_delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id);
   void recv_delete_follow();
-  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset);
-  void send_list_follows(const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset);
+  void list_follows(std::vector<TFollow> & _return, const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset);
+  void send_list_follows(const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_follows(std::vector<TFollow> & _return);
-  bool check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
-  void send_check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
+  bool check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id);
+  void send_check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id);
   bool recv_check_follow();
-  int32_t count_followers(const int32_t requester_id, const int32_t account_id);
-  void send_count_followers(const int32_t requester_id, const int32_t account_id);
+  int32_t count_followers(const TRequestMetadata& request_metadata, const int32_t account_id);
+  void send_count_followers(const TRequestMetadata& request_metadata, const int32_t account_id);
   int32_t recv_count_followers();
-  int32_t count_followees(const int32_t requester_id, const int32_t account_id);
-  void send_count_followees(const int32_t requester_id, const int32_t account_id);
+  int32_t count_followees(const TRequestMetadata& request_metadata, const int32_t account_id);
+  void send_count_followees(const TRequestMetadata& request_metadata, const int32_t account_id);
   int32_t recv_count_followees();
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
@@ -1156,80 +1156,80 @@ class TFollowServiceMultiface : virtual public TFollowServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  void follow_account(TFollow& _return, const int32_t requester_id, const int32_t account_id) {
+  void follow_account(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t account_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->follow_account(_return, requester_id, account_id);
+      ifaces_[i]->follow_account(_return, request_metadata, account_id);
     }
-    ifaces_[i]->follow_account(_return, requester_id, account_id);
+    ifaces_[i]->follow_account(_return, request_metadata, account_id);
     return;
   }
 
-  void retrieve_standard_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id) {
+  void retrieve_standard_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->retrieve_standard_follow(_return, requester_id, follow_id);
+      ifaces_[i]->retrieve_standard_follow(_return, request_metadata, follow_id);
     }
-    ifaces_[i]->retrieve_standard_follow(_return, requester_id, follow_id);
+    ifaces_[i]->retrieve_standard_follow(_return, request_metadata, follow_id);
     return;
   }
 
-  void retrieve_expanded_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id) {
+  void retrieve_expanded_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->retrieve_expanded_follow(_return, requester_id, follow_id);
+      ifaces_[i]->retrieve_expanded_follow(_return, request_metadata, follow_id);
     }
-    ifaces_[i]->retrieve_expanded_follow(_return, requester_id, follow_id);
+    ifaces_[i]->retrieve_expanded_follow(_return, request_metadata, follow_id);
     return;
   }
 
-  void delete_follow(const int32_t requester_id, const int32_t follow_id) {
+  void delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->delete_follow(requester_id, follow_id);
+      ifaces_[i]->delete_follow(request_metadata, follow_id);
     }
-    ifaces_[i]->delete_follow(requester_id, follow_id);
+    ifaces_[i]->delete_follow(request_metadata, follow_id);
   }
 
-  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset) {
+  void list_follows(std::vector<TFollow> & _return, const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->list_follows(_return, requester_id, query, limit, offset);
+      ifaces_[i]->list_follows(_return, request_metadata, query, limit, offset);
     }
-    ifaces_[i]->list_follows(_return, requester_id, query, limit, offset);
+    ifaces_[i]->list_follows(_return, request_metadata, query, limit, offset);
     return;
   }
 
-  bool check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id) {
+  bool check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->check_follow(requester_id, follower_id, followee_id);
+      ifaces_[i]->check_follow(request_metadata, follower_id, followee_id);
     }
-    return ifaces_[i]->check_follow(requester_id, follower_id, followee_id);
+    return ifaces_[i]->check_follow(request_metadata, follower_id, followee_id);
   }
 
-  int32_t count_followers(const int32_t requester_id, const int32_t account_id) {
+  int32_t count_followers(const TRequestMetadata& request_metadata, const int32_t account_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->count_followers(requester_id, account_id);
+      ifaces_[i]->count_followers(request_metadata, account_id);
     }
-    return ifaces_[i]->count_followers(requester_id, account_id);
+    return ifaces_[i]->count_followers(request_metadata, account_id);
   }
 
-  int32_t count_followees(const int32_t requester_id, const int32_t account_id) {
+  int32_t count_followees(const TRequestMetadata& request_metadata, const int32_t account_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->count_followees(requester_id, account_id);
+      ifaces_[i]->count_followees(request_metadata, account_id);
     }
-    return ifaces_[i]->count_followees(requester_id, account_id);
+    return ifaces_[i]->count_followees(request_metadata, account_id);
   }
 
 };
@@ -1264,29 +1264,29 @@ class TFollowServiceConcurrentClient : virtual public TFollowServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void follow_account(TFollow& _return, const int32_t requester_id, const int32_t account_id);
-  int32_t send_follow_account(const int32_t requester_id, const int32_t account_id);
+  void follow_account(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t account_id);
+  int32_t send_follow_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   void recv_follow_account(TFollow& _return, const int32_t seqid);
-  void retrieve_standard_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id);
-  int32_t send_retrieve_standard_follow(const int32_t requester_id, const int32_t follow_id);
+  void retrieve_standard_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id);
+  int32_t send_retrieve_standard_follow(const TRequestMetadata& request_metadata, const int32_t follow_id);
   void recv_retrieve_standard_follow(TFollow& _return, const int32_t seqid);
-  void retrieve_expanded_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id);
-  int32_t send_retrieve_expanded_follow(const int32_t requester_id, const int32_t follow_id);
+  void retrieve_expanded_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id);
+  int32_t send_retrieve_expanded_follow(const TRequestMetadata& request_metadata, const int32_t follow_id);
   void recv_retrieve_expanded_follow(TFollow& _return, const int32_t seqid);
-  void delete_follow(const int32_t requester_id, const int32_t follow_id);
-  int32_t send_delete_follow(const int32_t requester_id, const int32_t follow_id);
+  void delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id);
+  int32_t send_delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id);
   void recv_delete_follow(const int32_t seqid);
-  void list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset);
-  int32_t send_list_follows(const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset);
+  void list_follows(std::vector<TFollow> & _return, const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset);
+  int32_t send_list_follows(const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_follows(std::vector<TFollow> & _return, const int32_t seqid);
-  bool check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
-  int32_t send_check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id);
+  bool check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id);
+  int32_t send_check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id);
   bool recv_check_follow(const int32_t seqid);
-  int32_t count_followers(const int32_t requester_id, const int32_t account_id);
-  int32_t send_count_followers(const int32_t requester_id, const int32_t account_id);
+  int32_t count_followers(const TRequestMetadata& request_metadata, const int32_t account_id);
+  int32_t send_count_followers(const TRequestMetadata& request_metadata, const int32_t account_id);
   int32_t recv_count_followers(const int32_t seqid);
-  int32_t count_followees(const int32_t requester_id, const int32_t account_id);
-  int32_t send_count_followees(const int32_t requester_id, const int32_t account_id);
+  int32_t count_followees(const TRequestMetadata& request_metadata, const int32_t account_id);
+  int32_t send_count_followees(const TRequestMetadata& request_metadata, const int32_t account_id);
   int32_t recv_count_followees(const int32_t seqid);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;

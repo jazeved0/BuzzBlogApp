@@ -20,32 +20,32 @@ class TPostServiceHandler : virtual public TPostServiceIf {
     // Your initialization goes here
   }
 
-  void create_post(TPost& _return, const int32_t requester_id, const std::string& text) {
+  void create_post(TPost& _return, const TRequestMetadata& request_metadata, const std::string& text) {
     // Your implementation goes here
     printf("create_post\n");
   }
 
-  void retrieve_standard_post(TPost& _return, const int32_t requester_id, const int32_t post_id) {
+  void retrieve_standard_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id) {
     // Your implementation goes here
     printf("retrieve_standard_post\n");
   }
 
-  void retrieve_expanded_post(TPost& _return, const int32_t requester_id, const int32_t post_id) {
+  void retrieve_expanded_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id) {
     // Your implementation goes here
     printf("retrieve_expanded_post\n");
   }
 
-  void delete_post(const int32_t requester_id, const int32_t post_id) {
+  void delete_post(const TRequestMetadata& request_metadata, const int32_t post_id) {
     // Your implementation goes here
     printf("delete_post\n");
   }
 
-  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset) {
+  void list_posts(std::vector<TPost> & _return, const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset) {
     // Your implementation goes here
     printf("list_posts\n");
   }
 
-  int32_t count_posts_by_author(const int32_t requester_id, const int32_t author_id) {
+  int32_t count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id) {
     // Your implementation goes here
     printf("count_posts_by_author\n");
   }

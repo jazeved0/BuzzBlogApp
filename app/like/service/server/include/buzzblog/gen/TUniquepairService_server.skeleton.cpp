@@ -20,32 +20,32 @@ class TUniquepairServiceHandler : virtual public TUniquepairServiceIf {
     // Your initialization goes here
   }
 
-  void get(TUniquepair& _return, const int32_t uniquepair_id) {
+  void get(TUniquepair& _return, const TRequestMetadata& request_metadata, const int32_t uniquepair_id) {
     // Your implementation goes here
     printf("get\n");
   }
 
-  void add(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem) {
+  void add(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem) {
     // Your implementation goes here
     printf("add\n");
   }
 
-  void remove(const int32_t uniquepair_id) {
+  void remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id) {
     // Your implementation goes here
     printf("remove\n");
   }
 
-  void find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem) {
+  void find(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem) {
     // Your implementation goes here
     printf("find\n");
   }
 
-  void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset) {
+  void fetch(std::vector<TUniquepair> & _return, const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset) {
     // Your implementation goes here
     printf("fetch\n");
   }
 
-  int32_t count(const TUniquepairQuery& query) {
+  int32_t count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query) {
     // Your implementation goes here
     printf("count\n");
   }

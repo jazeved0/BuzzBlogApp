@@ -35,6 +35,14 @@ uint32_t TUniquepairService_get_args::read(::apache::thrift::protocol::TProtocol
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->uniquepair_id);
           this->__isset.uniquepair_id = true;
@@ -59,7 +67,11 @@ uint32_t TUniquepairService_get_args::write(::apache::thrift::protocol::TProtoco
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_get_args");
 
-  xfer += oprot->writeFieldBegin("uniquepair_id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("uniquepair_id", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32(this->uniquepair_id);
   xfer += oprot->writeFieldEnd();
 
@@ -78,7 +90,11 @@ uint32_t TUniquepairService_get_pargs::write(::apache::thrift::protocol::TProtoc
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_get_pargs");
 
-  xfer += oprot->writeFieldBegin("uniquepair_id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("uniquepair_id", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32((*(this->uniquepair_id)));
   xfer += oprot->writeFieldEnd();
 
@@ -242,6 +258,14 @@ uint32_t TUniquepairService_add_args::read(::apache::thrift::protocol::TProtocol
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->domain);
           this->__isset.domain = true;
@@ -249,7 +273,7 @@ uint32_t TUniquepairService_add_args::read(::apache::thrift::protocol::TProtocol
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->first_elem);
           this->__isset.first_elem = true;
@@ -257,7 +281,7 @@ uint32_t TUniquepairService_add_args::read(::apache::thrift::protocol::TProtocol
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->second_elem);
           this->__isset.second_elem = true;
@@ -282,15 +306,19 @@ uint32_t TUniquepairService_add_args::write(::apache::thrift::protocol::TProtoco
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_add_args");
 
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString(this->domain);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32(this->first_elem);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 4);
   xfer += oprot->writeI32(this->second_elem);
   xfer += oprot->writeFieldEnd();
 
@@ -309,15 +337,19 @@ uint32_t TUniquepairService_add_pargs::write(::apache::thrift::protocol::TProtoc
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_add_pargs");
 
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString((*(this->domain)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32((*(this->first_elem)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 4);
   xfer += oprot->writeI32((*(this->second_elem)));
   xfer += oprot->writeFieldEnd();
 
@@ -481,6 +513,14 @@ uint32_t TUniquepairService_remove_args::read(::apache::thrift::protocol::TProto
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->uniquepair_id);
           this->__isset.uniquepair_id = true;
@@ -505,7 +545,11 @@ uint32_t TUniquepairService_remove_args::write(::apache::thrift::protocol::TProt
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_remove_args");
 
-  xfer += oprot->writeFieldBegin("uniquepair_id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("uniquepair_id", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32(this->uniquepair_id);
   xfer += oprot->writeFieldEnd();
 
@@ -524,7 +568,11 @@ uint32_t TUniquepairService_remove_pargs::write(::apache::thrift::protocol::TPro
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_remove_pargs");
 
-  xfer += oprot->writeFieldBegin("uniquepair_id", ::apache::thrift::protocol::T_I32, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("uniquepair_id", ::apache::thrift::protocol::T_I32, 2);
   xfer += oprot->writeI32((*(this->uniquepair_id)));
   xfer += oprot->writeFieldEnd();
 
@@ -668,6 +716,14 @@ uint32_t TUniquepairService_find_args::read(::apache::thrift::protocol::TProtoco
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->domain);
           this->__isset.domain = true;
@@ -675,7 +731,7 @@ uint32_t TUniquepairService_find_args::read(::apache::thrift::protocol::TProtoco
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->first_elem);
           this->__isset.first_elem = true;
@@ -683,7 +739,7 @@ uint32_t TUniquepairService_find_args::read(::apache::thrift::protocol::TProtoco
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->second_elem);
           this->__isset.second_elem = true;
@@ -708,15 +764,19 @@ uint32_t TUniquepairService_find_args::write(::apache::thrift::protocol::TProtoc
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_find_args");
 
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString(this->domain);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32(this->first_elem);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 4);
   xfer += oprot->writeI32(this->second_elem);
   xfer += oprot->writeFieldEnd();
 
@@ -735,15 +795,19 @@ uint32_t TUniquepairService_find_pargs::write(::apache::thrift::protocol::TProto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_find_pargs");
 
-  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("domain", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString((*(this->domain)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("first_elem", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32((*(this->first_elem)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeFieldBegin("second_elem", ::apache::thrift::protocol::T_I32, 4);
   xfer += oprot->writeI32((*(this->second_elem)));
   xfer += oprot->writeFieldEnd();
 
@@ -908,13 +972,21 @@ uint32_t TUniquepairService_fetch_args::read(::apache::thrift::protocol::TProtoc
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
           xfer += this->query.read(iprot);
           this->__isset.query = true;
         } else {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->limit);
           this->__isset.limit = true;
@@ -922,7 +994,7 @@ uint32_t TUniquepairService_fetch_args::read(::apache::thrift::protocol::TProtoc
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_I32) {
           xfer += iprot->readI32(this->offset);
           this->__isset.offset = true;
@@ -947,15 +1019,19 @@ uint32_t TUniquepairService_fetch_args::write(::apache::thrift::protocol::TProto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_fetch_args");
 
-  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
   xfer += this->query.write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32(this->limit);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 4);
   xfer += oprot->writeI32(this->offset);
   xfer += oprot->writeFieldEnd();
 
@@ -974,15 +1050,19 @@ uint32_t TUniquepairService_fetch_pargs::write(::apache::thrift::protocol::TProt
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_fetch_pargs");
 
-  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
   xfer += (*(this->query)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 2);
+  xfer += oprot->writeFieldBegin("limit", ::apache::thrift::protocol::T_I32, 3);
   xfer += oprot->writeI32((*(this->limit)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 3);
+  xfer += oprot->writeFieldBegin("offset", ::apache::thrift::protocol::T_I32, 4);
   xfer += oprot->writeI32((*(this->offset)));
   xfer += oprot->writeFieldEnd();
 
@@ -1021,14 +1101,14 @@ uint32_t TUniquepairService_fetch_result::read(::apache::thrift::protocol::TProt
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size85;
-            ::apache::thrift::protocol::TType _etype88;
-            xfer += iprot->readListBegin(_etype88, _size85);
-            this->success.resize(_size85);
-            uint32_t _i89;
-            for (_i89 = 0; _i89 < _size85; ++_i89)
+            uint32_t _size87;
+            ::apache::thrift::protocol::TType _etype90;
+            xfer += iprot->readListBegin(_etype90, _size87);
+            this->success.resize(_size87);
+            uint32_t _i91;
+            for (_i91 = 0; _i91 < _size87; ++_i91)
             {
-              xfer += this->success[_i89].read(iprot);
+              xfer += this->success[_i91].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1059,10 +1139,10 @@ uint32_t TUniquepairService_fetch_result::write(::apache::thrift::protocol::TPro
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TUniquepair> ::const_iterator _iter90;
-      for (_iter90 = this->success.begin(); _iter90 != this->success.end(); ++_iter90)
+      std::vector<TUniquepair> ::const_iterator _iter92;
+      for (_iter92 = this->success.begin(); _iter92 != this->success.end(); ++_iter92)
       {
-        xfer += (*_iter90).write(oprot);
+        xfer += (*_iter92).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1103,14 +1183,14 @@ uint32_t TUniquepairService_fetch_presult::read(::apache::thrift::protocol::TPro
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size91;
-            ::apache::thrift::protocol::TType _etype94;
-            xfer += iprot->readListBegin(_etype94, _size91);
-            (*(this->success)).resize(_size91);
-            uint32_t _i95;
-            for (_i95 = 0; _i95 < _size91; ++_i95)
+            uint32_t _size93;
+            ::apache::thrift::protocol::TType _etype96;
+            xfer += iprot->readListBegin(_etype96, _size93);
+            (*(this->success)).resize(_size93);
+            uint32_t _i97;
+            for (_i97 = 0; _i97 < _size93; ++_i97)
             {
-              xfer += (*(this->success))[_i95].read(iprot);
+              xfer += (*(this->success))[_i97].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1159,6 +1239,14 @@ uint32_t TUniquepairService_count_args::read(::apache::thrift::protocol::TProtoc
     {
       case 1:
         if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
           xfer += this->query.read(iprot);
           this->__isset.query = true;
         } else {
@@ -1182,7 +1270,11 @@ uint32_t TUniquepairService_count_args::write(::apache::thrift::protocol::TProto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_count_args");
 
-  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
   xfer += this->query.write(oprot);
   xfer += oprot->writeFieldEnd();
 
@@ -1201,7 +1293,11 @@ uint32_t TUniquepairService_count_pargs::write(::apache::thrift::protocol::TProt
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TUniquepairService_count_pargs");
 
-  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
   xfer += (*(this->query)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
@@ -1318,18 +1414,19 @@ uint32_t TUniquepairService_count_presult::read(::apache::thrift::protocol::TPro
   return xfer;
 }
 
-void TUniquepairServiceClient::get(TUniquepair& _return, const int32_t uniquepair_id)
+void TUniquepairServiceClient::get(TUniquepair& _return, const TRequestMetadata& request_metadata, const int32_t uniquepair_id)
 {
-  send_get(uniquepair_id);
+  send_get(request_metadata, uniquepair_id);
   recv_get(_return);
 }
 
-void TUniquepairServiceClient::send_get(const int32_t uniquepair_id)
+void TUniquepairServiceClient::send_get(const TRequestMetadata& request_metadata, const int32_t uniquepair_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("get", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_get_pargs args;
+  args.request_metadata = &request_metadata;
   args.uniquepair_id = &uniquepair_id;
   args.write(oprot_);
 
@@ -1379,18 +1476,19 @@ void TUniquepairServiceClient::recv_get(TUniquepair& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "get failed: unknown result");
 }
 
-void TUniquepairServiceClient::add(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
+void TUniquepairServiceClient::add(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
 {
-  send_add(domain, first_elem, second_elem);
+  send_add(request_metadata, domain, first_elem, second_elem);
   recv_add(_return);
 }
 
-void TUniquepairServiceClient::send_add(const std::string& domain, const int32_t first_elem, const int32_t second_elem)
+void TUniquepairServiceClient::send_add(const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("add", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_add_pargs args;
+  args.request_metadata = &request_metadata;
   args.domain = &domain;
   args.first_elem = &first_elem;
   args.second_elem = &second_elem;
@@ -1442,18 +1540,19 @@ void TUniquepairServiceClient::recv_add(TUniquepair& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "add failed: unknown result");
 }
 
-void TUniquepairServiceClient::remove(const int32_t uniquepair_id)
+void TUniquepairServiceClient::remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id)
 {
-  send_remove(uniquepair_id);
+  send_remove(request_metadata, uniquepair_id);
   recv_remove();
 }
 
-void TUniquepairServiceClient::send_remove(const int32_t uniquepair_id)
+void TUniquepairServiceClient::send_remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("remove", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_remove_pargs args;
+  args.request_metadata = &request_metadata;
   args.uniquepair_id = &uniquepair_id;
   args.write(oprot_);
 
@@ -1498,18 +1597,19 @@ void TUniquepairServiceClient::recv_remove()
   return;
 }
 
-void TUniquepairServiceClient::find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
+void TUniquepairServiceClient::find(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
 {
-  send_find(domain, first_elem, second_elem);
+  send_find(request_metadata, domain, first_elem, second_elem);
   recv_find(_return);
 }
 
-void TUniquepairServiceClient::send_find(const std::string& domain, const int32_t first_elem, const int32_t second_elem)
+void TUniquepairServiceClient::send_find(const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("find", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_find_pargs args;
+  args.request_metadata = &request_metadata;
   args.domain = &domain;
   args.first_elem = &first_elem;
   args.second_elem = &second_elem;
@@ -1561,18 +1661,19 @@ void TUniquepairServiceClient::recv_find(TUniquepair& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "find failed: unknown result");
 }
 
-void TUniquepairServiceClient::fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
+void TUniquepairServiceClient::fetch(std::vector<TUniquepair> & _return, const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
 {
-  send_fetch(query, limit, offset);
+  send_fetch(request_metadata, query, limit, offset);
   recv_fetch(_return);
 }
 
-void TUniquepairServiceClient::send_fetch(const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
+void TUniquepairServiceClient::send_fetch(const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("fetch", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_fetch_pargs args;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.limit = &limit;
   args.offset = &offset;
@@ -1621,18 +1722,19 @@ void TUniquepairServiceClient::recv_fetch(std::vector<TUniquepair> & _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "fetch failed: unknown result");
 }
 
-int32_t TUniquepairServiceClient::count(const TUniquepairQuery& query)
+int32_t TUniquepairServiceClient::count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query)
 {
-  send_count(query);
+  send_count(request_metadata, query);
   return recv_count();
 }
 
-void TUniquepairServiceClient::send_count(const TUniquepairQuery& query)
+void TUniquepairServiceClient::send_count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("count", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_count_pargs args;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.write(oprot_);
 
@@ -1721,7 +1823,7 @@ void TUniquepairServiceProcessor::process_get(int32_t seqid, ::apache::thrift::p
 
   TUniquepairService_get_result result;
   try {
-    iface_->get(result.success, args.uniquepair_id);
+    iface_->get(result.success, args.request_metadata, args.uniquepair_id);
     result.__isset.success = true;
   } catch (TUniquepairNotFoundException &e) {
     result.e = e;
@@ -1778,7 +1880,7 @@ void TUniquepairServiceProcessor::process_add(int32_t seqid, ::apache::thrift::p
 
   TUniquepairService_add_result result;
   try {
-    iface_->add(result.success, args.domain, args.first_elem, args.second_elem);
+    iface_->add(result.success, args.request_metadata, args.domain, args.first_elem, args.second_elem);
     result.__isset.success = true;
   } catch (TUniquepairAlreadyExistsException &e) {
     result.e = e;
@@ -1835,7 +1937,7 @@ void TUniquepairServiceProcessor::process_remove(int32_t seqid, ::apache::thrift
 
   TUniquepairService_remove_result result;
   try {
-    iface_->remove(args.uniquepair_id);
+    iface_->remove(args.request_metadata, args.uniquepair_id);
   } catch (TUniquepairNotFoundException &e) {
     result.e = e;
     result.__isset.e = true;
@@ -1891,7 +1993,7 @@ void TUniquepairServiceProcessor::process_find(int32_t seqid, ::apache::thrift::
 
   TUniquepairService_find_result result;
   try {
-    iface_->find(result.success, args.domain, args.first_elem, args.second_elem);
+    iface_->find(result.success, args.request_metadata, args.domain, args.first_elem, args.second_elem);
     result.__isset.success = true;
   } catch (TUniquepairNotFoundException &e) {
     result.e = e;
@@ -1948,7 +2050,7 @@ void TUniquepairServiceProcessor::process_fetch(int32_t seqid, ::apache::thrift:
 
   TUniquepairService_fetch_result result;
   try {
-    iface_->fetch(result.success, args.query, args.limit, args.offset);
+    iface_->fetch(result.success, args.request_metadata, args.query, args.limit, args.offset);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -2002,7 +2104,7 @@ void TUniquepairServiceProcessor::process_count(int32_t seqid, ::apache::thrift:
 
   TUniquepairService_count_result result;
   try {
-    result.success = iface_->count(args.query);
+    result.success = iface_->count(args.request_metadata, args.query);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -2040,19 +2142,20 @@ void TUniquepairServiceProcessor::process_count(int32_t seqid, ::apache::thrift:
   return processor;
 }
 
-void TUniquepairServiceConcurrentClient::get(TUniquepair& _return, const int32_t uniquepair_id)
+void TUniquepairServiceConcurrentClient::get(TUniquepair& _return, const TRequestMetadata& request_metadata, const int32_t uniquepair_id)
 {
-  int32_t seqid = send_get(uniquepair_id);
+  int32_t seqid = send_get(request_metadata, uniquepair_id);
   recv_get(_return, seqid);
 }
 
-int32_t TUniquepairServiceConcurrentClient::send_get(const int32_t uniquepair_id)
+int32_t TUniquepairServiceConcurrentClient::send_get(const TRequestMetadata& request_metadata, const int32_t uniquepair_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("get", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_get_pargs args;
+  args.request_metadata = &request_metadata;
   args.uniquepair_id = &uniquepair_id;
   args.write(oprot_);
 
@@ -2128,19 +2231,20 @@ void TUniquepairServiceConcurrentClient::recv_get(TUniquepair& _return, const in
   } // end while(true)
 }
 
-void TUniquepairServiceConcurrentClient::add(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
+void TUniquepairServiceConcurrentClient::add(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
 {
-  int32_t seqid = send_add(domain, first_elem, second_elem);
+  int32_t seqid = send_add(request_metadata, domain, first_elem, second_elem);
   recv_add(_return, seqid);
 }
 
-int32_t TUniquepairServiceConcurrentClient::send_add(const std::string& domain, const int32_t first_elem, const int32_t second_elem)
+int32_t TUniquepairServiceConcurrentClient::send_add(const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("add", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_add_pargs args;
+  args.request_metadata = &request_metadata;
   args.domain = &domain;
   args.first_elem = &first_elem;
   args.second_elem = &second_elem;
@@ -2218,19 +2322,20 @@ void TUniquepairServiceConcurrentClient::recv_add(TUniquepair& _return, const in
   } // end while(true)
 }
 
-void TUniquepairServiceConcurrentClient::remove(const int32_t uniquepair_id)
+void TUniquepairServiceConcurrentClient::remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id)
 {
-  int32_t seqid = send_remove(uniquepair_id);
+  int32_t seqid = send_remove(request_metadata, uniquepair_id);
   recv_remove(seqid);
 }
 
-int32_t TUniquepairServiceConcurrentClient::send_remove(const int32_t uniquepair_id)
+int32_t TUniquepairServiceConcurrentClient::send_remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("remove", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_remove_pargs args;
+  args.request_metadata = &request_metadata;
   args.uniquepair_id = &uniquepair_id;
   args.write(oprot_);
 
@@ -2300,19 +2405,20 @@ void TUniquepairServiceConcurrentClient::recv_remove(const int32_t seqid)
   } // end while(true)
 }
 
-void TUniquepairServiceConcurrentClient::find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
+void TUniquepairServiceConcurrentClient::find(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
 {
-  int32_t seqid = send_find(domain, first_elem, second_elem);
+  int32_t seqid = send_find(request_metadata, domain, first_elem, second_elem);
   recv_find(_return, seqid);
 }
 
-int32_t TUniquepairServiceConcurrentClient::send_find(const std::string& domain, const int32_t first_elem, const int32_t second_elem)
+int32_t TUniquepairServiceConcurrentClient::send_find(const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("find", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_find_pargs args;
+  args.request_metadata = &request_metadata;
   args.domain = &domain;
   args.first_elem = &first_elem;
   args.second_elem = &second_elem;
@@ -2390,19 +2496,20 @@ void TUniquepairServiceConcurrentClient::recv_find(TUniquepair& _return, const i
   } // end while(true)
 }
 
-void TUniquepairServiceConcurrentClient::fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
+void TUniquepairServiceConcurrentClient::fetch(std::vector<TUniquepair> & _return, const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
 {
-  int32_t seqid = send_fetch(query, limit, offset);
+  int32_t seqid = send_fetch(request_metadata, query, limit, offset);
   recv_fetch(_return, seqid);
 }
 
-int32_t TUniquepairServiceConcurrentClient::send_fetch(const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
+int32_t TUniquepairServiceConcurrentClient::send_fetch(const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("fetch", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_fetch_pargs args;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.limit = &limit;
   args.offset = &offset;
@@ -2476,19 +2583,20 @@ void TUniquepairServiceConcurrentClient::recv_fetch(std::vector<TUniquepair> & _
   } // end while(true)
 }
 
-int32_t TUniquepairServiceConcurrentClient::count(const TUniquepairQuery& query)
+int32_t TUniquepairServiceConcurrentClient::count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query)
 {
-  int32_t seqid = send_count(query);
+  int32_t seqid = send_count(request_metadata, query);
   return recv_count(seqid);
 }
 
-int32_t TUniquepairServiceConcurrentClient::send_count(const TUniquepairQuery& query)
+int32_t TUniquepairServiceConcurrentClient::send_count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("count", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TUniquepairService_count_pargs args;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.write(oprot_);
 

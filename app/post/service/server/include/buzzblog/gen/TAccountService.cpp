@@ -35,6 +35,14 @@ uint32_t TAccountService_authenticate_user_args::read(::apache::thrift::protocol
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->username);
           this->__isset.username = true;
@@ -42,7 +50,7 @@ uint32_t TAccountService_authenticate_user_args::read(::apache::thrift::protocol
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->password);
           this->__isset.password = true;
@@ -67,11 +75,15 @@ uint32_t TAccountService_authenticate_user_args::write(::apache::thrift::protoco
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_authenticate_user_args");
 
-  xfer += oprot->writeFieldBegin("username", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("username", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString(this->username);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("password", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("password", ::apache::thrift::protocol::T_STRING, 3);
   xfer += oprot->writeString(this->password);
   xfer += oprot->writeFieldEnd();
 
@@ -90,11 +102,15 @@ uint32_t TAccountService_authenticate_user_pargs::write(::apache::thrift::protoc
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_authenticate_user_pargs");
 
-  xfer += oprot->writeFieldBegin("username", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("username", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString((*(this->username)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("password", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("password", ::apache::thrift::protocol::T_STRING, 3);
   xfer += oprot->writeString((*(this->password)));
   xfer += oprot->writeFieldEnd();
 
@@ -278,6 +294,14 @@ uint32_t TAccountService_create_account_args::read(::apache::thrift::protocol::T
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->username);
           this->__isset.username = true;
@@ -285,7 +309,7 @@ uint32_t TAccountService_create_account_args::read(::apache::thrift::protocol::T
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->password);
           this->__isset.password = true;
@@ -293,7 +317,7 @@ uint32_t TAccountService_create_account_args::read(::apache::thrift::protocol::T
           xfer += iprot->skip(ftype);
         }
         break;
-      case 3:
+      case 4:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->first_name);
           this->__isset.first_name = true;
@@ -301,7 +325,7 @@ uint32_t TAccountService_create_account_args::read(::apache::thrift::protocol::T
           xfer += iprot->skip(ftype);
         }
         break;
-      case 4:
+      case 5:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->last_name);
           this->__isset.last_name = true;
@@ -326,19 +350,23 @@ uint32_t TAccountService_create_account_args::write(::apache::thrift::protocol::
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_create_account_args");
 
-  xfer += oprot->writeFieldBegin("username", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("username", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString(this->username);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("password", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("password", ::apache::thrift::protocol::T_STRING, 3);
   xfer += oprot->writeString(this->password);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("first_name", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeFieldBegin("first_name", ::apache::thrift::protocol::T_STRING, 4);
   xfer += oprot->writeString(this->first_name);
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("last_name", ::apache::thrift::protocol::T_STRING, 4);
+  xfer += oprot->writeFieldBegin("last_name", ::apache::thrift::protocol::T_STRING, 5);
   xfer += oprot->writeString(this->last_name);
   xfer += oprot->writeFieldEnd();
 
@@ -357,19 +385,23 @@ uint32_t TAccountService_create_account_pargs::write(::apache::thrift::protocol:
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_create_account_pargs");
 
-  xfer += oprot->writeFieldBegin("username", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
+  xfer += oprot->writeFieldEnd();
+
+  xfer += oprot->writeFieldBegin("username", ::apache::thrift::protocol::T_STRING, 2);
   xfer += oprot->writeString((*(this->username)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("password", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("password", ::apache::thrift::protocol::T_STRING, 3);
   xfer += oprot->writeString((*(this->password)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("first_name", ::apache::thrift::protocol::T_STRING, 3);
+  xfer += oprot->writeFieldBegin("first_name", ::apache::thrift::protocol::T_STRING, 4);
   xfer += oprot->writeString((*(this->first_name)));
   xfer += oprot->writeFieldEnd();
 
-  xfer += oprot->writeFieldBegin("last_name", ::apache::thrift::protocol::T_STRING, 4);
+  xfer += oprot->writeFieldBegin("last_name", ::apache::thrift::protocol::T_STRING, 5);
   xfer += oprot->writeString((*(this->last_name)));
   xfer += oprot->writeFieldEnd();
 
@@ -553,9 +585,9 @@ uint32_t TAccountService_retrieve_standard_account_args::read(::apache::thrift::
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -585,8 +617,8 @@ uint32_t TAccountService_retrieve_standard_account_args::write(::apache::thrift:
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_retrieve_standard_account_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -608,8 +640,8 @@ uint32_t TAccountService_retrieve_standard_account_pargs::write(::apache::thrift
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_retrieve_standard_account_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -776,9 +808,9 @@ uint32_t TAccountService_retrieve_expanded_account_args::read(::apache::thrift::
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -808,8 +840,8 @@ uint32_t TAccountService_retrieve_expanded_account_args::write(::apache::thrift:
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_retrieve_expanded_account_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -831,8 +863,8 @@ uint32_t TAccountService_retrieve_expanded_account_pargs::write(::apache::thrift
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_retrieve_expanded_account_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -999,9 +1031,9 @@ uint32_t TAccountService_update_account_args::read(::apache::thrift::protocol::T
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1055,8 +1087,8 @@ uint32_t TAccountService_update_account_args::write(::apache::thrift::protocol::
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_update_account_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1090,8 +1122,8 @@ uint32_t TAccountService_update_account_pargs::write(::apache::thrift::protocol:
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_update_account_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1310,9 +1342,9 @@ uint32_t TAccountService_delete_account_args::read(::apache::thrift::protocol::T
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1342,8 +1374,8 @@ uint32_t TAccountService_delete_account_args::write(::apache::thrift::protocol::
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_delete_account_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1365,8 +1397,8 @@ uint32_t TAccountService_delete_account_pargs::write(::apache::thrift::protocol:
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TAccountService_delete_account_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1506,18 +1538,19 @@ uint32_t TAccountService_delete_account_presult::read(::apache::thrift::protocol
   return xfer;
 }
 
-void TAccountServiceClient::authenticate_user(TAccount& _return, const std::string& username, const std::string& password)
+void TAccountServiceClient::authenticate_user(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password)
 {
-  send_authenticate_user(username, password);
+  send_authenticate_user(request_metadata, username, password);
   recv_authenticate_user(_return);
 }
 
-void TAccountServiceClient::send_authenticate_user(const std::string& username, const std::string& password)
+void TAccountServiceClient::send_authenticate_user(const TRequestMetadata& request_metadata, const std::string& username, const std::string& password)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("authenticate_user", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_authenticate_user_pargs args;
+  args.request_metadata = &request_metadata;
   args.username = &username;
   args.password = &password;
   args.write(oprot_);
@@ -1571,18 +1604,19 @@ void TAccountServiceClient::recv_authenticate_user(TAccount& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "authenticate_user failed: unknown result");
 }
 
-void TAccountServiceClient::create_account(TAccount& _return, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name)
+void TAccountServiceClient::create_account(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name)
 {
-  send_create_account(username, password, first_name, last_name);
+  send_create_account(request_metadata, username, password, first_name, last_name);
   recv_create_account(_return);
 }
 
-void TAccountServiceClient::send_create_account(const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name)
+void TAccountServiceClient::send_create_account(const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("create_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_create_account_pargs args;
+  args.request_metadata = &request_metadata;
   args.username = &username;
   args.password = &password;
   args.first_name = &first_name;
@@ -1638,19 +1672,19 @@ void TAccountServiceClient::recv_create_account(TAccount& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "create_account failed: unknown result");
 }
 
-void TAccountServiceClient::retrieve_standard_account(TAccount& _return, const int32_t requester_id, const int32_t account_id)
+void TAccountServiceClient::retrieve_standard_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  send_retrieve_standard_account(requester_id, account_id);
+  send_retrieve_standard_account(request_metadata, account_id);
   recv_retrieve_standard_account(_return);
 }
 
-void TAccountServiceClient::send_retrieve_standard_account(const int32_t requester_id, const int32_t account_id)
+void TAccountServiceClient::send_retrieve_standard_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("retrieve_standard_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_retrieve_standard_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -1700,19 +1734,19 @@ void TAccountServiceClient::recv_retrieve_standard_account(TAccount& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "retrieve_standard_account failed: unknown result");
 }
 
-void TAccountServiceClient::retrieve_expanded_account(TAccount& _return, const int32_t requester_id, const int32_t account_id)
+void TAccountServiceClient::retrieve_expanded_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  send_retrieve_expanded_account(requester_id, account_id);
+  send_retrieve_expanded_account(request_metadata, account_id);
   recv_retrieve_expanded_account(_return);
 }
 
-void TAccountServiceClient::send_retrieve_expanded_account(const int32_t requester_id, const int32_t account_id)
+void TAccountServiceClient::send_retrieve_expanded_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("retrieve_expanded_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_retrieve_expanded_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -1762,19 +1796,19 @@ void TAccountServiceClient::recv_retrieve_expanded_account(TAccount& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "retrieve_expanded_account failed: unknown result");
 }
 
-void TAccountServiceClient::update_account(TAccount& _return, const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name)
+void TAccountServiceClient::update_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name)
 {
-  send_update_account(requester_id, account_id, password, first_name, last_name);
+  send_update_account(request_metadata, account_id, password, first_name, last_name);
   recv_update_account(_return);
 }
 
-void TAccountServiceClient::send_update_account(const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name)
+void TAccountServiceClient::send_update_account(const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("update_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_update_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.password = &password;
   args.first_name = &first_name;
@@ -1833,19 +1867,19 @@ void TAccountServiceClient::recv_update_account(TAccount& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "update_account failed: unknown result");
 }
 
-void TAccountServiceClient::delete_account(const int32_t requester_id, const int32_t account_id)
+void TAccountServiceClient::delete_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  send_delete_account(requester_id, account_id);
+  send_delete_account(request_metadata, account_id);
   recv_delete_account();
 }
 
-void TAccountServiceClient::send_delete_account(const int32_t requester_id, const int32_t account_id)
+void TAccountServiceClient::send_delete_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("delete_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_delete_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -1935,7 +1969,7 @@ void TAccountServiceProcessor::process_authenticate_user(int32_t seqid, ::apache
 
   TAccountService_authenticate_user_result result;
   try {
-    iface_->authenticate_user(result.success, args.username, args.password);
+    iface_->authenticate_user(result.success, args.request_metadata, args.username, args.password);
     result.__isset.success = true;
   } catch (TAccountInvalidCredentialsException &e1) {
     result.e1 = e1;
@@ -1995,7 +2029,7 @@ void TAccountServiceProcessor::process_create_account(int32_t seqid, ::apache::t
 
   TAccountService_create_account_result result;
   try {
-    iface_->create_account(result.success, args.username, args.password, args.first_name, args.last_name);
+    iface_->create_account(result.success, args.request_metadata, args.username, args.password, args.first_name, args.last_name);
     result.__isset.success = true;
   } catch (TAccountInvalidAttributesException &e1) {
     result.e1 = e1;
@@ -2055,7 +2089,7 @@ void TAccountServiceProcessor::process_retrieve_standard_account(int32_t seqid, 
 
   TAccountService_retrieve_standard_account_result result;
   try {
-    iface_->retrieve_standard_account(result.success, args.requester_id, args.account_id);
+    iface_->retrieve_standard_account(result.success, args.request_metadata, args.account_id);
     result.__isset.success = true;
   } catch (TAccountNotFoundException &e) {
     result.e = e;
@@ -2112,7 +2146,7 @@ void TAccountServiceProcessor::process_retrieve_expanded_account(int32_t seqid, 
 
   TAccountService_retrieve_expanded_account_result result;
   try {
-    iface_->retrieve_expanded_account(result.success, args.requester_id, args.account_id);
+    iface_->retrieve_expanded_account(result.success, args.request_metadata, args.account_id);
     result.__isset.success = true;
   } catch (TAccountNotFoundException &e) {
     result.e = e;
@@ -2169,7 +2203,7 @@ void TAccountServiceProcessor::process_update_account(int32_t seqid, ::apache::t
 
   TAccountService_update_account_result result;
   try {
-    iface_->update_account(result.success, args.requester_id, args.account_id, args.password, args.first_name, args.last_name);
+    iface_->update_account(result.success, args.request_metadata, args.account_id, args.password, args.first_name, args.last_name);
     result.__isset.success = true;
   } catch (TAccountNotAuthorizedException &e1) {
     result.e1 = e1;
@@ -2232,7 +2266,7 @@ void TAccountServiceProcessor::process_delete_account(int32_t seqid, ::apache::t
 
   TAccountService_delete_account_result result;
   try {
-    iface_->delete_account(args.requester_id, args.account_id);
+    iface_->delete_account(args.request_metadata, args.account_id);
   } catch (TAccountNotAuthorizedException &e1) {
     result.e1 = e1;
     result.__isset.e1 = true;
@@ -2275,19 +2309,20 @@ void TAccountServiceProcessor::process_delete_account(int32_t seqid, ::apache::t
   return processor;
 }
 
-void TAccountServiceConcurrentClient::authenticate_user(TAccount& _return, const std::string& username, const std::string& password)
+void TAccountServiceConcurrentClient::authenticate_user(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password)
 {
-  int32_t seqid = send_authenticate_user(username, password);
+  int32_t seqid = send_authenticate_user(request_metadata, username, password);
   recv_authenticate_user(_return, seqid);
 }
 
-int32_t TAccountServiceConcurrentClient::send_authenticate_user(const std::string& username, const std::string& password)
+int32_t TAccountServiceConcurrentClient::send_authenticate_user(const TRequestMetadata& request_metadata, const std::string& username, const std::string& password)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("authenticate_user", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_authenticate_user_pargs args;
+  args.request_metadata = &request_metadata;
   args.username = &username;
   args.password = &password;
   args.write(oprot_);
@@ -2368,19 +2403,20 @@ void TAccountServiceConcurrentClient::recv_authenticate_user(TAccount& _return, 
   } // end while(true)
 }
 
-void TAccountServiceConcurrentClient::create_account(TAccount& _return, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name)
+void TAccountServiceConcurrentClient::create_account(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name)
 {
-  int32_t seqid = send_create_account(username, password, first_name, last_name);
+  int32_t seqid = send_create_account(request_metadata, username, password, first_name, last_name);
   recv_create_account(_return, seqid);
 }
 
-int32_t TAccountServiceConcurrentClient::send_create_account(const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name)
+int32_t TAccountServiceConcurrentClient::send_create_account(const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("create_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_create_account_pargs args;
+  args.request_metadata = &request_metadata;
   args.username = &username;
   args.password = &password;
   args.first_name = &first_name;
@@ -2463,20 +2499,20 @@ void TAccountServiceConcurrentClient::recv_create_account(TAccount& _return, con
   } // end while(true)
 }
 
-void TAccountServiceConcurrentClient::retrieve_standard_account(TAccount& _return, const int32_t requester_id, const int32_t account_id)
+void TAccountServiceConcurrentClient::retrieve_standard_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  int32_t seqid = send_retrieve_standard_account(requester_id, account_id);
+  int32_t seqid = send_retrieve_standard_account(request_metadata, account_id);
   recv_retrieve_standard_account(_return, seqid);
 }
 
-int32_t TAccountServiceConcurrentClient::send_retrieve_standard_account(const int32_t requester_id, const int32_t account_id)
+int32_t TAccountServiceConcurrentClient::send_retrieve_standard_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("retrieve_standard_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_retrieve_standard_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -2552,20 +2588,20 @@ void TAccountServiceConcurrentClient::recv_retrieve_standard_account(TAccount& _
   } // end while(true)
 }
 
-void TAccountServiceConcurrentClient::retrieve_expanded_account(TAccount& _return, const int32_t requester_id, const int32_t account_id)
+void TAccountServiceConcurrentClient::retrieve_expanded_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  int32_t seqid = send_retrieve_expanded_account(requester_id, account_id);
+  int32_t seqid = send_retrieve_expanded_account(request_metadata, account_id);
   recv_retrieve_expanded_account(_return, seqid);
 }
 
-int32_t TAccountServiceConcurrentClient::send_retrieve_expanded_account(const int32_t requester_id, const int32_t account_id)
+int32_t TAccountServiceConcurrentClient::send_retrieve_expanded_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("retrieve_expanded_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_retrieve_expanded_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -2641,20 +2677,20 @@ void TAccountServiceConcurrentClient::recv_retrieve_expanded_account(TAccount& _
   } // end while(true)
 }
 
-void TAccountServiceConcurrentClient::update_account(TAccount& _return, const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name)
+void TAccountServiceConcurrentClient::update_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name)
 {
-  int32_t seqid = send_update_account(requester_id, account_id, password, first_name, last_name);
+  int32_t seqid = send_update_account(request_metadata, account_id, password, first_name, last_name);
   recv_update_account(_return, seqid);
 }
 
-int32_t TAccountServiceConcurrentClient::send_update_account(const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name)
+int32_t TAccountServiceConcurrentClient::send_update_account(const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("update_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_update_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.password = &password;
   args.first_name = &first_name;
@@ -2741,20 +2777,20 @@ void TAccountServiceConcurrentClient::recv_update_account(TAccount& _return, con
   } // end while(true)
 }
 
-void TAccountServiceConcurrentClient::delete_account(const int32_t requester_id, const int32_t account_id)
+void TAccountServiceConcurrentClient::delete_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  int32_t seqid = send_delete_account(requester_id, account_id);
+  int32_t seqid = send_delete_account(request_metadata, account_id);
   recv_delete_account(seqid);
 }
 
-int32_t TAccountServiceConcurrentClient::send_delete_account(const int32_t requester_id, const int32_t account_id)
+int32_t TAccountServiceConcurrentClient::send_delete_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("delete_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TAccountService_delete_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 

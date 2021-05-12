@@ -22,12 +22,12 @@ namespace gen {
 class TPostServiceIf {
  public:
   virtual ~TPostServiceIf() {}
-  virtual void create_post(TPost& _return, const int32_t requester_id, const std::string& text) = 0;
-  virtual void retrieve_standard_post(TPost& _return, const int32_t requester_id, const int32_t post_id) = 0;
-  virtual void retrieve_expanded_post(TPost& _return, const int32_t requester_id, const int32_t post_id) = 0;
-  virtual void delete_post(const int32_t requester_id, const int32_t post_id) = 0;
-  virtual void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset) = 0;
-  virtual int32_t count_posts_by_author(const int32_t requester_id, const int32_t author_id) = 0;
+  virtual void create_post(TPost& _return, const TRequestMetadata& request_metadata, const std::string& text) = 0;
+  virtual void retrieve_standard_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id) = 0;
+  virtual void retrieve_expanded_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id) = 0;
+  virtual void delete_post(const TRequestMetadata& request_metadata, const int32_t post_id) = 0;
+  virtual void list_posts(std::vector<TPost> & _return, const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset) = 0;
+  virtual int32_t count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id) = 0;
 };
 
 class TPostServiceIfFactory {
@@ -57,30 +57,30 @@ class TPostServiceIfSingletonFactory : virtual public TPostServiceIfFactory {
 class TPostServiceNull : virtual public TPostServiceIf {
  public:
   virtual ~TPostServiceNull() {}
-  void create_post(TPost& /* _return */, const int32_t /* requester_id */, const std::string& /* text */) {
+  void create_post(TPost& /* _return */, const TRequestMetadata& /* request_metadata */, const std::string& /* text */) {
     return;
   }
-  void retrieve_standard_post(TPost& /* _return */, const int32_t /* requester_id */, const int32_t /* post_id */) {
+  void retrieve_standard_post(TPost& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* post_id */) {
     return;
   }
-  void retrieve_expanded_post(TPost& /* _return */, const int32_t /* requester_id */, const int32_t /* post_id */) {
+  void retrieve_expanded_post(TPost& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* post_id */) {
     return;
   }
-  void delete_post(const int32_t /* requester_id */, const int32_t /* post_id */) {
+  void delete_post(const TRequestMetadata& /* request_metadata */, const int32_t /* post_id */) {
     return;
   }
-  void list_posts(std::vector<TPost> & /* _return */, const int32_t /* requester_id */, const TPostQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
+  void list_posts(std::vector<TPost> & /* _return */, const TRequestMetadata& /* request_metadata */, const TPostQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
     return;
   }
-  int32_t count_posts_by_author(const int32_t /* requester_id */, const int32_t /* author_id */) {
+  int32_t count_posts_by_author(const TRequestMetadata& /* request_metadata */, const int32_t /* author_id */) {
     int32_t _return = 0;
     return _return;
   }
 };
 
 typedef struct _TPostService_create_post_args__isset {
-  _TPostService_create_post_args__isset() : requester_id(false), text(false) {}
-  bool requester_id :1;
+  _TPostService_create_post_args__isset() : request_metadata(false), text(false) {}
+  bool request_metadata :1;
   bool text :1;
 } _TPostService_create_post_args__isset;
 
@@ -89,22 +89,22 @@ class TPostService_create_post_args {
 
   TPostService_create_post_args(const TPostService_create_post_args&);
   TPostService_create_post_args& operator=(const TPostService_create_post_args&);
-  TPostService_create_post_args() : requester_id(0), text() {
+  TPostService_create_post_args() : text() {
   }
 
   virtual ~TPostService_create_post_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   std::string text;
 
   _TPostService_create_post_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_text(const std::string& val);
 
   bool operator == (const TPostService_create_post_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(text == rhs.text))
       return false;
@@ -127,7 +127,7 @@ class TPostService_create_post_pargs {
 
 
   virtual ~TPostService_create_post_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const std::string* text;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -198,8 +198,8 @@ class TPostService_create_post_presult {
 };
 
 typedef struct _TPostService_retrieve_standard_post_args__isset {
-  _TPostService_retrieve_standard_post_args__isset() : requester_id(false), post_id(false) {}
-  bool requester_id :1;
+  _TPostService_retrieve_standard_post_args__isset() : request_metadata(false), post_id(false) {}
+  bool request_metadata :1;
   bool post_id :1;
 } _TPostService_retrieve_standard_post_args__isset;
 
@@ -208,22 +208,22 @@ class TPostService_retrieve_standard_post_args {
 
   TPostService_retrieve_standard_post_args(const TPostService_retrieve_standard_post_args&);
   TPostService_retrieve_standard_post_args& operator=(const TPostService_retrieve_standard_post_args&);
-  TPostService_retrieve_standard_post_args() : requester_id(0), post_id(0) {
+  TPostService_retrieve_standard_post_args() : post_id(0) {
   }
 
   virtual ~TPostService_retrieve_standard_post_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t post_id;
 
   _TPostService_retrieve_standard_post_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_post_id(const int32_t val);
 
   bool operator == (const TPostService_retrieve_standard_post_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(post_id == rhs.post_id))
       return false;
@@ -246,7 +246,7 @@ class TPostService_retrieve_standard_post_pargs {
 
 
   virtual ~TPostService_retrieve_standard_post_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* post_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -317,8 +317,8 @@ class TPostService_retrieve_standard_post_presult {
 };
 
 typedef struct _TPostService_retrieve_expanded_post_args__isset {
-  _TPostService_retrieve_expanded_post_args__isset() : requester_id(false), post_id(false) {}
-  bool requester_id :1;
+  _TPostService_retrieve_expanded_post_args__isset() : request_metadata(false), post_id(false) {}
+  bool request_metadata :1;
   bool post_id :1;
 } _TPostService_retrieve_expanded_post_args__isset;
 
@@ -327,22 +327,22 @@ class TPostService_retrieve_expanded_post_args {
 
   TPostService_retrieve_expanded_post_args(const TPostService_retrieve_expanded_post_args&);
   TPostService_retrieve_expanded_post_args& operator=(const TPostService_retrieve_expanded_post_args&);
-  TPostService_retrieve_expanded_post_args() : requester_id(0), post_id(0) {
+  TPostService_retrieve_expanded_post_args() : post_id(0) {
   }
 
   virtual ~TPostService_retrieve_expanded_post_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t post_id;
 
   _TPostService_retrieve_expanded_post_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_post_id(const int32_t val);
 
   bool operator == (const TPostService_retrieve_expanded_post_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(post_id == rhs.post_id))
       return false;
@@ -365,7 +365,7 @@ class TPostService_retrieve_expanded_post_pargs {
 
 
   virtual ~TPostService_retrieve_expanded_post_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* post_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -444,8 +444,8 @@ class TPostService_retrieve_expanded_post_presult {
 };
 
 typedef struct _TPostService_delete_post_args__isset {
-  _TPostService_delete_post_args__isset() : requester_id(false), post_id(false) {}
-  bool requester_id :1;
+  _TPostService_delete_post_args__isset() : request_metadata(false), post_id(false) {}
+  bool request_metadata :1;
   bool post_id :1;
 } _TPostService_delete_post_args__isset;
 
@@ -454,22 +454,22 @@ class TPostService_delete_post_args {
 
   TPostService_delete_post_args(const TPostService_delete_post_args&);
   TPostService_delete_post_args& operator=(const TPostService_delete_post_args&);
-  TPostService_delete_post_args() : requester_id(0), post_id(0) {
+  TPostService_delete_post_args() : post_id(0) {
   }
 
   virtual ~TPostService_delete_post_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t post_id;
 
   _TPostService_delete_post_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_post_id(const int32_t val);
 
   bool operator == (const TPostService_delete_post_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(post_id == rhs.post_id))
       return false;
@@ -492,7 +492,7 @@ class TPostService_delete_post_pargs {
 
 
   virtual ~TPostService_delete_post_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* post_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -563,8 +563,8 @@ class TPostService_delete_post_presult {
 };
 
 typedef struct _TPostService_list_posts_args__isset {
-  _TPostService_list_posts_args__isset() : requester_id(false), query(false), limit(false), offset(false) {}
-  bool requester_id :1;
+  _TPostService_list_posts_args__isset() : request_metadata(false), query(false), limit(false), offset(false) {}
+  bool request_metadata :1;
   bool query :1;
   bool limit :1;
   bool offset :1;
@@ -575,18 +575,18 @@ class TPostService_list_posts_args {
 
   TPostService_list_posts_args(const TPostService_list_posts_args&);
   TPostService_list_posts_args& operator=(const TPostService_list_posts_args&);
-  TPostService_list_posts_args() : requester_id(0), limit(0), offset(0) {
+  TPostService_list_posts_args() : limit(0), offset(0) {
   }
 
   virtual ~TPostService_list_posts_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   TPostQuery query;
   int32_t limit;
   int32_t offset;
 
   _TPostService_list_posts_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_query(const TPostQuery& val);
 
@@ -596,7 +596,7 @@ class TPostService_list_posts_args {
 
   bool operator == (const TPostService_list_posts_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(query == rhs.query))
       return false;
@@ -623,7 +623,7 @@ class TPostService_list_posts_pargs {
 
 
   virtual ~TPostService_list_posts_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const TPostQuery* query;
   const int32_t* limit;
   const int32_t* offset;
@@ -696,8 +696,8 @@ class TPostService_list_posts_presult {
 };
 
 typedef struct _TPostService_count_posts_by_author_args__isset {
-  _TPostService_count_posts_by_author_args__isset() : requester_id(false), author_id(false) {}
-  bool requester_id :1;
+  _TPostService_count_posts_by_author_args__isset() : request_metadata(false), author_id(false) {}
+  bool request_metadata :1;
   bool author_id :1;
 } _TPostService_count_posts_by_author_args__isset;
 
@@ -706,22 +706,22 @@ class TPostService_count_posts_by_author_args {
 
   TPostService_count_posts_by_author_args(const TPostService_count_posts_by_author_args&);
   TPostService_count_posts_by_author_args& operator=(const TPostService_count_posts_by_author_args&);
-  TPostService_count_posts_by_author_args() : requester_id(0), author_id(0) {
+  TPostService_count_posts_by_author_args() : author_id(0) {
   }
 
   virtual ~TPostService_count_posts_by_author_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t author_id;
 
   _TPostService_count_posts_by_author_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_author_id(const int32_t val);
 
   bool operator == (const TPostService_count_posts_by_author_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(author_id == rhs.author_id))
       return false;
@@ -744,7 +744,7 @@ class TPostService_count_posts_by_author_pargs {
 
 
   virtual ~TPostService_count_posts_by_author_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* author_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -831,23 +831,23 @@ class TPostServiceClient : virtual public TPostServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void create_post(TPost& _return, const int32_t requester_id, const std::string& text);
-  void send_create_post(const int32_t requester_id, const std::string& text);
+  void create_post(TPost& _return, const TRequestMetadata& request_metadata, const std::string& text);
+  void send_create_post(const TRequestMetadata& request_metadata, const std::string& text);
   void recv_create_post(TPost& _return);
-  void retrieve_standard_post(TPost& _return, const int32_t requester_id, const int32_t post_id);
-  void send_retrieve_standard_post(const int32_t requester_id, const int32_t post_id);
+  void retrieve_standard_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id);
+  void send_retrieve_standard_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   void recv_retrieve_standard_post(TPost& _return);
-  void retrieve_expanded_post(TPost& _return, const int32_t requester_id, const int32_t post_id);
-  void send_retrieve_expanded_post(const int32_t requester_id, const int32_t post_id);
+  void retrieve_expanded_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id);
+  void send_retrieve_expanded_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   void recv_retrieve_expanded_post(TPost& _return);
-  void delete_post(const int32_t requester_id, const int32_t post_id);
-  void send_delete_post(const int32_t requester_id, const int32_t post_id);
+  void delete_post(const TRequestMetadata& request_metadata, const int32_t post_id);
+  void send_delete_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   void recv_delete_post();
-  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset);
-  void send_list_posts(const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset);
+  void list_posts(std::vector<TPost> & _return, const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset);
+  void send_list_posts(const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_posts(std::vector<TPost> & _return);
-  int32_t count_posts_by_author(const int32_t requester_id, const int32_t author_id);
-  void send_count_posts_by_author(const int32_t requester_id, const int32_t author_id);
+  int32_t count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id);
+  void send_count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id);
   int32_t recv_count_posts_by_author();
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
@@ -907,62 +907,62 @@ class TPostServiceMultiface : virtual public TPostServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  void create_post(TPost& _return, const int32_t requester_id, const std::string& text) {
+  void create_post(TPost& _return, const TRequestMetadata& request_metadata, const std::string& text) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->create_post(_return, requester_id, text);
+      ifaces_[i]->create_post(_return, request_metadata, text);
     }
-    ifaces_[i]->create_post(_return, requester_id, text);
+    ifaces_[i]->create_post(_return, request_metadata, text);
     return;
   }
 
-  void retrieve_standard_post(TPost& _return, const int32_t requester_id, const int32_t post_id) {
+  void retrieve_standard_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->retrieve_standard_post(_return, requester_id, post_id);
+      ifaces_[i]->retrieve_standard_post(_return, request_metadata, post_id);
     }
-    ifaces_[i]->retrieve_standard_post(_return, requester_id, post_id);
+    ifaces_[i]->retrieve_standard_post(_return, request_metadata, post_id);
     return;
   }
 
-  void retrieve_expanded_post(TPost& _return, const int32_t requester_id, const int32_t post_id) {
+  void retrieve_expanded_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->retrieve_expanded_post(_return, requester_id, post_id);
+      ifaces_[i]->retrieve_expanded_post(_return, request_metadata, post_id);
     }
-    ifaces_[i]->retrieve_expanded_post(_return, requester_id, post_id);
+    ifaces_[i]->retrieve_expanded_post(_return, request_metadata, post_id);
     return;
   }
 
-  void delete_post(const int32_t requester_id, const int32_t post_id) {
+  void delete_post(const TRequestMetadata& request_metadata, const int32_t post_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->delete_post(requester_id, post_id);
+      ifaces_[i]->delete_post(request_metadata, post_id);
     }
-    ifaces_[i]->delete_post(requester_id, post_id);
+    ifaces_[i]->delete_post(request_metadata, post_id);
   }
 
-  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset) {
+  void list_posts(std::vector<TPost> & _return, const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->list_posts(_return, requester_id, query, limit, offset);
+      ifaces_[i]->list_posts(_return, request_metadata, query, limit, offset);
     }
-    ifaces_[i]->list_posts(_return, requester_id, query, limit, offset);
+    ifaces_[i]->list_posts(_return, request_metadata, query, limit, offset);
     return;
   }
 
-  int32_t count_posts_by_author(const int32_t requester_id, const int32_t author_id) {
+  int32_t count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->count_posts_by_author(requester_id, author_id);
+      ifaces_[i]->count_posts_by_author(request_metadata, author_id);
     }
-    return ifaces_[i]->count_posts_by_author(requester_id, author_id);
+    return ifaces_[i]->count_posts_by_author(request_metadata, author_id);
   }
 
 };
@@ -997,23 +997,23 @@ class TPostServiceConcurrentClient : virtual public TPostServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void create_post(TPost& _return, const int32_t requester_id, const std::string& text);
-  int32_t send_create_post(const int32_t requester_id, const std::string& text);
+  void create_post(TPost& _return, const TRequestMetadata& request_metadata, const std::string& text);
+  int32_t send_create_post(const TRequestMetadata& request_metadata, const std::string& text);
   void recv_create_post(TPost& _return, const int32_t seqid);
-  void retrieve_standard_post(TPost& _return, const int32_t requester_id, const int32_t post_id);
-  int32_t send_retrieve_standard_post(const int32_t requester_id, const int32_t post_id);
+  void retrieve_standard_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id);
+  int32_t send_retrieve_standard_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   void recv_retrieve_standard_post(TPost& _return, const int32_t seqid);
-  void retrieve_expanded_post(TPost& _return, const int32_t requester_id, const int32_t post_id);
-  int32_t send_retrieve_expanded_post(const int32_t requester_id, const int32_t post_id);
+  void retrieve_expanded_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id);
+  int32_t send_retrieve_expanded_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   void recv_retrieve_expanded_post(TPost& _return, const int32_t seqid);
-  void delete_post(const int32_t requester_id, const int32_t post_id);
-  int32_t send_delete_post(const int32_t requester_id, const int32_t post_id);
+  void delete_post(const TRequestMetadata& request_metadata, const int32_t post_id);
+  int32_t send_delete_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   void recv_delete_post(const int32_t seqid);
-  void list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset);
-  int32_t send_list_posts(const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset);
+  void list_posts(std::vector<TPost> & _return, const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset);
+  int32_t send_list_posts(const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_posts(std::vector<TPost> & _return, const int32_t seqid);
-  int32_t count_posts_by_author(const int32_t requester_id, const int32_t author_id);
-  int32_t send_count_posts_by_author(const int32_t requester_id, const int32_t author_id);
+  int32_t count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id);
+  int32_t send_count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id);
   int32_t recv_count_posts_by_author(const int32_t seqid);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;

@@ -22,13 +22,13 @@ namespace gen {
 class TLikeServiceIf {
  public:
   virtual ~TLikeServiceIf() {}
-  virtual void like_post(TLike& _return, const int32_t requester_id, const int32_t post_id) = 0;
-  virtual void retrieve_standard_like(TLike& _return, const int32_t requester_id, const int32_t like_id) = 0;
-  virtual void retrieve_expanded_like(TLike& _return, const int32_t requester_id, const int32_t like_id) = 0;
-  virtual void delete_like(const int32_t requester_id, const int32_t like_id) = 0;
-  virtual void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset) = 0;
-  virtual int32_t count_likes_by_account(const int32_t requester_id, const int32_t account_id) = 0;
-  virtual int32_t count_likes_of_post(const int32_t requester_id, const int32_t post_id) = 0;
+  virtual void like_post(TLike& _return, const TRequestMetadata& request_metadata, const int32_t post_id) = 0;
+  virtual void retrieve_standard_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id) = 0;
+  virtual void retrieve_expanded_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id) = 0;
+  virtual void delete_like(const TRequestMetadata& request_metadata, const int32_t like_id) = 0;
+  virtual void list_likes(std::vector<TLike> & _return, const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset) = 0;
+  virtual int32_t count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id) = 0;
+  virtual int32_t count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id) = 0;
 };
 
 class TLikeServiceIfFactory {
@@ -58,34 +58,34 @@ class TLikeServiceIfSingletonFactory : virtual public TLikeServiceIfFactory {
 class TLikeServiceNull : virtual public TLikeServiceIf {
  public:
   virtual ~TLikeServiceNull() {}
-  void like_post(TLike& /* _return */, const int32_t /* requester_id */, const int32_t /* post_id */) {
+  void like_post(TLike& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* post_id */) {
     return;
   }
-  void retrieve_standard_like(TLike& /* _return */, const int32_t /* requester_id */, const int32_t /* like_id */) {
+  void retrieve_standard_like(TLike& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* like_id */) {
     return;
   }
-  void retrieve_expanded_like(TLike& /* _return */, const int32_t /* requester_id */, const int32_t /* like_id */) {
+  void retrieve_expanded_like(TLike& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* like_id */) {
     return;
   }
-  void delete_like(const int32_t /* requester_id */, const int32_t /* like_id */) {
+  void delete_like(const TRequestMetadata& /* request_metadata */, const int32_t /* like_id */) {
     return;
   }
-  void list_likes(std::vector<TLike> & /* _return */, const int32_t /* requester_id */, const TLikeQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
+  void list_likes(std::vector<TLike> & /* _return */, const TRequestMetadata& /* request_metadata */, const TLikeQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
     return;
   }
-  int32_t count_likes_by_account(const int32_t /* requester_id */, const int32_t /* account_id */) {
+  int32_t count_likes_by_account(const TRequestMetadata& /* request_metadata */, const int32_t /* account_id */) {
     int32_t _return = 0;
     return _return;
   }
-  int32_t count_likes_of_post(const int32_t /* requester_id */, const int32_t /* post_id */) {
+  int32_t count_likes_of_post(const TRequestMetadata& /* request_metadata */, const int32_t /* post_id */) {
     int32_t _return = 0;
     return _return;
   }
 };
 
 typedef struct _TLikeService_like_post_args__isset {
-  _TLikeService_like_post_args__isset() : requester_id(false), post_id(false) {}
-  bool requester_id :1;
+  _TLikeService_like_post_args__isset() : request_metadata(false), post_id(false) {}
+  bool request_metadata :1;
   bool post_id :1;
 } _TLikeService_like_post_args__isset;
 
@@ -94,22 +94,22 @@ class TLikeService_like_post_args {
 
   TLikeService_like_post_args(const TLikeService_like_post_args&);
   TLikeService_like_post_args& operator=(const TLikeService_like_post_args&);
-  TLikeService_like_post_args() : requester_id(0), post_id(0) {
+  TLikeService_like_post_args() : post_id(0) {
   }
 
   virtual ~TLikeService_like_post_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t post_id;
 
   _TLikeService_like_post_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_post_id(const int32_t val);
 
   bool operator == (const TLikeService_like_post_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(post_id == rhs.post_id))
       return false;
@@ -132,7 +132,7 @@ class TLikeService_like_post_pargs {
 
 
   virtual ~TLikeService_like_post_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* post_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -203,8 +203,8 @@ class TLikeService_like_post_presult {
 };
 
 typedef struct _TLikeService_retrieve_standard_like_args__isset {
-  _TLikeService_retrieve_standard_like_args__isset() : requester_id(false), like_id(false) {}
-  bool requester_id :1;
+  _TLikeService_retrieve_standard_like_args__isset() : request_metadata(false), like_id(false) {}
+  bool request_metadata :1;
   bool like_id :1;
 } _TLikeService_retrieve_standard_like_args__isset;
 
@@ -213,22 +213,22 @@ class TLikeService_retrieve_standard_like_args {
 
   TLikeService_retrieve_standard_like_args(const TLikeService_retrieve_standard_like_args&);
   TLikeService_retrieve_standard_like_args& operator=(const TLikeService_retrieve_standard_like_args&);
-  TLikeService_retrieve_standard_like_args() : requester_id(0), like_id(0) {
+  TLikeService_retrieve_standard_like_args() : like_id(0) {
   }
 
   virtual ~TLikeService_retrieve_standard_like_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t like_id;
 
   _TLikeService_retrieve_standard_like_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_like_id(const int32_t val);
 
   bool operator == (const TLikeService_retrieve_standard_like_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(like_id == rhs.like_id))
       return false;
@@ -251,7 +251,7 @@ class TLikeService_retrieve_standard_like_pargs {
 
 
   virtual ~TLikeService_retrieve_standard_like_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* like_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -322,8 +322,8 @@ class TLikeService_retrieve_standard_like_presult {
 };
 
 typedef struct _TLikeService_retrieve_expanded_like_args__isset {
-  _TLikeService_retrieve_expanded_like_args__isset() : requester_id(false), like_id(false) {}
-  bool requester_id :1;
+  _TLikeService_retrieve_expanded_like_args__isset() : request_metadata(false), like_id(false) {}
+  bool request_metadata :1;
   bool like_id :1;
 } _TLikeService_retrieve_expanded_like_args__isset;
 
@@ -332,22 +332,22 @@ class TLikeService_retrieve_expanded_like_args {
 
   TLikeService_retrieve_expanded_like_args(const TLikeService_retrieve_expanded_like_args&);
   TLikeService_retrieve_expanded_like_args& operator=(const TLikeService_retrieve_expanded_like_args&);
-  TLikeService_retrieve_expanded_like_args() : requester_id(0), like_id(0) {
+  TLikeService_retrieve_expanded_like_args() : like_id(0) {
   }
 
   virtual ~TLikeService_retrieve_expanded_like_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t like_id;
 
   _TLikeService_retrieve_expanded_like_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_like_id(const int32_t val);
 
   bool operator == (const TLikeService_retrieve_expanded_like_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(like_id == rhs.like_id))
       return false;
@@ -370,7 +370,7 @@ class TLikeService_retrieve_expanded_like_pargs {
 
 
   virtual ~TLikeService_retrieve_expanded_like_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* like_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -457,8 +457,8 @@ class TLikeService_retrieve_expanded_like_presult {
 };
 
 typedef struct _TLikeService_delete_like_args__isset {
-  _TLikeService_delete_like_args__isset() : requester_id(false), like_id(false) {}
-  bool requester_id :1;
+  _TLikeService_delete_like_args__isset() : request_metadata(false), like_id(false) {}
+  bool request_metadata :1;
   bool like_id :1;
 } _TLikeService_delete_like_args__isset;
 
@@ -467,22 +467,22 @@ class TLikeService_delete_like_args {
 
   TLikeService_delete_like_args(const TLikeService_delete_like_args&);
   TLikeService_delete_like_args& operator=(const TLikeService_delete_like_args&);
-  TLikeService_delete_like_args() : requester_id(0), like_id(0) {
+  TLikeService_delete_like_args() : like_id(0) {
   }
 
   virtual ~TLikeService_delete_like_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t like_id;
 
   _TLikeService_delete_like_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_like_id(const int32_t val);
 
   bool operator == (const TLikeService_delete_like_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(like_id == rhs.like_id))
       return false;
@@ -505,7 +505,7 @@ class TLikeService_delete_like_pargs {
 
 
   virtual ~TLikeService_delete_like_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* like_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -576,8 +576,8 @@ class TLikeService_delete_like_presult {
 };
 
 typedef struct _TLikeService_list_likes_args__isset {
-  _TLikeService_list_likes_args__isset() : requester_id(false), query(false), limit(false), offset(false) {}
-  bool requester_id :1;
+  _TLikeService_list_likes_args__isset() : request_metadata(false), query(false), limit(false), offset(false) {}
+  bool request_metadata :1;
   bool query :1;
   bool limit :1;
   bool offset :1;
@@ -588,18 +588,18 @@ class TLikeService_list_likes_args {
 
   TLikeService_list_likes_args(const TLikeService_list_likes_args&);
   TLikeService_list_likes_args& operator=(const TLikeService_list_likes_args&);
-  TLikeService_list_likes_args() : requester_id(0), limit(0), offset(0) {
+  TLikeService_list_likes_args() : limit(0), offset(0) {
   }
 
   virtual ~TLikeService_list_likes_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   TLikeQuery query;
   int32_t limit;
   int32_t offset;
 
   _TLikeService_list_likes_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_query(const TLikeQuery& val);
 
@@ -609,7 +609,7 @@ class TLikeService_list_likes_args {
 
   bool operator == (const TLikeService_list_likes_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(query == rhs.query))
       return false;
@@ -636,7 +636,7 @@ class TLikeService_list_likes_pargs {
 
 
   virtual ~TLikeService_list_likes_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const TLikeQuery* query;
   const int32_t* limit;
   const int32_t* offset;
@@ -717,8 +717,8 @@ class TLikeService_list_likes_presult {
 };
 
 typedef struct _TLikeService_count_likes_by_account_args__isset {
-  _TLikeService_count_likes_by_account_args__isset() : requester_id(false), account_id(false) {}
-  bool requester_id :1;
+  _TLikeService_count_likes_by_account_args__isset() : request_metadata(false), account_id(false) {}
+  bool request_metadata :1;
   bool account_id :1;
 } _TLikeService_count_likes_by_account_args__isset;
 
@@ -727,22 +727,22 @@ class TLikeService_count_likes_by_account_args {
 
   TLikeService_count_likes_by_account_args(const TLikeService_count_likes_by_account_args&);
   TLikeService_count_likes_by_account_args& operator=(const TLikeService_count_likes_by_account_args&);
-  TLikeService_count_likes_by_account_args() : requester_id(0), account_id(0) {
+  TLikeService_count_likes_by_account_args() : account_id(0) {
   }
 
   virtual ~TLikeService_count_likes_by_account_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t account_id;
 
   _TLikeService_count_likes_by_account_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_account_id(const int32_t val);
 
   bool operator == (const TLikeService_count_likes_by_account_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(account_id == rhs.account_id))
       return false;
@@ -765,7 +765,7 @@ class TLikeService_count_likes_by_account_pargs {
 
 
   virtual ~TLikeService_count_likes_by_account_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* account_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -828,8 +828,8 @@ class TLikeService_count_likes_by_account_presult {
 };
 
 typedef struct _TLikeService_count_likes_of_post_args__isset {
-  _TLikeService_count_likes_of_post_args__isset() : requester_id(false), post_id(false) {}
-  bool requester_id :1;
+  _TLikeService_count_likes_of_post_args__isset() : request_metadata(false), post_id(false) {}
+  bool request_metadata :1;
   bool post_id :1;
 } _TLikeService_count_likes_of_post_args__isset;
 
@@ -838,22 +838,22 @@ class TLikeService_count_likes_of_post_args {
 
   TLikeService_count_likes_of_post_args(const TLikeService_count_likes_of_post_args&);
   TLikeService_count_likes_of_post_args& operator=(const TLikeService_count_likes_of_post_args&);
-  TLikeService_count_likes_of_post_args() : requester_id(0), post_id(0) {
+  TLikeService_count_likes_of_post_args() : post_id(0) {
   }
 
   virtual ~TLikeService_count_likes_of_post_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t post_id;
 
   _TLikeService_count_likes_of_post_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_post_id(const int32_t val);
 
   bool operator == (const TLikeService_count_likes_of_post_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(post_id == rhs.post_id))
       return false;
@@ -876,7 +876,7 @@ class TLikeService_count_likes_of_post_pargs {
 
 
   virtual ~TLikeService_count_likes_of_post_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* post_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -963,26 +963,26 @@ class TLikeServiceClient : virtual public TLikeServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void like_post(TLike& _return, const int32_t requester_id, const int32_t post_id);
-  void send_like_post(const int32_t requester_id, const int32_t post_id);
+  void like_post(TLike& _return, const TRequestMetadata& request_metadata, const int32_t post_id);
+  void send_like_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   void recv_like_post(TLike& _return);
-  void retrieve_standard_like(TLike& _return, const int32_t requester_id, const int32_t like_id);
-  void send_retrieve_standard_like(const int32_t requester_id, const int32_t like_id);
+  void retrieve_standard_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id);
+  void send_retrieve_standard_like(const TRequestMetadata& request_metadata, const int32_t like_id);
   void recv_retrieve_standard_like(TLike& _return);
-  void retrieve_expanded_like(TLike& _return, const int32_t requester_id, const int32_t like_id);
-  void send_retrieve_expanded_like(const int32_t requester_id, const int32_t like_id);
+  void retrieve_expanded_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id);
+  void send_retrieve_expanded_like(const TRequestMetadata& request_metadata, const int32_t like_id);
   void recv_retrieve_expanded_like(TLike& _return);
-  void delete_like(const int32_t requester_id, const int32_t like_id);
-  void send_delete_like(const int32_t requester_id, const int32_t like_id);
+  void delete_like(const TRequestMetadata& request_metadata, const int32_t like_id);
+  void send_delete_like(const TRequestMetadata& request_metadata, const int32_t like_id);
   void recv_delete_like();
-  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset);
-  void send_list_likes(const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset);
+  void list_likes(std::vector<TLike> & _return, const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset);
+  void send_list_likes(const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_likes(std::vector<TLike> & _return);
-  int32_t count_likes_by_account(const int32_t requester_id, const int32_t account_id);
-  void send_count_likes_by_account(const int32_t requester_id, const int32_t account_id);
+  int32_t count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id);
+  void send_count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   int32_t recv_count_likes_by_account();
-  int32_t count_likes_of_post(const int32_t requester_id, const int32_t post_id);
-  void send_count_likes_of_post(const int32_t requester_id, const int32_t post_id);
+  int32_t count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id);
+  void send_count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   int32_t recv_count_likes_of_post();
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
@@ -1044,71 +1044,71 @@ class TLikeServiceMultiface : virtual public TLikeServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  void like_post(TLike& _return, const int32_t requester_id, const int32_t post_id) {
+  void like_post(TLike& _return, const TRequestMetadata& request_metadata, const int32_t post_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->like_post(_return, requester_id, post_id);
+      ifaces_[i]->like_post(_return, request_metadata, post_id);
     }
-    ifaces_[i]->like_post(_return, requester_id, post_id);
+    ifaces_[i]->like_post(_return, request_metadata, post_id);
     return;
   }
 
-  void retrieve_standard_like(TLike& _return, const int32_t requester_id, const int32_t like_id) {
+  void retrieve_standard_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->retrieve_standard_like(_return, requester_id, like_id);
+      ifaces_[i]->retrieve_standard_like(_return, request_metadata, like_id);
     }
-    ifaces_[i]->retrieve_standard_like(_return, requester_id, like_id);
+    ifaces_[i]->retrieve_standard_like(_return, request_metadata, like_id);
     return;
   }
 
-  void retrieve_expanded_like(TLike& _return, const int32_t requester_id, const int32_t like_id) {
+  void retrieve_expanded_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->retrieve_expanded_like(_return, requester_id, like_id);
+      ifaces_[i]->retrieve_expanded_like(_return, request_metadata, like_id);
     }
-    ifaces_[i]->retrieve_expanded_like(_return, requester_id, like_id);
+    ifaces_[i]->retrieve_expanded_like(_return, request_metadata, like_id);
     return;
   }
 
-  void delete_like(const int32_t requester_id, const int32_t like_id) {
+  void delete_like(const TRequestMetadata& request_metadata, const int32_t like_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->delete_like(requester_id, like_id);
+      ifaces_[i]->delete_like(request_metadata, like_id);
     }
-    ifaces_[i]->delete_like(requester_id, like_id);
+    ifaces_[i]->delete_like(request_metadata, like_id);
   }
 
-  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset) {
+  void list_likes(std::vector<TLike> & _return, const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->list_likes(_return, requester_id, query, limit, offset);
+      ifaces_[i]->list_likes(_return, request_metadata, query, limit, offset);
     }
-    ifaces_[i]->list_likes(_return, requester_id, query, limit, offset);
+    ifaces_[i]->list_likes(_return, request_metadata, query, limit, offset);
     return;
   }
 
-  int32_t count_likes_by_account(const int32_t requester_id, const int32_t account_id) {
+  int32_t count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->count_likes_by_account(requester_id, account_id);
+      ifaces_[i]->count_likes_by_account(request_metadata, account_id);
     }
-    return ifaces_[i]->count_likes_by_account(requester_id, account_id);
+    return ifaces_[i]->count_likes_by_account(request_metadata, account_id);
   }
 
-  int32_t count_likes_of_post(const int32_t requester_id, const int32_t post_id) {
+  int32_t count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->count_likes_of_post(requester_id, post_id);
+      ifaces_[i]->count_likes_of_post(request_metadata, post_id);
     }
-    return ifaces_[i]->count_likes_of_post(requester_id, post_id);
+    return ifaces_[i]->count_likes_of_post(request_metadata, post_id);
   }
 
 };
@@ -1143,26 +1143,26 @@ class TLikeServiceConcurrentClient : virtual public TLikeServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void like_post(TLike& _return, const int32_t requester_id, const int32_t post_id);
-  int32_t send_like_post(const int32_t requester_id, const int32_t post_id);
+  void like_post(TLike& _return, const TRequestMetadata& request_metadata, const int32_t post_id);
+  int32_t send_like_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   void recv_like_post(TLike& _return, const int32_t seqid);
-  void retrieve_standard_like(TLike& _return, const int32_t requester_id, const int32_t like_id);
-  int32_t send_retrieve_standard_like(const int32_t requester_id, const int32_t like_id);
+  void retrieve_standard_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id);
+  int32_t send_retrieve_standard_like(const TRequestMetadata& request_metadata, const int32_t like_id);
   void recv_retrieve_standard_like(TLike& _return, const int32_t seqid);
-  void retrieve_expanded_like(TLike& _return, const int32_t requester_id, const int32_t like_id);
-  int32_t send_retrieve_expanded_like(const int32_t requester_id, const int32_t like_id);
+  void retrieve_expanded_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id);
+  int32_t send_retrieve_expanded_like(const TRequestMetadata& request_metadata, const int32_t like_id);
   void recv_retrieve_expanded_like(TLike& _return, const int32_t seqid);
-  void delete_like(const int32_t requester_id, const int32_t like_id);
-  int32_t send_delete_like(const int32_t requester_id, const int32_t like_id);
+  void delete_like(const TRequestMetadata& request_metadata, const int32_t like_id);
+  int32_t send_delete_like(const TRequestMetadata& request_metadata, const int32_t like_id);
   void recv_delete_like(const int32_t seqid);
-  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset);
-  int32_t send_list_likes(const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset);
+  void list_likes(std::vector<TLike> & _return, const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset);
+  int32_t send_list_likes(const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset);
   void recv_list_likes(std::vector<TLike> & _return, const int32_t seqid);
-  int32_t count_likes_by_account(const int32_t requester_id, const int32_t account_id);
-  int32_t send_count_likes_by_account(const int32_t requester_id, const int32_t account_id);
+  int32_t count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id);
+  int32_t send_count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   int32_t recv_count_likes_by_account(const int32_t seqid);
-  int32_t count_likes_of_post(const int32_t requester_id, const int32_t post_id);
-  int32_t send_count_likes_of_post(const int32_t requester_id, const int32_t post_id);
+  int32_t count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id);
+  int32_t send_count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id);
   int32_t recv_count_likes_of_post(const int32_t seqid);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;

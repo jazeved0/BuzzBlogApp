@@ -20,32 +20,32 @@ class TAccountServiceHandler : virtual public TAccountServiceIf {
     // Your initialization goes here
   }
 
-  void authenticate_user(TAccount& _return, const std::string& username, const std::string& password) {
+  void authenticate_user(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password) {
     // Your implementation goes here
     printf("authenticate_user\n");
   }
 
-  void create_account(TAccount& _return, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name) {
+  void create_account(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name) {
     // Your implementation goes here
     printf("create_account\n");
   }
 
-  void retrieve_standard_account(TAccount& _return, const int32_t requester_id, const int32_t account_id) {
+  void retrieve_standard_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id) {
     // Your implementation goes here
     printf("retrieve_standard_account\n");
   }
 
-  void retrieve_expanded_account(TAccount& _return, const int32_t requester_id, const int32_t account_id) {
+  void retrieve_expanded_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id) {
     // Your implementation goes here
     printf("retrieve_expanded_account\n");
   }
 
-  void update_account(TAccount& _return, const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name) {
+  void update_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name) {
     // Your implementation goes here
     printf("update_account\n");
   }
 
-  void delete_account(const int32_t requester_id, const int32_t account_id) {
+  void delete_account(const TRequestMetadata& request_metadata, const int32_t account_id) {
     // Your implementation goes here
     printf("delete_account\n");
   }

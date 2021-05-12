@@ -35,9 +35,9 @@ uint32_t TLikeService_like_post_args::read(::apache::thrift::protocol::TProtocol
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -67,8 +67,8 @@ uint32_t TLikeService_like_post_args::write(::apache::thrift::protocol::TProtoco
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_like_post_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -90,8 +90,8 @@ uint32_t TLikeService_like_post_pargs::write(::apache::thrift::protocol::TProtoc
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_like_post_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -258,9 +258,9 @@ uint32_t TLikeService_retrieve_standard_like_args::read(::apache::thrift::protoc
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -290,8 +290,8 @@ uint32_t TLikeService_retrieve_standard_like_args::write(::apache::thrift::proto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_retrieve_standard_like_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("like_id", ::apache::thrift::protocol::T_I32, 2);
@@ -313,8 +313,8 @@ uint32_t TLikeService_retrieve_standard_like_pargs::write(::apache::thrift::prot
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_retrieve_standard_like_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("like_id", ::apache::thrift::protocol::T_I32, 2);
@@ -481,9 +481,9 @@ uint32_t TLikeService_retrieve_expanded_like_args::read(::apache::thrift::protoc
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -513,8 +513,8 @@ uint32_t TLikeService_retrieve_expanded_like_args::write(::apache::thrift::proto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_retrieve_expanded_like_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("like_id", ::apache::thrift::protocol::T_I32, 2);
@@ -536,8 +536,8 @@ uint32_t TLikeService_retrieve_expanded_like_pargs::write(::apache::thrift::prot
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_retrieve_expanded_like_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("like_id", ::apache::thrift::protocol::T_I32, 2);
@@ -744,9 +744,9 @@ uint32_t TLikeService_delete_like_args::read(::apache::thrift::protocol::TProtoc
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -776,8 +776,8 @@ uint32_t TLikeService_delete_like_args::write(::apache::thrift::protocol::TProto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_delete_like_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("like_id", ::apache::thrift::protocol::T_I32, 2);
@@ -799,8 +799,8 @@ uint32_t TLikeService_delete_like_pargs::write(::apache::thrift::protocol::TProt
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_delete_like_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("like_id", ::apache::thrift::protocol::T_I32, 2);
@@ -967,9 +967,9 @@ uint32_t TLikeService_list_likes_args::read(::apache::thrift::protocol::TProtoco
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1015,8 +1015,8 @@ uint32_t TLikeService_list_likes_args::write(::apache::thrift::protocol::TProtoc
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_list_likes_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
@@ -1046,8 +1046,8 @@ uint32_t TLikeService_list_likes_pargs::write(::apache::thrift::protocol::TProto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_list_likes_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
@@ -1097,14 +1097,14 @@ uint32_t TLikeService_list_likes_result::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size63;
-            ::apache::thrift::protocol::TType _etype66;
-            xfer += iprot->readListBegin(_etype66, _size63);
-            this->success.resize(_size63);
-            uint32_t _i67;
-            for (_i67 = 0; _i67 < _size63; ++_i67)
+            uint32_t _size65;
+            ::apache::thrift::protocol::TType _etype68;
+            xfer += iprot->readListBegin(_etype68, _size65);
+            this->success.resize(_size65);
+            uint32_t _i69;
+            for (_i69 = 0; _i69 < _size65; ++_i69)
             {
-              xfer += this->success[_i67].read(iprot);
+              xfer += this->success[_i69].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1151,10 +1151,10 @@ uint32_t TLikeService_list_likes_result::write(::apache::thrift::protocol::TProt
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TLike> ::const_iterator _iter68;
-      for (_iter68 = this->success.begin(); _iter68 != this->success.end(); ++_iter68)
+      std::vector<TLike> ::const_iterator _iter70;
+      for (_iter70 = this->success.begin(); _iter70 != this->success.end(); ++_iter70)
       {
-        xfer += (*_iter68).write(oprot);
+        xfer += (*_iter70).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1203,14 +1203,14 @@ uint32_t TLikeService_list_likes_presult::read(::apache::thrift::protocol::TProt
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size69;
-            ::apache::thrift::protocol::TType _etype72;
-            xfer += iprot->readListBegin(_etype72, _size69);
-            (*(this->success)).resize(_size69);
-            uint32_t _i73;
-            for (_i73 = 0; _i73 < _size69; ++_i73)
+            uint32_t _size71;
+            ::apache::thrift::protocol::TType _etype74;
+            xfer += iprot->readListBegin(_etype74, _size71);
+            (*(this->success)).resize(_size71);
+            uint32_t _i75;
+            for (_i75 = 0; _i75 < _size71; ++_i75)
             {
-              xfer += (*(this->success))[_i73].read(iprot);
+              xfer += (*(this->success))[_i75].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1274,9 +1274,9 @@ uint32_t TLikeService_count_likes_by_account_args::read(::apache::thrift::protoc
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1306,8 +1306,8 @@ uint32_t TLikeService_count_likes_by_account_args::write(::apache::thrift::proto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_count_likes_by_account_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1329,8 +1329,8 @@ uint32_t TLikeService_count_likes_by_account_pargs::write(::apache::thrift::prot
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_count_likes_by_account_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1477,9 +1477,9 @@ uint32_t TLikeService_count_likes_of_post_args::read(::apache::thrift::protocol:
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1509,8 +1509,8 @@ uint32_t TLikeService_count_likes_of_post_args::write(::apache::thrift::protocol
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_count_likes_of_post_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1532,8 +1532,8 @@ uint32_t TLikeService_count_likes_of_post_pargs::write(::apache::thrift::protoco
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TLikeService_count_likes_of_post_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1653,19 +1653,19 @@ uint32_t TLikeService_count_likes_of_post_presult::read(::apache::thrift::protoc
   return xfer;
 }
 
-void TLikeServiceClient::like_post(TLike& _return, const int32_t requester_id, const int32_t post_id)
+void TLikeServiceClient::like_post(TLike& _return, const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  send_like_post(requester_id, post_id);
+  send_like_post(request_metadata, post_id);
   recv_like_post(_return);
 }
 
-void TLikeServiceClient::send_like_post(const int32_t requester_id, const int32_t post_id)
+void TLikeServiceClient::send_like_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("like_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_like_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 
@@ -1715,19 +1715,19 @@ void TLikeServiceClient::recv_like_post(TLike& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "like_post failed: unknown result");
 }
 
-void TLikeServiceClient::retrieve_standard_like(TLike& _return, const int32_t requester_id, const int32_t like_id)
+void TLikeServiceClient::retrieve_standard_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id)
 {
-  send_retrieve_standard_like(requester_id, like_id);
+  send_retrieve_standard_like(request_metadata, like_id);
   recv_retrieve_standard_like(_return);
 }
 
-void TLikeServiceClient::send_retrieve_standard_like(const int32_t requester_id, const int32_t like_id)
+void TLikeServiceClient::send_retrieve_standard_like(const TRequestMetadata& request_metadata, const int32_t like_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("retrieve_standard_like", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_retrieve_standard_like_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.like_id = &like_id;
   args.write(oprot_);
 
@@ -1777,19 +1777,19 @@ void TLikeServiceClient::recv_retrieve_standard_like(TLike& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "retrieve_standard_like failed: unknown result");
 }
 
-void TLikeServiceClient::retrieve_expanded_like(TLike& _return, const int32_t requester_id, const int32_t like_id)
+void TLikeServiceClient::retrieve_expanded_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id)
 {
-  send_retrieve_expanded_like(requester_id, like_id);
+  send_retrieve_expanded_like(request_metadata, like_id);
   recv_retrieve_expanded_like(_return);
 }
 
-void TLikeServiceClient::send_retrieve_expanded_like(const int32_t requester_id, const int32_t like_id)
+void TLikeServiceClient::send_retrieve_expanded_like(const TRequestMetadata& request_metadata, const int32_t like_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("retrieve_expanded_like", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_retrieve_expanded_like_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.like_id = &like_id;
   args.write(oprot_);
 
@@ -1845,19 +1845,19 @@ void TLikeServiceClient::recv_retrieve_expanded_like(TLike& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "retrieve_expanded_like failed: unknown result");
 }
 
-void TLikeServiceClient::delete_like(const int32_t requester_id, const int32_t like_id)
+void TLikeServiceClient::delete_like(const TRequestMetadata& request_metadata, const int32_t like_id)
 {
-  send_delete_like(requester_id, like_id);
+  send_delete_like(request_metadata, like_id);
   recv_delete_like();
 }
 
-void TLikeServiceClient::send_delete_like(const int32_t requester_id, const int32_t like_id)
+void TLikeServiceClient::send_delete_like(const TRequestMetadata& request_metadata, const int32_t like_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("delete_like", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_delete_like_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.like_id = &like_id;
   args.write(oprot_);
 
@@ -1905,19 +1905,19 @@ void TLikeServiceClient::recv_delete_like()
   return;
 }
 
-void TLikeServiceClient::list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset)
+void TLikeServiceClient::list_likes(std::vector<TLike> & _return, const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset)
 {
-  send_list_likes(requester_id, query, limit, offset);
+  send_list_likes(request_metadata, query, limit, offset);
   recv_list_likes(_return);
 }
 
-void TLikeServiceClient::send_list_likes(const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset)
+void TLikeServiceClient::send_list_likes(const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("list_likes", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_list_likes_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.limit = &limit;
   args.offset = &offset;
@@ -1972,19 +1972,19 @@ void TLikeServiceClient::recv_list_likes(std::vector<TLike> & _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "list_likes failed: unknown result");
 }
 
-int32_t TLikeServiceClient::count_likes_by_account(const int32_t requester_id, const int32_t account_id)
+int32_t TLikeServiceClient::count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  send_count_likes_by_account(requester_id, account_id);
+  send_count_likes_by_account(request_metadata, account_id);
   return recv_count_likes_by_account();
 }
 
-void TLikeServiceClient::send_count_likes_by_account(const int32_t requester_id, const int32_t account_id)
+void TLikeServiceClient::send_count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("count_likes_by_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_count_likes_by_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -2031,19 +2031,19 @@ int32_t TLikeServiceClient::recv_count_likes_by_account()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "count_likes_by_account failed: unknown result");
 }
 
-int32_t TLikeServiceClient::count_likes_of_post(const int32_t requester_id, const int32_t post_id)
+int32_t TLikeServiceClient::count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  send_count_likes_of_post(requester_id, post_id);
+  send_count_likes_of_post(request_metadata, post_id);
   return recv_count_likes_of_post();
 }
 
-void TLikeServiceClient::send_count_likes_of_post(const int32_t requester_id, const int32_t post_id)
+void TLikeServiceClient::send_count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("count_likes_of_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_count_likes_of_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 
@@ -2132,7 +2132,7 @@ void TLikeServiceProcessor::process_like_post(int32_t seqid, ::apache::thrift::p
 
   TLikeService_like_post_result result;
   try {
-    iface_->like_post(result.success, args.requester_id, args.post_id);
+    iface_->like_post(result.success, args.request_metadata, args.post_id);
     result.__isset.success = true;
   } catch (TLikeAlreadyExistsException &e) {
     result.e = e;
@@ -2189,7 +2189,7 @@ void TLikeServiceProcessor::process_retrieve_standard_like(int32_t seqid, ::apac
 
   TLikeService_retrieve_standard_like_result result;
   try {
-    iface_->retrieve_standard_like(result.success, args.requester_id, args.like_id);
+    iface_->retrieve_standard_like(result.success, args.request_metadata, args.like_id);
     result.__isset.success = true;
   } catch (TLikeNotFoundException &e) {
     result.e = e;
@@ -2246,7 +2246,7 @@ void TLikeServiceProcessor::process_retrieve_expanded_like(int32_t seqid, ::apac
 
   TLikeService_retrieve_expanded_like_result result;
   try {
-    iface_->retrieve_expanded_like(result.success, args.requester_id, args.like_id);
+    iface_->retrieve_expanded_like(result.success, args.request_metadata, args.like_id);
     result.__isset.success = true;
   } catch (TLikeNotFoundException &e1) {
     result.e1 = e1;
@@ -2309,7 +2309,7 @@ void TLikeServiceProcessor::process_delete_like(int32_t seqid, ::apache::thrift:
 
   TLikeService_delete_like_result result;
   try {
-    iface_->delete_like(args.requester_id, args.like_id);
+    iface_->delete_like(args.request_metadata, args.like_id);
   } catch (TLikeNotFoundException &e1) {
     result.e1 = e1;
     result.__isset.e1 = true;
@@ -2368,7 +2368,7 @@ void TLikeServiceProcessor::process_list_likes(int32_t seqid, ::apache::thrift::
 
   TLikeService_list_likes_result result;
   try {
-    iface_->list_likes(result.success, args.requester_id, args.query, args.limit, args.offset);
+    iface_->list_likes(result.success, args.request_metadata, args.query, args.limit, args.offset);
     result.__isset.success = true;
   } catch (TAccountNotFoundException &e1) {
     result.e1 = e1;
@@ -2428,7 +2428,7 @@ void TLikeServiceProcessor::process_count_likes_by_account(int32_t seqid, ::apac
 
   TLikeService_count_likes_by_account_result result;
   try {
-    result.success = iface_->count_likes_by_account(args.requester_id, args.account_id);
+    result.success = iface_->count_likes_by_account(args.request_metadata, args.account_id);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -2482,7 +2482,7 @@ void TLikeServiceProcessor::process_count_likes_of_post(int32_t seqid, ::apache:
 
   TLikeService_count_likes_of_post_result result;
   try {
-    result.success = iface_->count_likes_of_post(args.requester_id, args.post_id);
+    result.success = iface_->count_likes_of_post(args.request_metadata, args.post_id);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -2520,20 +2520,20 @@ void TLikeServiceProcessor::process_count_likes_of_post(int32_t seqid, ::apache:
   return processor;
 }
 
-void TLikeServiceConcurrentClient::like_post(TLike& _return, const int32_t requester_id, const int32_t post_id)
+void TLikeServiceConcurrentClient::like_post(TLike& _return, const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  int32_t seqid = send_like_post(requester_id, post_id);
+  int32_t seqid = send_like_post(request_metadata, post_id);
   recv_like_post(_return, seqid);
 }
 
-int32_t TLikeServiceConcurrentClient::send_like_post(const int32_t requester_id, const int32_t post_id)
+int32_t TLikeServiceConcurrentClient::send_like_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("like_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_like_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 
@@ -2609,20 +2609,20 @@ void TLikeServiceConcurrentClient::recv_like_post(TLike& _return, const int32_t 
   } // end while(true)
 }
 
-void TLikeServiceConcurrentClient::retrieve_standard_like(TLike& _return, const int32_t requester_id, const int32_t like_id)
+void TLikeServiceConcurrentClient::retrieve_standard_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id)
 {
-  int32_t seqid = send_retrieve_standard_like(requester_id, like_id);
+  int32_t seqid = send_retrieve_standard_like(request_metadata, like_id);
   recv_retrieve_standard_like(_return, seqid);
 }
 
-int32_t TLikeServiceConcurrentClient::send_retrieve_standard_like(const int32_t requester_id, const int32_t like_id)
+int32_t TLikeServiceConcurrentClient::send_retrieve_standard_like(const TRequestMetadata& request_metadata, const int32_t like_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("retrieve_standard_like", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_retrieve_standard_like_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.like_id = &like_id;
   args.write(oprot_);
 
@@ -2698,20 +2698,20 @@ void TLikeServiceConcurrentClient::recv_retrieve_standard_like(TLike& _return, c
   } // end while(true)
 }
 
-void TLikeServiceConcurrentClient::retrieve_expanded_like(TLike& _return, const int32_t requester_id, const int32_t like_id)
+void TLikeServiceConcurrentClient::retrieve_expanded_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id)
 {
-  int32_t seqid = send_retrieve_expanded_like(requester_id, like_id);
+  int32_t seqid = send_retrieve_expanded_like(request_metadata, like_id);
   recv_retrieve_expanded_like(_return, seqid);
 }
 
-int32_t TLikeServiceConcurrentClient::send_retrieve_expanded_like(const int32_t requester_id, const int32_t like_id)
+int32_t TLikeServiceConcurrentClient::send_retrieve_expanded_like(const TRequestMetadata& request_metadata, const int32_t like_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("retrieve_expanded_like", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_retrieve_expanded_like_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.like_id = &like_id;
   args.write(oprot_);
 
@@ -2795,20 +2795,20 @@ void TLikeServiceConcurrentClient::recv_retrieve_expanded_like(TLike& _return, c
   } // end while(true)
 }
 
-void TLikeServiceConcurrentClient::delete_like(const int32_t requester_id, const int32_t like_id)
+void TLikeServiceConcurrentClient::delete_like(const TRequestMetadata& request_metadata, const int32_t like_id)
 {
-  int32_t seqid = send_delete_like(requester_id, like_id);
+  int32_t seqid = send_delete_like(request_metadata, like_id);
   recv_delete_like(seqid);
 }
 
-int32_t TLikeServiceConcurrentClient::send_delete_like(const int32_t requester_id, const int32_t like_id)
+int32_t TLikeServiceConcurrentClient::send_delete_like(const TRequestMetadata& request_metadata, const int32_t like_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("delete_like", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_delete_like_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.like_id = &like_id;
   args.write(oprot_);
 
@@ -2882,20 +2882,20 @@ void TLikeServiceConcurrentClient::recv_delete_like(const int32_t seqid)
   } // end while(true)
 }
 
-void TLikeServiceConcurrentClient::list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset)
+void TLikeServiceConcurrentClient::list_likes(std::vector<TLike> & _return, const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset)
 {
-  int32_t seqid = send_list_likes(requester_id, query, limit, offset);
+  int32_t seqid = send_list_likes(request_metadata, query, limit, offset);
   recv_list_likes(_return, seqid);
 }
 
-int32_t TLikeServiceConcurrentClient::send_list_likes(const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset)
+int32_t TLikeServiceConcurrentClient::send_list_likes(const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("list_likes", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_list_likes_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.limit = &limit;
   args.offset = &offset;
@@ -2977,20 +2977,20 @@ void TLikeServiceConcurrentClient::recv_list_likes(std::vector<TLike> & _return,
   } // end while(true)
 }
 
-int32_t TLikeServiceConcurrentClient::count_likes_by_account(const int32_t requester_id, const int32_t account_id)
+int32_t TLikeServiceConcurrentClient::count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  int32_t seqid = send_count_likes_by_account(requester_id, account_id);
+  int32_t seqid = send_count_likes_by_account(request_metadata, account_id);
   return recv_count_likes_by_account(seqid);
 }
 
-int32_t TLikeServiceConcurrentClient::send_count_likes_by_account(const int32_t requester_id, const int32_t account_id)
+int32_t TLikeServiceConcurrentClient::send_count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("count_likes_by_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_count_likes_by_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -3062,20 +3062,20 @@ int32_t TLikeServiceConcurrentClient::recv_count_likes_by_account(const int32_t 
   } // end while(true)
 }
 
-int32_t TLikeServiceConcurrentClient::count_likes_of_post(const int32_t requester_id, const int32_t post_id)
+int32_t TLikeServiceConcurrentClient::count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  int32_t seqid = send_count_likes_of_post(requester_id, post_id);
+  int32_t seqid = send_count_likes_of_post(request_metadata, post_id);
   return recv_count_likes_of_post(seqid);
 }
 
-int32_t TLikeServiceConcurrentClient::send_count_likes_of_post(const int32_t requester_id, const int32_t post_id)
+int32_t TLikeServiceConcurrentClient::send_count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("count_likes_of_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TLikeService_count_likes_of_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 

@@ -35,9 +35,9 @@ uint32_t TFollowService_follow_account_args::read(::apache::thrift::protocol::TP
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -67,8 +67,8 @@ uint32_t TFollowService_follow_account_args::write(::apache::thrift::protocol::T
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_follow_account_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -90,8 +90,8 @@ uint32_t TFollowService_follow_account_pargs::write(::apache::thrift::protocol::
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_follow_account_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -258,9 +258,9 @@ uint32_t TFollowService_retrieve_standard_follow_args::read(::apache::thrift::pr
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -290,8 +290,8 @@ uint32_t TFollowService_retrieve_standard_follow_args::write(::apache::thrift::p
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_retrieve_standard_follow_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("follow_id", ::apache::thrift::protocol::T_I32, 2);
@@ -313,8 +313,8 @@ uint32_t TFollowService_retrieve_standard_follow_pargs::write(::apache::thrift::
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_retrieve_standard_follow_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("follow_id", ::apache::thrift::protocol::T_I32, 2);
@@ -481,9 +481,9 @@ uint32_t TFollowService_retrieve_expanded_follow_args::read(::apache::thrift::pr
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -513,8 +513,8 @@ uint32_t TFollowService_retrieve_expanded_follow_args::write(::apache::thrift::p
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_retrieve_expanded_follow_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("follow_id", ::apache::thrift::protocol::T_I32, 2);
@@ -536,8 +536,8 @@ uint32_t TFollowService_retrieve_expanded_follow_pargs::write(::apache::thrift::
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_retrieve_expanded_follow_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("follow_id", ::apache::thrift::protocol::T_I32, 2);
@@ -724,9 +724,9 @@ uint32_t TFollowService_delete_follow_args::read(::apache::thrift::protocol::TPr
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -756,8 +756,8 @@ uint32_t TFollowService_delete_follow_args::write(::apache::thrift::protocol::TP
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_delete_follow_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("follow_id", ::apache::thrift::protocol::T_I32, 2);
@@ -779,8 +779,8 @@ uint32_t TFollowService_delete_follow_pargs::write(::apache::thrift::protocol::T
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_delete_follow_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("follow_id", ::apache::thrift::protocol::T_I32, 2);
@@ -947,9 +947,9 @@ uint32_t TFollowService_list_follows_args::read(::apache::thrift::protocol::TPro
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -995,8 +995,8 @@ uint32_t TFollowService_list_follows_args::write(::apache::thrift::protocol::TPr
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_list_follows_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
@@ -1026,8 +1026,8 @@ uint32_t TFollowService_list_follows_pargs::write(::apache::thrift::protocol::TP
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_list_follows_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
@@ -1077,14 +1077,14 @@ uint32_t TFollowService_list_follows_result::read(::apache::thrift::protocol::TP
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size52;
-            ::apache::thrift::protocol::TType _etype55;
-            xfer += iprot->readListBegin(_etype55, _size52);
-            this->success.resize(_size52);
-            uint32_t _i56;
-            for (_i56 = 0; _i56 < _size52; ++_i56)
+            uint32_t _size54;
+            ::apache::thrift::protocol::TType _etype57;
+            xfer += iprot->readListBegin(_etype57, _size54);
+            this->success.resize(_size54);
+            uint32_t _i58;
+            for (_i58 = 0; _i58 < _size54; ++_i58)
             {
-              xfer += this->success[_i56].read(iprot);
+              xfer += this->success[_i58].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1123,10 +1123,10 @@ uint32_t TFollowService_list_follows_result::write(::apache::thrift::protocol::T
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TFollow> ::const_iterator _iter57;
-      for (_iter57 = this->success.begin(); _iter57 != this->success.end(); ++_iter57)
+      std::vector<TFollow> ::const_iterator _iter59;
+      for (_iter59 = this->success.begin(); _iter59 != this->success.end(); ++_iter59)
       {
-        xfer += (*_iter57).write(oprot);
+        xfer += (*_iter59).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1171,14 +1171,14 @@ uint32_t TFollowService_list_follows_presult::read(::apache::thrift::protocol::T
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size58;
-            ::apache::thrift::protocol::TType _etype61;
-            xfer += iprot->readListBegin(_etype61, _size58);
-            (*(this->success)).resize(_size58);
-            uint32_t _i62;
-            for (_i62 = 0; _i62 < _size58; ++_i62)
+            uint32_t _size60;
+            ::apache::thrift::protocol::TType _etype63;
+            xfer += iprot->readListBegin(_etype63, _size60);
+            (*(this->success)).resize(_size60);
+            uint32_t _i64;
+            for (_i64 = 0; _i64 < _size60; ++_i64)
             {
-              xfer += (*(this->success))[_i62].read(iprot);
+              xfer += (*(this->success))[_i64].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1234,9 +1234,9 @@ uint32_t TFollowService_check_follow_args::read(::apache::thrift::protocol::TPro
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1274,8 +1274,8 @@ uint32_t TFollowService_check_follow_args::write(::apache::thrift::protocol::TPr
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_check_follow_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("follower_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1301,8 +1301,8 @@ uint32_t TFollowService_check_follow_pargs::write(::apache::thrift::protocol::TP
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_check_follow_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("follower_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1453,9 +1453,9 @@ uint32_t TFollowService_count_followers_args::read(::apache::thrift::protocol::T
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1485,8 +1485,8 @@ uint32_t TFollowService_count_followers_args::write(::apache::thrift::protocol::
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_count_followers_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1508,8 +1508,8 @@ uint32_t TFollowService_count_followers_pargs::write(::apache::thrift::protocol:
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_count_followers_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1656,9 +1656,9 @@ uint32_t TFollowService_count_followees_args::read(::apache::thrift::protocol::T
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1688,8 +1688,8 @@ uint32_t TFollowService_count_followees_args::write(::apache::thrift::protocol::
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_count_followees_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1711,8 +1711,8 @@ uint32_t TFollowService_count_followees_pargs::write(::apache::thrift::protocol:
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TFollowService_count_followees_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("account_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1832,19 +1832,19 @@ uint32_t TFollowService_count_followees_presult::read(::apache::thrift::protocol
   return xfer;
 }
 
-void TFollowServiceClient::follow_account(TFollow& _return, const int32_t requester_id, const int32_t account_id)
+void TFollowServiceClient::follow_account(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  send_follow_account(requester_id, account_id);
+  send_follow_account(request_metadata, account_id);
   recv_follow_account(_return);
 }
 
-void TFollowServiceClient::send_follow_account(const int32_t requester_id, const int32_t account_id)
+void TFollowServiceClient::send_follow_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("follow_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_follow_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -1894,19 +1894,19 @@ void TFollowServiceClient::recv_follow_account(TFollow& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "follow_account failed: unknown result");
 }
 
-void TFollowServiceClient::retrieve_standard_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id)
+void TFollowServiceClient::retrieve_standard_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
-  send_retrieve_standard_follow(requester_id, follow_id);
+  send_retrieve_standard_follow(request_metadata, follow_id);
   recv_retrieve_standard_follow(_return);
 }
 
-void TFollowServiceClient::send_retrieve_standard_follow(const int32_t requester_id, const int32_t follow_id)
+void TFollowServiceClient::send_retrieve_standard_follow(const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("retrieve_standard_follow", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_retrieve_standard_follow_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.follow_id = &follow_id;
   args.write(oprot_);
 
@@ -1956,19 +1956,19 @@ void TFollowServiceClient::recv_retrieve_standard_follow(TFollow& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "retrieve_standard_follow failed: unknown result");
 }
 
-void TFollowServiceClient::retrieve_expanded_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id)
+void TFollowServiceClient::retrieve_expanded_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
-  send_retrieve_expanded_follow(requester_id, follow_id);
+  send_retrieve_expanded_follow(request_metadata, follow_id);
   recv_retrieve_expanded_follow(_return);
 }
 
-void TFollowServiceClient::send_retrieve_expanded_follow(const int32_t requester_id, const int32_t follow_id)
+void TFollowServiceClient::send_retrieve_expanded_follow(const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("retrieve_expanded_follow", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_retrieve_expanded_follow_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.follow_id = &follow_id;
   args.write(oprot_);
 
@@ -2021,19 +2021,19 @@ void TFollowServiceClient::recv_retrieve_expanded_follow(TFollow& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "retrieve_expanded_follow failed: unknown result");
 }
 
-void TFollowServiceClient::delete_follow(const int32_t requester_id, const int32_t follow_id)
+void TFollowServiceClient::delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
-  send_delete_follow(requester_id, follow_id);
+  send_delete_follow(request_metadata, follow_id);
   recv_delete_follow();
 }
 
-void TFollowServiceClient::send_delete_follow(const int32_t requester_id, const int32_t follow_id)
+void TFollowServiceClient::send_delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("delete_follow", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_delete_follow_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.follow_id = &follow_id;
   args.write(oprot_);
 
@@ -2081,19 +2081,19 @@ void TFollowServiceClient::recv_delete_follow()
   return;
 }
 
-void TFollowServiceClient::list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset)
+void TFollowServiceClient::list_follows(std::vector<TFollow> & _return, const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset)
 {
-  send_list_follows(requester_id, query, limit, offset);
+  send_list_follows(request_metadata, query, limit, offset);
   recv_list_follows(_return);
 }
 
-void TFollowServiceClient::send_list_follows(const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset)
+void TFollowServiceClient::send_list_follows(const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("list_follows", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_list_follows_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.limit = &limit;
   args.offset = &offset;
@@ -2145,19 +2145,19 @@ void TFollowServiceClient::recv_list_follows(std::vector<TFollow> & _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "list_follows failed: unknown result");
 }
 
-bool TFollowServiceClient::check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id)
+bool TFollowServiceClient::check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id)
 {
-  send_check_follow(requester_id, follower_id, followee_id);
+  send_check_follow(request_metadata, follower_id, followee_id);
   return recv_check_follow();
 }
 
-void TFollowServiceClient::send_check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id)
+void TFollowServiceClient::send_check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("check_follow", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_check_follow_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.follower_id = &follower_id;
   args.followee_id = &followee_id;
   args.write(oprot_);
@@ -2205,19 +2205,19 @@ bool TFollowServiceClient::recv_check_follow()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "check_follow failed: unknown result");
 }
 
-int32_t TFollowServiceClient::count_followers(const int32_t requester_id, const int32_t account_id)
+int32_t TFollowServiceClient::count_followers(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  send_count_followers(requester_id, account_id);
+  send_count_followers(request_metadata, account_id);
   return recv_count_followers();
 }
 
-void TFollowServiceClient::send_count_followers(const int32_t requester_id, const int32_t account_id)
+void TFollowServiceClient::send_count_followers(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("count_followers", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_count_followers_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -2264,19 +2264,19 @@ int32_t TFollowServiceClient::recv_count_followers()
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "count_followers failed: unknown result");
 }
 
-int32_t TFollowServiceClient::count_followees(const int32_t requester_id, const int32_t account_id)
+int32_t TFollowServiceClient::count_followees(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  send_count_followees(requester_id, account_id);
+  send_count_followees(request_metadata, account_id);
   return recv_count_followees();
 }
 
-void TFollowServiceClient::send_count_followees(const int32_t requester_id, const int32_t account_id)
+void TFollowServiceClient::send_count_followees(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("count_followees", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_count_followees_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -2365,7 +2365,7 @@ void TFollowServiceProcessor::process_follow_account(int32_t seqid, ::apache::th
 
   TFollowService_follow_account_result result;
   try {
-    iface_->follow_account(result.success, args.requester_id, args.account_id);
+    iface_->follow_account(result.success, args.request_metadata, args.account_id);
     result.__isset.success = true;
   } catch (TFollowAlreadyExistsException &e) {
     result.e = e;
@@ -2422,7 +2422,7 @@ void TFollowServiceProcessor::process_retrieve_standard_follow(int32_t seqid, ::
 
   TFollowService_retrieve_standard_follow_result result;
   try {
-    iface_->retrieve_standard_follow(result.success, args.requester_id, args.follow_id);
+    iface_->retrieve_standard_follow(result.success, args.request_metadata, args.follow_id);
     result.__isset.success = true;
   } catch (TFollowNotFoundException &e) {
     result.e = e;
@@ -2479,7 +2479,7 @@ void TFollowServiceProcessor::process_retrieve_expanded_follow(int32_t seqid, ::
 
   TFollowService_retrieve_expanded_follow_result result;
   try {
-    iface_->retrieve_expanded_follow(result.success, args.requester_id, args.follow_id);
+    iface_->retrieve_expanded_follow(result.success, args.request_metadata, args.follow_id);
     result.__isset.success = true;
   } catch (TFollowNotFoundException &e1) {
     result.e1 = e1;
@@ -2539,7 +2539,7 @@ void TFollowServiceProcessor::process_delete_follow(int32_t seqid, ::apache::thr
 
   TFollowService_delete_follow_result result;
   try {
-    iface_->delete_follow(args.requester_id, args.follow_id);
+    iface_->delete_follow(args.request_metadata, args.follow_id);
   } catch (TFollowNotFoundException &e1) {
     result.e1 = e1;
     result.__isset.e1 = true;
@@ -2598,7 +2598,7 @@ void TFollowServiceProcessor::process_list_follows(int32_t seqid, ::apache::thri
 
   TFollowService_list_follows_result result;
   try {
-    iface_->list_follows(result.success, args.requester_id, args.query, args.limit, args.offset);
+    iface_->list_follows(result.success, args.request_metadata, args.query, args.limit, args.offset);
     result.__isset.success = true;
   } catch (TAccountNotFoundException &e) {
     result.e = e;
@@ -2655,7 +2655,7 @@ void TFollowServiceProcessor::process_check_follow(int32_t seqid, ::apache::thri
 
   TFollowService_check_follow_result result;
   try {
-    result.success = iface_->check_follow(args.requester_id, args.follower_id, args.followee_id);
+    result.success = iface_->check_follow(args.request_metadata, args.follower_id, args.followee_id);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -2709,7 +2709,7 @@ void TFollowServiceProcessor::process_count_followers(int32_t seqid, ::apache::t
 
   TFollowService_count_followers_result result;
   try {
-    result.success = iface_->count_followers(args.requester_id, args.account_id);
+    result.success = iface_->count_followers(args.request_metadata, args.account_id);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -2763,7 +2763,7 @@ void TFollowServiceProcessor::process_count_followees(int32_t seqid, ::apache::t
 
   TFollowService_count_followees_result result;
   try {
-    result.success = iface_->count_followees(args.requester_id, args.account_id);
+    result.success = iface_->count_followees(args.request_metadata, args.account_id);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -2801,20 +2801,20 @@ void TFollowServiceProcessor::process_count_followees(int32_t seqid, ::apache::t
   return processor;
 }
 
-void TFollowServiceConcurrentClient::follow_account(TFollow& _return, const int32_t requester_id, const int32_t account_id)
+void TFollowServiceConcurrentClient::follow_account(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  int32_t seqid = send_follow_account(requester_id, account_id);
+  int32_t seqid = send_follow_account(request_metadata, account_id);
   recv_follow_account(_return, seqid);
 }
 
-int32_t TFollowServiceConcurrentClient::send_follow_account(const int32_t requester_id, const int32_t account_id)
+int32_t TFollowServiceConcurrentClient::send_follow_account(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("follow_account", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_follow_account_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -2890,20 +2890,20 @@ void TFollowServiceConcurrentClient::recv_follow_account(TFollow& _return, const
   } // end while(true)
 }
 
-void TFollowServiceConcurrentClient::retrieve_standard_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id)
+void TFollowServiceConcurrentClient::retrieve_standard_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
-  int32_t seqid = send_retrieve_standard_follow(requester_id, follow_id);
+  int32_t seqid = send_retrieve_standard_follow(request_metadata, follow_id);
   recv_retrieve_standard_follow(_return, seqid);
 }
 
-int32_t TFollowServiceConcurrentClient::send_retrieve_standard_follow(const int32_t requester_id, const int32_t follow_id)
+int32_t TFollowServiceConcurrentClient::send_retrieve_standard_follow(const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("retrieve_standard_follow", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_retrieve_standard_follow_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.follow_id = &follow_id;
   args.write(oprot_);
 
@@ -2979,20 +2979,20 @@ void TFollowServiceConcurrentClient::recv_retrieve_standard_follow(TFollow& _ret
   } // end while(true)
 }
 
-void TFollowServiceConcurrentClient::retrieve_expanded_follow(TFollow& _return, const int32_t requester_id, const int32_t follow_id)
+void TFollowServiceConcurrentClient::retrieve_expanded_follow(TFollow& _return, const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
-  int32_t seqid = send_retrieve_expanded_follow(requester_id, follow_id);
+  int32_t seqid = send_retrieve_expanded_follow(request_metadata, follow_id);
   recv_retrieve_expanded_follow(_return, seqid);
 }
 
-int32_t TFollowServiceConcurrentClient::send_retrieve_expanded_follow(const int32_t requester_id, const int32_t follow_id)
+int32_t TFollowServiceConcurrentClient::send_retrieve_expanded_follow(const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("retrieve_expanded_follow", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_retrieve_expanded_follow_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.follow_id = &follow_id;
   args.write(oprot_);
 
@@ -3072,20 +3072,20 @@ void TFollowServiceConcurrentClient::recv_retrieve_expanded_follow(TFollow& _ret
   } // end while(true)
 }
 
-void TFollowServiceConcurrentClient::delete_follow(const int32_t requester_id, const int32_t follow_id)
+void TFollowServiceConcurrentClient::delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
-  int32_t seqid = send_delete_follow(requester_id, follow_id);
+  int32_t seqid = send_delete_follow(request_metadata, follow_id);
   recv_delete_follow(seqid);
 }
 
-int32_t TFollowServiceConcurrentClient::send_delete_follow(const int32_t requester_id, const int32_t follow_id)
+int32_t TFollowServiceConcurrentClient::send_delete_follow(const TRequestMetadata& request_metadata, const int32_t follow_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("delete_follow", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_delete_follow_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.follow_id = &follow_id;
   args.write(oprot_);
 
@@ -3159,20 +3159,20 @@ void TFollowServiceConcurrentClient::recv_delete_follow(const int32_t seqid)
   } // end while(true)
 }
 
-void TFollowServiceConcurrentClient::list_follows(std::vector<TFollow> & _return, const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset)
+void TFollowServiceConcurrentClient::list_follows(std::vector<TFollow> & _return, const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset)
 {
-  int32_t seqid = send_list_follows(requester_id, query, limit, offset);
+  int32_t seqid = send_list_follows(request_metadata, query, limit, offset);
   recv_list_follows(_return, seqid);
 }
 
-int32_t TFollowServiceConcurrentClient::send_list_follows(const int32_t requester_id, const TFollowQuery& query, const int32_t limit, const int32_t offset)
+int32_t TFollowServiceConcurrentClient::send_list_follows(const TRequestMetadata& request_metadata, const TFollowQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("list_follows", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_list_follows_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.limit = &limit;
   args.offset = &offset;
@@ -3250,20 +3250,20 @@ void TFollowServiceConcurrentClient::recv_list_follows(std::vector<TFollow> & _r
   } // end while(true)
 }
 
-bool TFollowServiceConcurrentClient::check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id)
+bool TFollowServiceConcurrentClient::check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id)
 {
-  int32_t seqid = send_check_follow(requester_id, follower_id, followee_id);
+  int32_t seqid = send_check_follow(request_metadata, follower_id, followee_id);
   return recv_check_follow(seqid);
 }
 
-int32_t TFollowServiceConcurrentClient::send_check_follow(const int32_t requester_id, const int32_t follower_id, const int32_t followee_id)
+int32_t TFollowServiceConcurrentClient::send_check_follow(const TRequestMetadata& request_metadata, const int32_t follower_id, const int32_t followee_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("check_follow", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_check_follow_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.follower_id = &follower_id;
   args.followee_id = &followee_id;
   args.write(oprot_);
@@ -3336,20 +3336,20 @@ bool TFollowServiceConcurrentClient::recv_check_follow(const int32_t seqid)
   } // end while(true)
 }
 
-int32_t TFollowServiceConcurrentClient::count_followers(const int32_t requester_id, const int32_t account_id)
+int32_t TFollowServiceConcurrentClient::count_followers(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  int32_t seqid = send_count_followers(requester_id, account_id);
+  int32_t seqid = send_count_followers(request_metadata, account_id);
   return recv_count_followers(seqid);
 }
 
-int32_t TFollowServiceConcurrentClient::send_count_followers(const int32_t requester_id, const int32_t account_id)
+int32_t TFollowServiceConcurrentClient::send_count_followers(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("count_followers", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_count_followers_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 
@@ -3421,20 +3421,20 @@ int32_t TFollowServiceConcurrentClient::recv_count_followers(const int32_t seqid
   } // end while(true)
 }
 
-int32_t TFollowServiceConcurrentClient::count_followees(const int32_t requester_id, const int32_t account_id)
+int32_t TFollowServiceConcurrentClient::count_followees(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
-  int32_t seqid = send_count_followees(requester_id, account_id);
+  int32_t seqid = send_count_followees(request_metadata, account_id);
   return recv_count_followees(seqid);
 }
 
-int32_t TFollowServiceConcurrentClient::send_count_followees(const int32_t requester_id, const int32_t account_id)
+int32_t TFollowServiceConcurrentClient::send_count_followees(const TRequestMetadata& request_metadata, const int32_t account_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("count_followees", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TFollowService_count_followees_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.account_id = &account_id;
   args.write(oprot_);
 

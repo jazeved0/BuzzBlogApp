@@ -22,12 +22,12 @@ namespace gen {
 class TUniquepairServiceIf {
  public:
   virtual ~TUniquepairServiceIf() {}
-  virtual void get(TUniquepair& _return, const int32_t uniquepair_id) = 0;
-  virtual void add(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem) = 0;
-  virtual void remove(const int32_t uniquepair_id) = 0;
-  virtual void find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem) = 0;
-  virtual void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset) = 0;
-  virtual int32_t count(const TUniquepairQuery& query) = 0;
+  virtual void get(TUniquepair& _return, const TRequestMetadata& request_metadata, const int32_t uniquepair_id) = 0;
+  virtual void add(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem) = 0;
+  virtual void remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id) = 0;
+  virtual void find(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem) = 0;
+  virtual void fetch(std::vector<TUniquepair> & _return, const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset) = 0;
+  virtual int32_t count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query) = 0;
 };
 
 class TUniquepairServiceIfFactory {
@@ -57,29 +57,30 @@ class TUniquepairServiceIfSingletonFactory : virtual public TUniquepairServiceIf
 class TUniquepairServiceNull : virtual public TUniquepairServiceIf {
  public:
   virtual ~TUniquepairServiceNull() {}
-  void get(TUniquepair& /* _return */, const int32_t /* uniquepair_id */) {
+  void get(TUniquepair& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* uniquepair_id */) {
     return;
   }
-  void add(TUniquepair& /* _return */, const std::string& /* domain */, const int32_t /* first_elem */, const int32_t /* second_elem */) {
+  void add(TUniquepair& /* _return */, const TRequestMetadata& /* request_metadata */, const std::string& /* domain */, const int32_t /* first_elem */, const int32_t /* second_elem */) {
     return;
   }
-  void remove(const int32_t /* uniquepair_id */) {
+  void remove(const TRequestMetadata& /* request_metadata */, const int32_t /* uniquepair_id */) {
     return;
   }
-  void find(TUniquepair& /* _return */, const std::string& /* domain */, const int32_t /* first_elem */, const int32_t /* second_elem */) {
+  void find(TUniquepair& /* _return */, const TRequestMetadata& /* request_metadata */, const std::string& /* domain */, const int32_t /* first_elem */, const int32_t /* second_elem */) {
     return;
   }
-  void fetch(std::vector<TUniquepair> & /* _return */, const TUniquepairQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
+  void fetch(std::vector<TUniquepair> & /* _return */, const TRequestMetadata& /* request_metadata */, const TUniquepairQuery& /* query */, const int32_t /* limit */, const int32_t /* offset */) {
     return;
   }
-  int32_t count(const TUniquepairQuery& /* query */) {
+  int32_t count(const TRequestMetadata& /* request_metadata */, const TUniquepairQuery& /* query */) {
     int32_t _return = 0;
     return _return;
   }
 };
 
 typedef struct _TUniquepairService_get_args__isset {
-  _TUniquepairService_get_args__isset() : uniquepair_id(false) {}
+  _TUniquepairService_get_args__isset() : request_metadata(false), uniquepair_id(false) {}
+  bool request_metadata :1;
   bool uniquepair_id :1;
 } _TUniquepairService_get_args__isset;
 
@@ -92,14 +93,19 @@ class TUniquepairService_get_args {
   }
 
   virtual ~TUniquepairService_get_args() noexcept;
+  TRequestMetadata request_metadata;
   int32_t uniquepair_id;
 
   _TUniquepairService_get_args__isset __isset;
+
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_uniquepair_id(const int32_t val);
 
   bool operator == (const TUniquepairService_get_args & rhs) const
   {
+    if (!(request_metadata == rhs.request_metadata))
+      return false;
     if (!(uniquepair_id == rhs.uniquepair_id))
       return false;
     return true;
@@ -121,6 +127,7 @@ class TUniquepairService_get_pargs {
 
 
   virtual ~TUniquepairService_get_pargs() noexcept;
+  const TRequestMetadata* request_metadata;
   const int32_t* uniquepair_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -191,7 +198,8 @@ class TUniquepairService_get_presult {
 };
 
 typedef struct _TUniquepairService_add_args__isset {
-  _TUniquepairService_add_args__isset() : domain(false), first_elem(false), second_elem(false) {}
+  _TUniquepairService_add_args__isset() : request_metadata(false), domain(false), first_elem(false), second_elem(false) {}
+  bool request_metadata :1;
   bool domain :1;
   bool first_elem :1;
   bool second_elem :1;
@@ -206,11 +214,14 @@ class TUniquepairService_add_args {
   }
 
   virtual ~TUniquepairService_add_args() noexcept;
+  TRequestMetadata request_metadata;
   std::string domain;
   int32_t first_elem;
   int32_t second_elem;
 
   _TUniquepairService_add_args__isset __isset;
+
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_domain(const std::string& val);
 
@@ -220,6 +231,8 @@ class TUniquepairService_add_args {
 
   bool operator == (const TUniquepairService_add_args & rhs) const
   {
+    if (!(request_metadata == rhs.request_metadata))
+      return false;
     if (!(domain == rhs.domain))
       return false;
     if (!(first_elem == rhs.first_elem))
@@ -245,6 +258,7 @@ class TUniquepairService_add_pargs {
 
 
   virtual ~TUniquepairService_add_pargs() noexcept;
+  const TRequestMetadata* request_metadata;
   const std::string* domain;
   const int32_t* first_elem;
   const int32_t* second_elem;
@@ -317,7 +331,8 @@ class TUniquepairService_add_presult {
 };
 
 typedef struct _TUniquepairService_remove_args__isset {
-  _TUniquepairService_remove_args__isset() : uniquepair_id(false) {}
+  _TUniquepairService_remove_args__isset() : request_metadata(false), uniquepair_id(false) {}
+  bool request_metadata :1;
   bool uniquepair_id :1;
 } _TUniquepairService_remove_args__isset;
 
@@ -330,14 +345,19 @@ class TUniquepairService_remove_args {
   }
 
   virtual ~TUniquepairService_remove_args() noexcept;
+  TRequestMetadata request_metadata;
   int32_t uniquepair_id;
 
   _TUniquepairService_remove_args__isset __isset;
+
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_uniquepair_id(const int32_t val);
 
   bool operator == (const TUniquepairService_remove_args & rhs) const
   {
+    if (!(request_metadata == rhs.request_metadata))
+      return false;
     if (!(uniquepair_id == rhs.uniquepair_id))
       return false;
     return true;
@@ -359,6 +379,7 @@ class TUniquepairService_remove_pargs {
 
 
   virtual ~TUniquepairService_remove_pargs() noexcept;
+  const TRequestMetadata* request_metadata;
   const int32_t* uniquepair_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -421,7 +442,8 @@ class TUniquepairService_remove_presult {
 };
 
 typedef struct _TUniquepairService_find_args__isset {
-  _TUniquepairService_find_args__isset() : domain(false), first_elem(false), second_elem(false) {}
+  _TUniquepairService_find_args__isset() : request_metadata(false), domain(false), first_elem(false), second_elem(false) {}
+  bool request_metadata :1;
   bool domain :1;
   bool first_elem :1;
   bool second_elem :1;
@@ -436,11 +458,14 @@ class TUniquepairService_find_args {
   }
 
   virtual ~TUniquepairService_find_args() noexcept;
+  TRequestMetadata request_metadata;
   std::string domain;
   int32_t first_elem;
   int32_t second_elem;
 
   _TUniquepairService_find_args__isset __isset;
+
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_domain(const std::string& val);
 
@@ -450,6 +475,8 @@ class TUniquepairService_find_args {
 
   bool operator == (const TUniquepairService_find_args & rhs) const
   {
+    if (!(request_metadata == rhs.request_metadata))
+      return false;
     if (!(domain == rhs.domain))
       return false;
     if (!(first_elem == rhs.first_elem))
@@ -475,6 +502,7 @@ class TUniquepairService_find_pargs {
 
 
   virtual ~TUniquepairService_find_pargs() noexcept;
+  const TRequestMetadata* request_metadata;
   const std::string* domain;
   const int32_t* first_elem;
   const int32_t* second_elem;
@@ -547,7 +575,8 @@ class TUniquepairService_find_presult {
 };
 
 typedef struct _TUniquepairService_fetch_args__isset {
-  _TUniquepairService_fetch_args__isset() : query(false), limit(false), offset(false) {}
+  _TUniquepairService_fetch_args__isset() : request_metadata(false), query(false), limit(false), offset(false) {}
+  bool request_metadata :1;
   bool query :1;
   bool limit :1;
   bool offset :1;
@@ -562,11 +591,14 @@ class TUniquepairService_fetch_args {
   }
 
   virtual ~TUniquepairService_fetch_args() noexcept;
+  TRequestMetadata request_metadata;
   TUniquepairQuery query;
   int32_t limit;
   int32_t offset;
 
   _TUniquepairService_fetch_args__isset __isset;
+
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_query(const TUniquepairQuery& val);
 
@@ -576,6 +608,8 @@ class TUniquepairService_fetch_args {
 
   bool operator == (const TUniquepairService_fetch_args & rhs) const
   {
+    if (!(request_metadata == rhs.request_metadata))
+      return false;
     if (!(query == rhs.query))
       return false;
     if (!(limit == rhs.limit))
@@ -601,6 +635,7 @@ class TUniquepairService_fetch_pargs {
 
 
   virtual ~TUniquepairService_fetch_pargs() noexcept;
+  const TRequestMetadata* request_metadata;
   const TUniquepairQuery* query;
   const int32_t* limit;
   const int32_t* offset;
@@ -665,7 +700,8 @@ class TUniquepairService_fetch_presult {
 };
 
 typedef struct _TUniquepairService_count_args__isset {
-  _TUniquepairService_count_args__isset() : query(false) {}
+  _TUniquepairService_count_args__isset() : request_metadata(false), query(false) {}
+  bool request_metadata :1;
   bool query :1;
 } _TUniquepairService_count_args__isset;
 
@@ -678,14 +714,19 @@ class TUniquepairService_count_args {
   }
 
   virtual ~TUniquepairService_count_args() noexcept;
+  TRequestMetadata request_metadata;
   TUniquepairQuery query;
 
   _TUniquepairService_count_args__isset __isset;
+
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_query(const TUniquepairQuery& val);
 
   bool operator == (const TUniquepairService_count_args & rhs) const
   {
+    if (!(request_metadata == rhs.request_metadata))
+      return false;
     if (!(query == rhs.query))
       return false;
     return true;
@@ -707,6 +748,7 @@ class TUniquepairService_count_pargs {
 
 
   virtual ~TUniquepairService_count_pargs() noexcept;
+  const TRequestMetadata* request_metadata;
   const TUniquepairQuery* query;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -793,23 +835,23 @@ class TUniquepairServiceClient : virtual public TUniquepairServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void get(TUniquepair& _return, const int32_t uniquepair_id);
-  void send_get(const int32_t uniquepair_id);
+  void get(TUniquepair& _return, const TRequestMetadata& request_metadata, const int32_t uniquepair_id);
+  void send_get(const TRequestMetadata& request_metadata, const int32_t uniquepair_id);
   void recv_get(TUniquepair& _return);
-  void add(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
-  void send_add(const std::string& domain, const int32_t first_elem, const int32_t second_elem);
+  void add(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
+  void send_add(const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
   void recv_add(TUniquepair& _return);
-  void remove(const int32_t uniquepair_id);
-  void send_remove(const int32_t uniquepair_id);
+  void remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id);
+  void send_remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id);
   void recv_remove();
-  void find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
-  void send_find(const std::string& domain, const int32_t first_elem, const int32_t second_elem);
+  void find(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
+  void send_find(const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
   void recv_find(TUniquepair& _return);
-  void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
-  void send_fetch(const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
+  void fetch(std::vector<TUniquepair> & _return, const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
+  void send_fetch(const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
   void recv_fetch(std::vector<TUniquepair> & _return);
-  int32_t count(const TUniquepairQuery& query);
-  void send_count(const TUniquepairQuery& query);
+  int32_t count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query);
+  void send_count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query);
   int32_t recv_count();
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
@@ -869,62 +911,62 @@ class TUniquepairServiceMultiface : virtual public TUniquepairServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  void get(TUniquepair& _return, const int32_t uniquepair_id) {
+  void get(TUniquepair& _return, const TRequestMetadata& request_metadata, const int32_t uniquepair_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->get(_return, uniquepair_id);
+      ifaces_[i]->get(_return, request_metadata, uniquepair_id);
     }
-    ifaces_[i]->get(_return, uniquepair_id);
+    ifaces_[i]->get(_return, request_metadata, uniquepair_id);
     return;
   }
 
-  void add(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem) {
+  void add(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->add(_return, domain, first_elem, second_elem);
+      ifaces_[i]->add(_return, request_metadata, domain, first_elem, second_elem);
     }
-    ifaces_[i]->add(_return, domain, first_elem, second_elem);
+    ifaces_[i]->add(_return, request_metadata, domain, first_elem, second_elem);
     return;
   }
 
-  void remove(const int32_t uniquepair_id) {
+  void remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->remove(uniquepair_id);
+      ifaces_[i]->remove(request_metadata, uniquepair_id);
     }
-    ifaces_[i]->remove(uniquepair_id);
+    ifaces_[i]->remove(request_metadata, uniquepair_id);
   }
 
-  void find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem) {
+  void find(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->find(_return, domain, first_elem, second_elem);
+      ifaces_[i]->find(_return, request_metadata, domain, first_elem, second_elem);
     }
-    ifaces_[i]->find(_return, domain, first_elem, second_elem);
+    ifaces_[i]->find(_return, request_metadata, domain, first_elem, second_elem);
     return;
   }
 
-  void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset) {
+  void fetch(std::vector<TUniquepair> & _return, const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->fetch(_return, query, limit, offset);
+      ifaces_[i]->fetch(_return, request_metadata, query, limit, offset);
     }
-    ifaces_[i]->fetch(_return, query, limit, offset);
+    ifaces_[i]->fetch(_return, request_metadata, query, limit, offset);
     return;
   }
 
-  int32_t count(const TUniquepairQuery& query) {
+  int32_t count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->count(query);
+      ifaces_[i]->count(request_metadata, query);
     }
-    return ifaces_[i]->count(query);
+    return ifaces_[i]->count(request_metadata, query);
   }
 
 };
@@ -959,23 +1001,23 @@ class TUniquepairServiceConcurrentClient : virtual public TUniquepairServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void get(TUniquepair& _return, const int32_t uniquepair_id);
-  int32_t send_get(const int32_t uniquepair_id);
+  void get(TUniquepair& _return, const TRequestMetadata& request_metadata, const int32_t uniquepair_id);
+  int32_t send_get(const TRequestMetadata& request_metadata, const int32_t uniquepair_id);
   void recv_get(TUniquepair& _return, const int32_t seqid);
-  void add(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
-  int32_t send_add(const std::string& domain, const int32_t first_elem, const int32_t second_elem);
+  void add(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
+  int32_t send_add(const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
   void recv_add(TUniquepair& _return, const int32_t seqid);
-  void remove(const int32_t uniquepair_id);
-  int32_t send_remove(const int32_t uniquepair_id);
+  void remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id);
+  int32_t send_remove(const TRequestMetadata& request_metadata, const int32_t uniquepair_id);
   void recv_remove(const int32_t seqid);
-  void find(TUniquepair& _return, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
-  int32_t send_find(const std::string& domain, const int32_t first_elem, const int32_t second_elem);
+  void find(TUniquepair& _return, const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
+  int32_t send_find(const TRequestMetadata& request_metadata, const std::string& domain, const int32_t first_elem, const int32_t second_elem);
   void recv_find(TUniquepair& _return, const int32_t seqid);
-  void fetch(std::vector<TUniquepair> & _return, const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
-  int32_t send_fetch(const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
+  void fetch(std::vector<TUniquepair> & _return, const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
+  int32_t send_fetch(const TRequestMetadata& request_metadata, const TUniquepairQuery& query, const int32_t limit, const int32_t offset);
   void recv_fetch(std::vector<TUniquepair> & _return, const int32_t seqid);
-  int32_t count(const TUniquepairQuery& query);
-  int32_t send_count(const TUniquepairQuery& query);
+  int32_t count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query);
+  int32_t send_count(const TRequestMetadata& request_metadata, const TUniquepairQuery& query);
   int32_t recv_count(const int32_t seqid);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;

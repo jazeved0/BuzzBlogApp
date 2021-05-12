@@ -21,6 +21,8 @@
 
 namespace gen {
 
+class TRequestMetadata;
+
 class TAccount;
 
 class TFollow;
@@ -72,6 +74,55 @@ class TPostNotAuthorizedException;
 class TUniquepairNotFoundException;
 
 class TUniquepairAlreadyExistsException;
+
+typedef struct _TRequestMetadata__isset {
+  _TRequestMetadata__isset() : requester_id(false) {}
+  bool requester_id :1;
+} _TRequestMetadata__isset;
+
+class TRequestMetadata : public virtual ::apache::thrift::TBase {
+ public:
+
+  TRequestMetadata(const TRequestMetadata&);
+  TRequestMetadata& operator=(const TRequestMetadata&);
+  TRequestMetadata() : id(0), requester_id(0) {
+  }
+
+  virtual ~TRequestMetadata() noexcept;
+  int32_t id;
+  int32_t requester_id;
+
+  _TRequestMetadata__isset __isset;
+
+  void __set_id(const int32_t val);
+
+  void __set_requester_id(const int32_t val);
+
+  bool operator == (const TRequestMetadata & rhs) const
+  {
+    if (!(id == rhs.id))
+      return false;
+    if (__isset.requester_id != rhs.__isset.requester_id)
+      return false;
+    else if (__isset.requester_id && !(requester_id == rhs.requester_id))
+      return false;
+    return true;
+  }
+  bool operator != (const TRequestMetadata &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const TRequestMetadata & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+  virtual void printTo(std::ostream& out) const;
+};
+
+void swap(TRequestMetadata &a, TRequestMetadata &b);
+
+std::ostream& operator<<(std::ostream& out, const TRequestMetadata& obj);
 
 typedef struct _TAccount__isset {
   _TAccount__isset() : follows_you(false), followed_by_you(false), n_followers(false), n_following(false), n_posts(false), n_likes(false) {}

@@ -35,9 +35,9 @@ uint32_t TPostService_create_post_args::read(::apache::thrift::protocol::TProtoc
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -67,8 +67,8 @@ uint32_t TPostService_create_post_args::write(::apache::thrift::protocol::TProto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_create_post_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("text", ::apache::thrift::protocol::T_STRING, 2);
@@ -90,8 +90,8 @@ uint32_t TPostService_create_post_pargs::write(::apache::thrift::protocol::TProt
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_create_post_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("text", ::apache::thrift::protocol::T_STRING, 2);
@@ -258,9 +258,9 @@ uint32_t TPostService_retrieve_standard_post_args::read(::apache::thrift::protoc
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -290,8 +290,8 @@ uint32_t TPostService_retrieve_standard_post_args::write(::apache::thrift::proto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_retrieve_standard_post_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -313,8 +313,8 @@ uint32_t TPostService_retrieve_standard_post_pargs::write(::apache::thrift::prot
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_retrieve_standard_post_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -481,9 +481,9 @@ uint32_t TPostService_retrieve_expanded_post_args::read(::apache::thrift::protoc
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -513,8 +513,8 @@ uint32_t TPostService_retrieve_expanded_post_args::write(::apache::thrift::proto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_retrieve_expanded_post_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -536,8 +536,8 @@ uint32_t TPostService_retrieve_expanded_post_pargs::write(::apache::thrift::prot
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_retrieve_expanded_post_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -724,9 +724,9 @@ uint32_t TPostService_delete_post_args::read(::apache::thrift::protocol::TProtoc
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -756,8 +756,8 @@ uint32_t TPostService_delete_post_args::write(::apache::thrift::protocol::TProto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_delete_post_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -779,8 +779,8 @@ uint32_t TPostService_delete_post_pargs::write(::apache::thrift::protocol::TProt
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_delete_post_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("post_id", ::apache::thrift::protocol::T_I32, 2);
@@ -947,9 +947,9 @@ uint32_t TPostService_list_posts_args::read(::apache::thrift::protocol::TProtoco
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -995,8 +995,8 @@ uint32_t TPostService_list_posts_args::write(::apache::thrift::protocol::TProtoc
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_list_posts_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
@@ -1026,8 +1026,8 @@ uint32_t TPostService_list_posts_pargs::write(::apache::thrift::protocol::TProto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_list_posts_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("query", ::apache::thrift::protocol::T_STRUCT, 2);
@@ -1077,14 +1077,14 @@ uint32_t TPostService_list_posts_result::read(::apache::thrift::protocol::TProto
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             this->success.clear();
-            uint32_t _size74;
-            ::apache::thrift::protocol::TType _etype77;
-            xfer += iprot->readListBegin(_etype77, _size74);
-            this->success.resize(_size74);
-            uint32_t _i78;
-            for (_i78 = 0; _i78 < _size74; ++_i78)
+            uint32_t _size76;
+            ::apache::thrift::protocol::TType _etype79;
+            xfer += iprot->readListBegin(_etype79, _size76);
+            this->success.resize(_size76);
+            uint32_t _i80;
+            for (_i80 = 0; _i80 < _size76; ++_i80)
             {
-              xfer += this->success[_i78].read(iprot);
+              xfer += this->success[_i80].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1123,10 +1123,10 @@ uint32_t TPostService_list_posts_result::write(::apache::thrift::protocol::TProt
     xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_LIST, 0);
     {
       xfer += oprot->writeListBegin(::apache::thrift::protocol::T_STRUCT, static_cast<uint32_t>(this->success.size()));
-      std::vector<TPost> ::const_iterator _iter79;
-      for (_iter79 = this->success.begin(); _iter79 != this->success.end(); ++_iter79)
+      std::vector<TPost> ::const_iterator _iter81;
+      for (_iter81 = this->success.begin(); _iter81 != this->success.end(); ++_iter81)
       {
-        xfer += (*_iter79).write(oprot);
+        xfer += (*_iter81).write(oprot);
       }
       xfer += oprot->writeListEnd();
     }
@@ -1171,14 +1171,14 @@ uint32_t TPostService_list_posts_presult::read(::apache::thrift::protocol::TProt
         if (ftype == ::apache::thrift::protocol::T_LIST) {
           {
             (*(this->success)).clear();
-            uint32_t _size80;
-            ::apache::thrift::protocol::TType _etype83;
-            xfer += iprot->readListBegin(_etype83, _size80);
-            (*(this->success)).resize(_size80);
-            uint32_t _i84;
-            for (_i84 = 0; _i84 < _size80; ++_i84)
+            uint32_t _size82;
+            ::apache::thrift::protocol::TType _etype85;
+            xfer += iprot->readListBegin(_etype85, _size82);
+            (*(this->success)).resize(_size82);
+            uint32_t _i86;
+            for (_i86 = 0; _i86 < _size82; ++_i86)
             {
-              xfer += (*(this->success))[_i84].read(iprot);
+              xfer += (*(this->success))[_i86].read(iprot);
             }
             xfer += iprot->readListEnd();
           }
@@ -1234,9 +1234,9 @@ uint32_t TPostService_count_posts_by_author_args::read(::apache::thrift::protoco
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->requester_id);
-          this->__isset.requester_id = true;
+        if (ftype == ::apache::thrift::protocol::T_STRUCT) {
+          xfer += this->request_metadata.read(iprot);
+          this->__isset.request_metadata = true;
         } else {
           xfer += iprot->skip(ftype);
         }
@@ -1266,8 +1266,8 @@ uint32_t TPostService_count_posts_by_author_args::write(::apache::thrift::protoc
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_count_posts_by_author_args");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->requester_id);
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += this->request_metadata.write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("author_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1289,8 +1289,8 @@ uint32_t TPostService_count_posts_by_author_pargs::write(::apache::thrift::proto
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TPostService_count_posts_by_author_pargs");
 
-  xfer += oprot->writeFieldBegin("requester_id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32((*(this->requester_id)));
+  xfer += oprot->writeFieldBegin("request_metadata", ::apache::thrift::protocol::T_STRUCT, 1);
+  xfer += (*(this->request_metadata)).write(oprot);
   xfer += oprot->writeFieldEnd();
 
   xfer += oprot->writeFieldBegin("author_id", ::apache::thrift::protocol::T_I32, 2);
@@ -1410,19 +1410,19 @@ uint32_t TPostService_count_posts_by_author_presult::read(::apache::thrift::prot
   return xfer;
 }
 
-void TPostServiceClient::create_post(TPost& _return, const int32_t requester_id, const std::string& text)
+void TPostServiceClient::create_post(TPost& _return, const TRequestMetadata& request_metadata, const std::string& text)
 {
-  send_create_post(requester_id, text);
+  send_create_post(request_metadata, text);
   recv_create_post(_return);
 }
 
-void TPostServiceClient::send_create_post(const int32_t requester_id, const std::string& text)
+void TPostServiceClient::send_create_post(const TRequestMetadata& request_metadata, const std::string& text)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("create_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_create_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.text = &text;
   args.write(oprot_);
 
@@ -1472,19 +1472,19 @@ void TPostServiceClient::recv_create_post(TPost& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "create_post failed: unknown result");
 }
 
-void TPostServiceClient::retrieve_standard_post(TPost& _return, const int32_t requester_id, const int32_t post_id)
+void TPostServiceClient::retrieve_standard_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  send_retrieve_standard_post(requester_id, post_id);
+  send_retrieve_standard_post(request_metadata, post_id);
   recv_retrieve_standard_post(_return);
 }
 
-void TPostServiceClient::send_retrieve_standard_post(const int32_t requester_id, const int32_t post_id)
+void TPostServiceClient::send_retrieve_standard_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("retrieve_standard_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_retrieve_standard_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 
@@ -1534,19 +1534,19 @@ void TPostServiceClient::recv_retrieve_standard_post(TPost& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "retrieve_standard_post failed: unknown result");
 }
 
-void TPostServiceClient::retrieve_expanded_post(TPost& _return, const int32_t requester_id, const int32_t post_id)
+void TPostServiceClient::retrieve_expanded_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  send_retrieve_expanded_post(requester_id, post_id);
+  send_retrieve_expanded_post(request_metadata, post_id);
   recv_retrieve_expanded_post(_return);
 }
 
-void TPostServiceClient::send_retrieve_expanded_post(const int32_t requester_id, const int32_t post_id)
+void TPostServiceClient::send_retrieve_expanded_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("retrieve_expanded_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_retrieve_expanded_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 
@@ -1599,19 +1599,19 @@ void TPostServiceClient::recv_retrieve_expanded_post(TPost& _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "retrieve_expanded_post failed: unknown result");
 }
 
-void TPostServiceClient::delete_post(const int32_t requester_id, const int32_t post_id)
+void TPostServiceClient::delete_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  send_delete_post(requester_id, post_id);
+  send_delete_post(request_metadata, post_id);
   recv_delete_post();
 }
 
-void TPostServiceClient::send_delete_post(const int32_t requester_id, const int32_t post_id)
+void TPostServiceClient::send_delete_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("delete_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_delete_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 
@@ -1659,19 +1659,19 @@ void TPostServiceClient::recv_delete_post()
   return;
 }
 
-void TPostServiceClient::list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset)
+void TPostServiceClient::list_posts(std::vector<TPost> & _return, const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset)
 {
-  send_list_posts(requester_id, query, limit, offset);
+  send_list_posts(request_metadata, query, limit, offset);
   recv_list_posts(_return);
 }
 
-void TPostServiceClient::send_list_posts(const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset)
+void TPostServiceClient::send_list_posts(const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("list_posts", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_list_posts_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.limit = &limit;
   args.offset = &offset;
@@ -1723,19 +1723,19 @@ void TPostServiceClient::recv_list_posts(std::vector<TPost> & _return)
   throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "list_posts failed: unknown result");
 }
 
-int32_t TPostServiceClient::count_posts_by_author(const int32_t requester_id, const int32_t author_id)
+int32_t TPostServiceClient::count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id)
 {
-  send_count_posts_by_author(requester_id, author_id);
+  send_count_posts_by_author(request_metadata, author_id);
   return recv_count_posts_by_author();
 }
 
-void TPostServiceClient::send_count_posts_by_author(const int32_t requester_id, const int32_t author_id)
+void TPostServiceClient::send_count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id)
 {
   int32_t cseqid = 0;
   oprot_->writeMessageBegin("count_posts_by_author", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_count_posts_by_author_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.author_id = &author_id;
   args.write(oprot_);
 
@@ -1824,7 +1824,7 @@ void TPostServiceProcessor::process_create_post(int32_t seqid, ::apache::thrift:
 
   TPostService_create_post_result result;
   try {
-    iface_->create_post(result.success, args.requester_id, args.text);
+    iface_->create_post(result.success, args.request_metadata, args.text);
     result.__isset.success = true;
   } catch (TPostInvalidAttributesException &e) {
     result.e = e;
@@ -1881,7 +1881,7 @@ void TPostServiceProcessor::process_retrieve_standard_post(int32_t seqid, ::apac
 
   TPostService_retrieve_standard_post_result result;
   try {
-    iface_->retrieve_standard_post(result.success, args.requester_id, args.post_id);
+    iface_->retrieve_standard_post(result.success, args.request_metadata, args.post_id);
     result.__isset.success = true;
   } catch (TPostNotFoundException &e) {
     result.e = e;
@@ -1938,7 +1938,7 @@ void TPostServiceProcessor::process_retrieve_expanded_post(int32_t seqid, ::apac
 
   TPostService_retrieve_expanded_post_result result;
   try {
-    iface_->retrieve_expanded_post(result.success, args.requester_id, args.post_id);
+    iface_->retrieve_expanded_post(result.success, args.request_metadata, args.post_id);
     result.__isset.success = true;
   } catch (TPostNotFoundException &e1) {
     result.e1 = e1;
@@ -1998,7 +1998,7 @@ void TPostServiceProcessor::process_delete_post(int32_t seqid, ::apache::thrift:
 
   TPostService_delete_post_result result;
   try {
-    iface_->delete_post(args.requester_id, args.post_id);
+    iface_->delete_post(args.request_metadata, args.post_id);
   } catch (TPostNotFoundException &e1) {
     result.e1 = e1;
     result.__isset.e1 = true;
@@ -2057,7 +2057,7 @@ void TPostServiceProcessor::process_list_posts(int32_t seqid, ::apache::thrift::
 
   TPostService_list_posts_result result;
   try {
-    iface_->list_posts(result.success, args.requester_id, args.query, args.limit, args.offset);
+    iface_->list_posts(result.success, args.request_metadata, args.query, args.limit, args.offset);
     result.__isset.success = true;
   } catch (TAccountNotFoundException &e) {
     result.e = e;
@@ -2114,7 +2114,7 @@ void TPostServiceProcessor::process_count_posts_by_author(int32_t seqid, ::apach
 
   TPostService_count_posts_by_author_result result;
   try {
-    result.success = iface_->count_posts_by_author(args.requester_id, args.author_id);
+    result.success = iface_->count_posts_by_author(args.request_metadata, args.author_id);
     result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
@@ -2152,20 +2152,20 @@ void TPostServiceProcessor::process_count_posts_by_author(int32_t seqid, ::apach
   return processor;
 }
 
-void TPostServiceConcurrentClient::create_post(TPost& _return, const int32_t requester_id, const std::string& text)
+void TPostServiceConcurrentClient::create_post(TPost& _return, const TRequestMetadata& request_metadata, const std::string& text)
 {
-  int32_t seqid = send_create_post(requester_id, text);
+  int32_t seqid = send_create_post(request_metadata, text);
   recv_create_post(_return, seqid);
 }
 
-int32_t TPostServiceConcurrentClient::send_create_post(const int32_t requester_id, const std::string& text)
+int32_t TPostServiceConcurrentClient::send_create_post(const TRequestMetadata& request_metadata, const std::string& text)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("create_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_create_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.text = &text;
   args.write(oprot_);
 
@@ -2241,20 +2241,20 @@ void TPostServiceConcurrentClient::recv_create_post(TPost& _return, const int32_
   } // end while(true)
 }
 
-void TPostServiceConcurrentClient::retrieve_standard_post(TPost& _return, const int32_t requester_id, const int32_t post_id)
+void TPostServiceConcurrentClient::retrieve_standard_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  int32_t seqid = send_retrieve_standard_post(requester_id, post_id);
+  int32_t seqid = send_retrieve_standard_post(request_metadata, post_id);
   recv_retrieve_standard_post(_return, seqid);
 }
 
-int32_t TPostServiceConcurrentClient::send_retrieve_standard_post(const int32_t requester_id, const int32_t post_id)
+int32_t TPostServiceConcurrentClient::send_retrieve_standard_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("retrieve_standard_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_retrieve_standard_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 
@@ -2330,20 +2330,20 @@ void TPostServiceConcurrentClient::recv_retrieve_standard_post(TPost& _return, c
   } // end while(true)
 }
 
-void TPostServiceConcurrentClient::retrieve_expanded_post(TPost& _return, const int32_t requester_id, const int32_t post_id)
+void TPostServiceConcurrentClient::retrieve_expanded_post(TPost& _return, const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  int32_t seqid = send_retrieve_expanded_post(requester_id, post_id);
+  int32_t seqid = send_retrieve_expanded_post(request_metadata, post_id);
   recv_retrieve_expanded_post(_return, seqid);
 }
 
-int32_t TPostServiceConcurrentClient::send_retrieve_expanded_post(const int32_t requester_id, const int32_t post_id)
+int32_t TPostServiceConcurrentClient::send_retrieve_expanded_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("retrieve_expanded_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_retrieve_expanded_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 
@@ -2423,20 +2423,20 @@ void TPostServiceConcurrentClient::recv_retrieve_expanded_post(TPost& _return, c
   } // end while(true)
 }
 
-void TPostServiceConcurrentClient::delete_post(const int32_t requester_id, const int32_t post_id)
+void TPostServiceConcurrentClient::delete_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
-  int32_t seqid = send_delete_post(requester_id, post_id);
+  int32_t seqid = send_delete_post(request_metadata, post_id);
   recv_delete_post(seqid);
 }
 
-int32_t TPostServiceConcurrentClient::send_delete_post(const int32_t requester_id, const int32_t post_id)
+int32_t TPostServiceConcurrentClient::send_delete_post(const TRequestMetadata& request_metadata, const int32_t post_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("delete_post", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_delete_post_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.post_id = &post_id;
   args.write(oprot_);
 
@@ -2510,20 +2510,20 @@ void TPostServiceConcurrentClient::recv_delete_post(const int32_t seqid)
   } // end while(true)
 }
 
-void TPostServiceConcurrentClient::list_posts(std::vector<TPost> & _return, const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset)
+void TPostServiceConcurrentClient::list_posts(std::vector<TPost> & _return, const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset)
 {
-  int32_t seqid = send_list_posts(requester_id, query, limit, offset);
+  int32_t seqid = send_list_posts(request_metadata, query, limit, offset);
   recv_list_posts(_return, seqid);
 }
 
-int32_t TPostServiceConcurrentClient::send_list_posts(const int32_t requester_id, const TPostQuery& query, const int32_t limit, const int32_t offset)
+int32_t TPostServiceConcurrentClient::send_list_posts(const TRequestMetadata& request_metadata, const TPostQuery& query, const int32_t limit, const int32_t offset)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("list_posts", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_list_posts_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.query = &query;
   args.limit = &limit;
   args.offset = &offset;
@@ -2601,20 +2601,20 @@ void TPostServiceConcurrentClient::recv_list_posts(std::vector<TPost> & _return,
   } // end while(true)
 }
 
-int32_t TPostServiceConcurrentClient::count_posts_by_author(const int32_t requester_id, const int32_t author_id)
+int32_t TPostServiceConcurrentClient::count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id)
 {
-  int32_t seqid = send_count_posts_by_author(requester_id, author_id);
+  int32_t seqid = send_count_posts_by_author(request_metadata, author_id);
   return recv_count_posts_by_author(seqid);
 }
 
-int32_t TPostServiceConcurrentClient::send_count_posts_by_author(const int32_t requester_id, const int32_t author_id)
+int32_t TPostServiceConcurrentClient::send_count_posts_by_author(const TRequestMetadata& request_metadata, const int32_t author_id)
 {
   int32_t cseqid = this->sync_->generateSeqId();
   ::apache::thrift::async::TConcurrentSendSentry sentry(this->sync_.get());
   oprot_->writeMessageBegin("count_posts_by_author", ::apache::thrift::protocol::T_CALL, cseqid);
 
   TPostService_count_posts_by_author_pargs args;
-  args.requester_id = &requester_id;
+  args.request_metadata = &request_metadata;
   args.author_id = &author_id;
   args.write(oprot_);
 

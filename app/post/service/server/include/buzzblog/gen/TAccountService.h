@@ -22,12 +22,12 @@ namespace gen {
 class TAccountServiceIf {
  public:
   virtual ~TAccountServiceIf() {}
-  virtual void authenticate_user(TAccount& _return, const std::string& username, const std::string& password) = 0;
-  virtual void create_account(TAccount& _return, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name) = 0;
-  virtual void retrieve_standard_account(TAccount& _return, const int32_t requester_id, const int32_t account_id) = 0;
-  virtual void retrieve_expanded_account(TAccount& _return, const int32_t requester_id, const int32_t account_id) = 0;
-  virtual void update_account(TAccount& _return, const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name) = 0;
-  virtual void delete_account(const int32_t requester_id, const int32_t account_id) = 0;
+  virtual void authenticate_user(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password) = 0;
+  virtual void create_account(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name) = 0;
+  virtual void retrieve_standard_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id) = 0;
+  virtual void retrieve_expanded_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id) = 0;
+  virtual void update_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name) = 0;
+  virtual void delete_account(const TRequestMetadata& request_metadata, const int32_t account_id) = 0;
 };
 
 class TAccountServiceIfFactory {
@@ -57,28 +57,29 @@ class TAccountServiceIfSingletonFactory : virtual public TAccountServiceIfFactor
 class TAccountServiceNull : virtual public TAccountServiceIf {
  public:
   virtual ~TAccountServiceNull() {}
-  void authenticate_user(TAccount& /* _return */, const std::string& /* username */, const std::string& /* password */) {
+  void authenticate_user(TAccount& /* _return */, const TRequestMetadata& /* request_metadata */, const std::string& /* username */, const std::string& /* password */) {
     return;
   }
-  void create_account(TAccount& /* _return */, const std::string& /* username */, const std::string& /* password */, const std::string& /* first_name */, const std::string& /* last_name */) {
+  void create_account(TAccount& /* _return */, const TRequestMetadata& /* request_metadata */, const std::string& /* username */, const std::string& /* password */, const std::string& /* first_name */, const std::string& /* last_name */) {
     return;
   }
-  void retrieve_standard_account(TAccount& /* _return */, const int32_t /* requester_id */, const int32_t /* account_id */) {
+  void retrieve_standard_account(TAccount& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* account_id */) {
     return;
   }
-  void retrieve_expanded_account(TAccount& /* _return */, const int32_t /* requester_id */, const int32_t /* account_id */) {
+  void retrieve_expanded_account(TAccount& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* account_id */) {
     return;
   }
-  void update_account(TAccount& /* _return */, const int32_t /* requester_id */, const int32_t /* account_id */, const std::string& /* password */, const std::string& /* first_name */, const std::string& /* last_name */) {
+  void update_account(TAccount& /* _return */, const TRequestMetadata& /* request_metadata */, const int32_t /* account_id */, const std::string& /* password */, const std::string& /* first_name */, const std::string& /* last_name */) {
     return;
   }
-  void delete_account(const int32_t /* requester_id */, const int32_t /* account_id */) {
+  void delete_account(const TRequestMetadata& /* request_metadata */, const int32_t /* account_id */) {
     return;
   }
 };
 
 typedef struct _TAccountService_authenticate_user_args__isset {
-  _TAccountService_authenticate_user_args__isset() : username(false), password(false) {}
+  _TAccountService_authenticate_user_args__isset() : request_metadata(false), username(false), password(false) {}
+  bool request_metadata :1;
   bool username :1;
   bool password :1;
 } _TAccountService_authenticate_user_args__isset;
@@ -92,10 +93,13 @@ class TAccountService_authenticate_user_args {
   }
 
   virtual ~TAccountService_authenticate_user_args() noexcept;
+  TRequestMetadata request_metadata;
   std::string username;
   std::string password;
 
   _TAccountService_authenticate_user_args__isset __isset;
+
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_username(const std::string& val);
 
@@ -103,6 +107,8 @@ class TAccountService_authenticate_user_args {
 
   bool operator == (const TAccountService_authenticate_user_args & rhs) const
   {
+    if (!(request_metadata == rhs.request_metadata))
+      return false;
     if (!(username == rhs.username))
       return false;
     if (!(password == rhs.password))
@@ -126,6 +132,7 @@ class TAccountService_authenticate_user_pargs {
 
 
   virtual ~TAccountService_authenticate_user_pargs() noexcept;
+  const TRequestMetadata* request_metadata;
   const std::string* username;
   const std::string* password;
 
@@ -205,7 +212,8 @@ class TAccountService_authenticate_user_presult {
 };
 
 typedef struct _TAccountService_create_account_args__isset {
-  _TAccountService_create_account_args__isset() : username(false), password(false), first_name(false), last_name(false) {}
+  _TAccountService_create_account_args__isset() : request_metadata(false), username(false), password(false), first_name(false), last_name(false) {}
+  bool request_metadata :1;
   bool username :1;
   bool password :1;
   bool first_name :1;
@@ -221,12 +229,15 @@ class TAccountService_create_account_args {
   }
 
   virtual ~TAccountService_create_account_args() noexcept;
+  TRequestMetadata request_metadata;
   std::string username;
   std::string password;
   std::string first_name;
   std::string last_name;
 
   _TAccountService_create_account_args__isset __isset;
+
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_username(const std::string& val);
 
@@ -238,6 +249,8 @@ class TAccountService_create_account_args {
 
   bool operator == (const TAccountService_create_account_args & rhs) const
   {
+    if (!(request_metadata == rhs.request_metadata))
+      return false;
     if (!(username == rhs.username))
       return false;
     if (!(password == rhs.password))
@@ -265,6 +278,7 @@ class TAccountService_create_account_pargs {
 
 
   virtual ~TAccountService_create_account_pargs() noexcept;
+  const TRequestMetadata* request_metadata;
   const std::string* username;
   const std::string* password;
   const std::string* first_name;
@@ -346,8 +360,8 @@ class TAccountService_create_account_presult {
 };
 
 typedef struct _TAccountService_retrieve_standard_account_args__isset {
-  _TAccountService_retrieve_standard_account_args__isset() : requester_id(false), account_id(false) {}
-  bool requester_id :1;
+  _TAccountService_retrieve_standard_account_args__isset() : request_metadata(false), account_id(false) {}
+  bool request_metadata :1;
   bool account_id :1;
 } _TAccountService_retrieve_standard_account_args__isset;
 
@@ -356,22 +370,22 @@ class TAccountService_retrieve_standard_account_args {
 
   TAccountService_retrieve_standard_account_args(const TAccountService_retrieve_standard_account_args&);
   TAccountService_retrieve_standard_account_args& operator=(const TAccountService_retrieve_standard_account_args&);
-  TAccountService_retrieve_standard_account_args() : requester_id(0), account_id(0) {
+  TAccountService_retrieve_standard_account_args() : account_id(0) {
   }
 
   virtual ~TAccountService_retrieve_standard_account_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t account_id;
 
   _TAccountService_retrieve_standard_account_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_account_id(const int32_t val);
 
   bool operator == (const TAccountService_retrieve_standard_account_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(account_id == rhs.account_id))
       return false;
@@ -394,7 +408,7 @@ class TAccountService_retrieve_standard_account_pargs {
 
 
   virtual ~TAccountService_retrieve_standard_account_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* account_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -465,8 +479,8 @@ class TAccountService_retrieve_standard_account_presult {
 };
 
 typedef struct _TAccountService_retrieve_expanded_account_args__isset {
-  _TAccountService_retrieve_expanded_account_args__isset() : requester_id(false), account_id(false) {}
-  bool requester_id :1;
+  _TAccountService_retrieve_expanded_account_args__isset() : request_metadata(false), account_id(false) {}
+  bool request_metadata :1;
   bool account_id :1;
 } _TAccountService_retrieve_expanded_account_args__isset;
 
@@ -475,22 +489,22 @@ class TAccountService_retrieve_expanded_account_args {
 
   TAccountService_retrieve_expanded_account_args(const TAccountService_retrieve_expanded_account_args&);
   TAccountService_retrieve_expanded_account_args& operator=(const TAccountService_retrieve_expanded_account_args&);
-  TAccountService_retrieve_expanded_account_args() : requester_id(0), account_id(0) {
+  TAccountService_retrieve_expanded_account_args() : account_id(0) {
   }
 
   virtual ~TAccountService_retrieve_expanded_account_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t account_id;
 
   _TAccountService_retrieve_expanded_account_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_account_id(const int32_t val);
 
   bool operator == (const TAccountService_retrieve_expanded_account_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(account_id == rhs.account_id))
       return false;
@@ -513,7 +527,7 @@ class TAccountService_retrieve_expanded_account_pargs {
 
 
   virtual ~TAccountService_retrieve_expanded_account_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* account_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -584,8 +598,8 @@ class TAccountService_retrieve_expanded_account_presult {
 };
 
 typedef struct _TAccountService_update_account_args__isset {
-  _TAccountService_update_account_args__isset() : requester_id(false), account_id(false), password(false), first_name(false), last_name(false) {}
-  bool requester_id :1;
+  _TAccountService_update_account_args__isset() : request_metadata(false), account_id(false), password(false), first_name(false), last_name(false) {}
+  bool request_metadata :1;
   bool account_id :1;
   bool password :1;
   bool first_name :1;
@@ -597,11 +611,11 @@ class TAccountService_update_account_args {
 
   TAccountService_update_account_args(const TAccountService_update_account_args&);
   TAccountService_update_account_args& operator=(const TAccountService_update_account_args&);
-  TAccountService_update_account_args() : requester_id(0), account_id(0), password(), first_name(), last_name() {
+  TAccountService_update_account_args() : account_id(0), password(), first_name(), last_name() {
   }
 
   virtual ~TAccountService_update_account_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t account_id;
   std::string password;
   std::string first_name;
@@ -609,7 +623,7 @@ class TAccountService_update_account_args {
 
   _TAccountService_update_account_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_account_id(const int32_t val);
 
@@ -621,7 +635,7 @@ class TAccountService_update_account_args {
 
   bool operator == (const TAccountService_update_account_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(account_id == rhs.account_id))
       return false;
@@ -650,7 +664,7 @@ class TAccountService_update_account_pargs {
 
 
   virtual ~TAccountService_update_account_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* account_id;
   const std::string* password;
   const std::string* first_name;
@@ -740,8 +754,8 @@ class TAccountService_update_account_presult {
 };
 
 typedef struct _TAccountService_delete_account_args__isset {
-  _TAccountService_delete_account_args__isset() : requester_id(false), account_id(false) {}
-  bool requester_id :1;
+  _TAccountService_delete_account_args__isset() : request_metadata(false), account_id(false) {}
+  bool request_metadata :1;
   bool account_id :1;
 } _TAccountService_delete_account_args__isset;
 
@@ -750,22 +764,22 @@ class TAccountService_delete_account_args {
 
   TAccountService_delete_account_args(const TAccountService_delete_account_args&);
   TAccountService_delete_account_args& operator=(const TAccountService_delete_account_args&);
-  TAccountService_delete_account_args() : requester_id(0), account_id(0) {
+  TAccountService_delete_account_args() : account_id(0) {
   }
 
   virtual ~TAccountService_delete_account_args() noexcept;
-  int32_t requester_id;
+  TRequestMetadata request_metadata;
   int32_t account_id;
 
   _TAccountService_delete_account_args__isset __isset;
 
-  void __set_requester_id(const int32_t val);
+  void __set_request_metadata(const TRequestMetadata& val);
 
   void __set_account_id(const int32_t val);
 
   bool operator == (const TAccountService_delete_account_args & rhs) const
   {
-    if (!(requester_id == rhs.requester_id))
+    if (!(request_metadata == rhs.request_metadata))
       return false;
     if (!(account_id == rhs.account_id))
       return false;
@@ -788,7 +802,7 @@ class TAccountService_delete_account_pargs {
 
 
   virtual ~TAccountService_delete_account_pargs() noexcept;
-  const int32_t* requester_id;
+  const TRequestMetadata* request_metadata;
   const int32_t* account_id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -883,23 +897,23 @@ class TAccountServiceClient : virtual public TAccountServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void authenticate_user(TAccount& _return, const std::string& username, const std::string& password);
-  void send_authenticate_user(const std::string& username, const std::string& password);
+  void authenticate_user(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password);
+  void send_authenticate_user(const TRequestMetadata& request_metadata, const std::string& username, const std::string& password);
   void recv_authenticate_user(TAccount& _return);
-  void create_account(TAccount& _return, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name);
-  void send_create_account(const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name);
+  void create_account(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name);
+  void send_create_account(const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name);
   void recv_create_account(TAccount& _return);
-  void retrieve_standard_account(TAccount& _return, const int32_t requester_id, const int32_t account_id);
-  void send_retrieve_standard_account(const int32_t requester_id, const int32_t account_id);
+  void retrieve_standard_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id);
+  void send_retrieve_standard_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   void recv_retrieve_standard_account(TAccount& _return);
-  void retrieve_expanded_account(TAccount& _return, const int32_t requester_id, const int32_t account_id);
-  void send_retrieve_expanded_account(const int32_t requester_id, const int32_t account_id);
+  void retrieve_expanded_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id);
+  void send_retrieve_expanded_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   void recv_retrieve_expanded_account(TAccount& _return);
-  void update_account(TAccount& _return, const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name);
-  void send_update_account(const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name);
+  void update_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name);
+  void send_update_account(const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name);
   void recv_update_account(TAccount& _return);
-  void delete_account(const int32_t requester_id, const int32_t account_id);
-  void send_delete_account(const int32_t requester_id, const int32_t account_id);
+  void delete_account(const TRequestMetadata& request_metadata, const int32_t account_id);
+  void send_delete_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   void recv_delete_account();
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
@@ -959,63 +973,63 @@ class TAccountServiceMultiface : virtual public TAccountServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  void authenticate_user(TAccount& _return, const std::string& username, const std::string& password) {
+  void authenticate_user(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->authenticate_user(_return, username, password);
+      ifaces_[i]->authenticate_user(_return, request_metadata, username, password);
     }
-    ifaces_[i]->authenticate_user(_return, username, password);
+    ifaces_[i]->authenticate_user(_return, request_metadata, username, password);
     return;
   }
 
-  void create_account(TAccount& _return, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name) {
+  void create_account(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->create_account(_return, username, password, first_name, last_name);
+      ifaces_[i]->create_account(_return, request_metadata, username, password, first_name, last_name);
     }
-    ifaces_[i]->create_account(_return, username, password, first_name, last_name);
+    ifaces_[i]->create_account(_return, request_metadata, username, password, first_name, last_name);
     return;
   }
 
-  void retrieve_standard_account(TAccount& _return, const int32_t requester_id, const int32_t account_id) {
+  void retrieve_standard_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->retrieve_standard_account(_return, requester_id, account_id);
+      ifaces_[i]->retrieve_standard_account(_return, request_metadata, account_id);
     }
-    ifaces_[i]->retrieve_standard_account(_return, requester_id, account_id);
+    ifaces_[i]->retrieve_standard_account(_return, request_metadata, account_id);
     return;
   }
 
-  void retrieve_expanded_account(TAccount& _return, const int32_t requester_id, const int32_t account_id) {
+  void retrieve_expanded_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->retrieve_expanded_account(_return, requester_id, account_id);
+      ifaces_[i]->retrieve_expanded_account(_return, request_metadata, account_id);
     }
-    ifaces_[i]->retrieve_expanded_account(_return, requester_id, account_id);
+    ifaces_[i]->retrieve_expanded_account(_return, request_metadata, account_id);
     return;
   }
 
-  void update_account(TAccount& _return, const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name) {
+  void update_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->update_account(_return, requester_id, account_id, password, first_name, last_name);
+      ifaces_[i]->update_account(_return, request_metadata, account_id, password, first_name, last_name);
     }
-    ifaces_[i]->update_account(_return, requester_id, account_id, password, first_name, last_name);
+    ifaces_[i]->update_account(_return, request_metadata, account_id, password, first_name, last_name);
     return;
   }
 
-  void delete_account(const int32_t requester_id, const int32_t account_id) {
+  void delete_account(const TRequestMetadata& request_metadata, const int32_t account_id) {
     size_t sz = ifaces_.size();
     size_t i = 0;
     for (; i < (sz - 1); ++i) {
-      ifaces_[i]->delete_account(requester_id, account_id);
+      ifaces_[i]->delete_account(request_metadata, account_id);
     }
-    ifaces_[i]->delete_account(requester_id, account_id);
+    ifaces_[i]->delete_account(request_metadata, account_id);
   }
 
 };
@@ -1050,23 +1064,23 @@ class TAccountServiceConcurrentClient : virtual public TAccountServiceIf {
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void authenticate_user(TAccount& _return, const std::string& username, const std::string& password);
-  int32_t send_authenticate_user(const std::string& username, const std::string& password);
+  void authenticate_user(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password);
+  int32_t send_authenticate_user(const TRequestMetadata& request_metadata, const std::string& username, const std::string& password);
   void recv_authenticate_user(TAccount& _return, const int32_t seqid);
-  void create_account(TAccount& _return, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name);
-  int32_t send_create_account(const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name);
+  void create_account(TAccount& _return, const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name);
+  int32_t send_create_account(const TRequestMetadata& request_metadata, const std::string& username, const std::string& password, const std::string& first_name, const std::string& last_name);
   void recv_create_account(TAccount& _return, const int32_t seqid);
-  void retrieve_standard_account(TAccount& _return, const int32_t requester_id, const int32_t account_id);
-  int32_t send_retrieve_standard_account(const int32_t requester_id, const int32_t account_id);
+  void retrieve_standard_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id);
+  int32_t send_retrieve_standard_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   void recv_retrieve_standard_account(TAccount& _return, const int32_t seqid);
-  void retrieve_expanded_account(TAccount& _return, const int32_t requester_id, const int32_t account_id);
-  int32_t send_retrieve_expanded_account(const int32_t requester_id, const int32_t account_id);
+  void retrieve_expanded_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id);
+  int32_t send_retrieve_expanded_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   void recv_retrieve_expanded_account(TAccount& _return, const int32_t seqid);
-  void update_account(TAccount& _return, const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name);
-  int32_t send_update_account(const int32_t requester_id, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name);
+  void update_account(TAccount& _return, const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name);
+  int32_t send_update_account(const TRequestMetadata& request_metadata, const int32_t account_id, const std::string& password, const std::string& first_name, const std::string& last_name);
   void recv_update_account(TAccount& _return, const int32_t seqid);
-  void delete_account(const int32_t requester_id, const int32_t account_id);
-  int32_t send_delete_account(const int32_t requester_id, const int32_t account_id);
+  void delete_account(const TRequestMetadata& request_metadata, const int32_t account_id);
+  int32_t send_delete_account(const TRequestMetadata& request_metadata, const int32_t account_id);
   void recv_delete_account(const int32_t seqid);
  protected:
   std::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;

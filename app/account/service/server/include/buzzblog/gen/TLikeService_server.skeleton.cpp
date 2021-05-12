@@ -20,37 +20,37 @@ class TLikeServiceHandler : virtual public TLikeServiceIf {
     // Your initialization goes here
   }
 
-  void like_post(TLike& _return, const int32_t requester_id, const int32_t post_id) {
+  void like_post(TLike& _return, const TRequestMetadata& request_metadata, const int32_t post_id) {
     // Your implementation goes here
     printf("like_post\n");
   }
 
-  void retrieve_standard_like(TLike& _return, const int32_t requester_id, const int32_t like_id) {
+  void retrieve_standard_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id) {
     // Your implementation goes here
     printf("retrieve_standard_like\n");
   }
 
-  void retrieve_expanded_like(TLike& _return, const int32_t requester_id, const int32_t like_id) {
+  void retrieve_expanded_like(TLike& _return, const TRequestMetadata& request_metadata, const int32_t like_id) {
     // Your implementation goes here
     printf("retrieve_expanded_like\n");
   }
 
-  void delete_like(const int32_t requester_id, const int32_t like_id) {
+  void delete_like(const TRequestMetadata& request_metadata, const int32_t like_id) {
     // Your implementation goes here
     printf("delete_like\n");
   }
 
-  void list_likes(std::vector<TLike> & _return, const int32_t requester_id, const TLikeQuery& query, const int32_t limit, const int32_t offset) {
+  void list_likes(std::vector<TLike> & _return, const TRequestMetadata& request_metadata, const TLikeQuery& query, const int32_t limit, const int32_t offset) {
     // Your implementation goes here
     printf("list_likes\n");
   }
 
-  int32_t count_likes_by_account(const int32_t requester_id, const int32_t account_id) {
+  int32_t count_likes_by_account(const TRequestMetadata& request_metadata, const int32_t account_id) {
     // Your implementation goes here
     printf("count_likes_by_account\n");
   }
 
-  int32_t count_likes_of_post(const int32_t requester_id, const int32_t post_id) {
+  int32_t count_likes_of_post(const TRequestMetadata& request_metadata, const int32_t post_id) {
     // Your implementation goes here
     printf("count_likes_of_post\n");
   }
