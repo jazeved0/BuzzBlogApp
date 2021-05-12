@@ -30,20 +30,22 @@ class Client:
     if self._transport.isOpen():
       self._transport.close()
 
-  def create_post(self, requester_id, text):
-    return self._tclient.create_post(requester_id=requester_id, text=text)
+  def create_post(self, request_metadata, text):
+    return self._tclient.create_post(request_metadata=request_metadata,
+        text=text)
 
-  def retrieve_standard_post(self, requester_id, post_id):
-    return self._tclient.retrieve_standard_post(requester_id=requester_id,
+  def retrieve_standard_post(self, request_metadata, post_id):
+    return self._tclient.retrieve_standard_post(
+        request_metadata=request_metadata, post_id=post_id)
+
+  def retrieve_expanded_post(self, request_metadata, post_id):
+    return self._tclient.retrieve_expanded_post(
+        request_metadata=request_metadata, post_id=post_id)
+
+  def delete_post(self, request_metadata, post_id):
+    return self._tclient.delete_post(request_metadata=request_metadata,
         post_id=post_id)
 
-  def retrieve_expanded_post(self, requester_id, post_id):
-    return self._tclient.retrieve_expanded_post(requester_id=requester_id,
-        post_id=post_id)
-
-  def delete_post(self, requester_id, post_id):
-    return self._tclient.delete_post(requester_id=requester_id, post_id=post_id)
-
-  def list_posts(self, requester_id, query, limit, offset):
-    return self._tclient.list_posts(requester_id=requester_id,
+  def list_posts(self, request_metadata, query, limit, offset):
+    return self._tclient.list_posts(request_metadata=request_metadata,
         query=query, limit=limit, offset=offset)

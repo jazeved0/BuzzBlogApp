@@ -30,34 +30,34 @@ class Client:
     if self._transport.isOpen():
       self._transport.close()
 
-  def follow_account(self, requester_id, account_id):
-    return self._tclient.follow_account(requester_id=requester_id,
+  def follow_account(self, request_metadata, account_id):
+    return self._tclient.follow_account(request_metadata=request_metadata,
         account_id=account_id)
 
-  def retrieve_standard_follow(self, requester_id, follow_id):
-    return self._tclient.retrieve_standard_follow(requester_id=requester_id,
+  def retrieve_standard_follow(self, request_metadata, follow_id):
+    return self._tclient.retrieve_standard_follow(
+        request_metadata=request_metadata, follow_id=follow_id)
+
+  def retrieve_expanded_follow(self, request_metadata, follow_id):
+    return self._tclient.retrieve_expanded_follow(
+        request_metadata=request_metadata, follow_id=follow_id)
+
+  def delete_follow(self, request_metadata, follow_id):
+    return self._tclient.delete_follow(request_metadata=request_metadata,
         follow_id=follow_id)
 
-  def retrieve_expanded_follow(self, requester_id, follow_id):
-    return self._tclient.retrieve_expanded_follow(requester_id=requester_id,
-        follow_id=follow_id)
-
-  def delete_follow(self, requester_id, follow_id):
-    return self._tclient.delete_follow(requester_id=requester_id,
-        follow_id=follow_id)
-
-  def list_follows(self, requester_id, query, limit, offset):
-    return self._tclient.list_follows(requester_id=requester_id,
+  def list_follows(self, request_metadata, query, limit, offset):
+    return self._tclient.list_follows(request_metadata=request_metadata,
         query=query, limit=limit, offset=offset)
 
-  def check_follow(self, requester_id, follower_id, followee_id):
-    return self._tclient.check_follow(requester_id=requester_id,
+  def check_follow(self, request_metadata, follower_id, followee_id):
+    return self._tclient.check_follow(request_metadata=request_metadata,
         follower_id=follower_id, followee_id=followee_id)
 
-  def count_followers(self, requester_id, account_id):
-    return self._tclient.count_followers(requester_id=requester_id,
+  def count_followers(self, request_metadata, account_id):
+    return self._tclient.count_followers(request_metadata=request_metadata,
         account_id=account_id)
 
-  def count_followees(self, requester_id, account_id):
-    return self._tclient.count_followees(requester_id=requester_id,
+  def count_followees(self, request_metadata, account_id):
+    return self._tclient.count_followees(request_metadata=request_metadata,
         account_id=account_id)

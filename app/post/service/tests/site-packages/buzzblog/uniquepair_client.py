@@ -30,22 +30,25 @@ class Client:
     if self._transport.isOpen():
       self._transport.close()
 
-  def get(self, uniquepair_id):
-    return self._tclient.get(uniquepair_id=uniquepair_id)
+  def get(self, request_metadata, uniquepair_id):
+    return self._tclient.get(request_metadata=request_metadata,
+        uniquepair_id=uniquepair_id)
 
-  def add(self, domain, first_elem, second_elem):
-    return self._tclient.add(domain=domain, first_elem=first_elem,
-        second_elem=second_elem)
+  def add(self, request_metadata, domain, first_elem, second_elem):
+    return self._tclient.add(request_metadata=request_metadata, domain=domain,
+        first_elem=first_elem, second_elem=second_elem)
 
-  def remove(self, uniquepair_id):
-    return self._tclient.remove(uniquepair_id=uniquepair_id)
+  def remove(self, request_metadata, uniquepair_id):
+    return self._tclient.remove(request_metadata=request_metadata,
+        uniquepair_id=uniquepair_id)
 
-  def find(self, domain, first_elem, second_elem):
-    return self._tclient.find(domain=domain, first_elem=first_elem,
-        second_elem=second_elem)
+  def find(self, request_metadata, domain, first_elem, second_elem):
+    return self._tclient.find(request_metadata=request_metadata, domain=domain,
+        first_elem=first_elem, second_elem=second_elem)
 
-  def fetch(self, query, limit, offset):
-    return self._tclient.fetch(query=query, limit=limit, offset=offset)
+  def fetch(self, request_metadata, query, limit, offset):
+    return self._tclient.fetch(request_metadata=request_metadata, query=query,
+        limit=limit, offset=offset)
 
-  def count(self, query):
-    return self._tclient.count(query=query)
+  def count(self, request_metadata, query):
+    return self._tclient.count(request_metadata=request_metadata, query=query)

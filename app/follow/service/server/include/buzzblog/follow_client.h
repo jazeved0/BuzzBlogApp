@@ -45,51 +45,52 @@ namespace follow_service {
         _transport->close();
     }
 
-    TFollow follow_account(const int32_t requester_id,
+    TFollow follow_account(const TRequestMetadata& request_metadata,
         const int32_t account_id) {
       TFollow _return;
-      _client->follow_account(_return, requester_id, account_id);
+      _client->follow_account(_return, request_metadata, account_id);
       return _return;
     }
 
-    TFollow retrieve_standard_follow(const int32_t requester_id,
+    TFollow retrieve_standard_follow(const TRequestMetadata& request_metadata,
         const int32_t follow_id) {
       TFollow _return;
-      _client->retrieve_standard_follow(_return, requester_id, follow_id);
+      _client->retrieve_standard_follow(_return, request_metadata, follow_id);
       return _return;
     }
 
-    TFollow retrieve_expanded_follow(const int32_t requester_id,
+    TFollow retrieve_expanded_follow(const TRequestMetadata& request_metadata,
         const int32_t follow_id) {
       TFollow _return;
-      _client->retrieve_expanded_follow(_return, requester_id, follow_id);
+      _client->retrieve_expanded_follow(_return, request_metadata, follow_id);
       return _return;
     }
 
-    void delete_follow(const int32_t requester_id, const int32_t follow_id) {
-      _client->delete_follow(requester_id, follow_id);
+    void delete_follow(const TRequestMetadata& request_metadata,
+        const int32_t follow_id) {
+      _client->delete_follow(request_metadata, follow_id);
     }
 
-    std::vector<TFollow> list_follows(const int32_t requester_id,
+    std::vector<TFollow> list_follows(const TRequestMetadata& request_metadata,
         const TFollowQuery& query, const int32_t limit, const int32_t offset) {
       std::vector<TFollow> _return;
-      _client->list_follows(_return, requester_id, query, limit, offset);
+      _client->list_follows(_return, request_metadata, query, limit, offset);
       return _return;
     }
 
-    bool check_follow(const int32_t requester_id,
+    bool check_follow(const TRequestMetadata& request_metadata,
         const int32_t follower_id, const int32_t followee_id) {
-      return _client->check_follow(requester_id, follower_id, followee_id);
+      return _client->check_follow(request_metadata, follower_id, followee_id);
     }
 
-    int32_t count_followers(const int32_t requester_id,
+    int32_t count_followers(const TRequestMetadata& request_metadata,
         const int32_t account_id) {
-      return _client->count_followers(requester_id, account_id);
+      return _client->count_followers(request_metadata, account_id);
     }
 
-    int32_t count_followees(const int32_t requester_id,
+    int32_t count_followees(const TRequestMetadata& request_metadata,
         const int32_t account_id) {
-      return _client->count_followees(requester_id, account_id);
+      return _client->count_followees(request_metadata, account_id);
     }
   };
 }

@@ -13,7 +13,7 @@ namespace py gen
 ////////////////////////////////////////////////////////////////////////////////
 
 struct TRequestMetadata {
-  1: required i32 id;             // unique request id.
+  1: required string id;          // unique request id.
   2: optional i32 requester_id;   // id of the account making the request.
 }
 
