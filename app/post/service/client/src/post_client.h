@@ -44,40 +44,42 @@ namespace post_service {
         _transport->close();
     }
 
-    TPost create_post(const int32_t requester_id, const std::string& text) {
+    TPost create_post(const TRequestMetadata& request_metadata,
+        const std::string& text) {
       TPost _return;
-      _client->create_post(_return, requester_id, text);
+      _client->create_post(_return, request_metadata, text);
       return _return;
     }
 
-    TPost retrieve_standard_post(const int32_t requester_id,
+    TPost retrieve_standard_post(const TRequestMetadata& request_metadata,
         const int32_t post_id) {
       TPost _return;
-      _client->retrieve_standard_post(_return, requester_id, post_id);
+      _client->retrieve_standard_post(_return, request_metadata, post_id);
       return _return;
     }
 
-    TPost retrieve_expanded_post(const int32_t requester_id,
+    TPost retrieve_expanded_post(const TRequestMetadata& request_metadata,
         const int32_t post_id) {
       TPost _return;
-      _client->retrieve_expanded_post(_return, requester_id, post_id);
+      _client->retrieve_expanded_post(_return, request_metadata, post_id);
       return _return;
     }
 
-    void delete_post(const int32_t requester_id, const int32_t post_id) {
-      _client->delete_post(requester_id, post_id);
+    void delete_post(const TRequestMetadata& request_metadata,
+        const int32_t post_id) {
+      _client->delete_post(request_metadata, post_id);
     }
 
-    std::vector<TPost> list_posts(const int32_t requester_id,
+    std::vector<TPost> list_posts(const TRequestMetadata& request_metadata,
         const TPostQuery& query, const int32_t limit, const int32_t offset) {
       std::vector<TPost> _return;
-      _client->list_posts(_return, requester_id, query, limit, offset);
+      _client->list_posts(_return, request_metadata, query, limit, offset);
       return _return;
     }
 
-    int32_t count_posts_by_author(const int32_t requester_id,
+    int32_t count_posts_by_author(const TRequestMetadata& request_metadata,
         const int32_t author_id) {
-      return _client->count_posts_by_author(requester_id, author_id);
+      return _client->count_posts_by_author(request_metadata, author_id);
     }
   };
 }

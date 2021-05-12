@@ -44,47 +44,48 @@ namespace account_service {
         _transport->close();
     }
 
-    TAccount authenticate_user(const std::string& username,
-        const std::string& password) {
+    TAccount authenticate_user(const TRequestMetadata& request_metadata,
+        const std::string& username, const std::string& password) {
       TAccount _return;
-      _client->authenticate_user(_return, username, password);
+      _client->authenticate_user(_return, request_metadata, username, password);
       return _return;
     }
 
-    TAccount create_account(const std::string& username,
-        const std::string& password, const std::string& first_name,
-        const std::string& last_name) {
-      TAccount _return;
-      _client->create_account(_return, username, password, first_name,
-          last_name);
-      return _return;
-    }
-
-    TAccount retrieve_standard_account(const int32_t requester_id,
-        const int32_t account_id) {
-      TAccount _return;
-      _client->retrieve_standard_account(_return, requester_id, account_id);
-      return _return;
-    }
-
-    TAccount retrieve_expanded_account(const int32_t requester_id,
-        const int32_t account_id) {
-      TAccount _return;
-      _client->retrieve_expanded_account(_return, requester_id, account_id);
-      return _return;
-    }
-
-    TAccount update_account(const int32_t requester_id,
-        const int32_t account_id, const std::string& password,
+    TAccount create_account(const TRequestMetadata& request_metadata,
+        const std::string& username, const std::string& password,
         const std::string& first_name, const std::string& last_name) {
       TAccount _return;
-      _client->update_account(_return, requester_id, account_id, password,
+      _client->create_account(_return, request_metadata, username, password,
           first_name, last_name);
       return _return;
     }
 
-    void delete_account(const int32_t requester_id, const int32_t account_id) {
-      _client->delete_account(requester_id, account_id);
+    TAccount retrieve_standard_account(const TRequestMetadata& request_metadata,
+        const int32_t account_id) {
+      TAccount _return;
+      _client->retrieve_standard_account(_return, request_metadata, account_id);
+      return _return;
+    }
+
+    TAccount retrieve_expanded_account(const TRequestMetadata& request_metadata,
+        const int32_t account_id) {
+      TAccount _return;
+      _client->retrieve_expanded_account(_return, request_metadata, account_id);
+      return _return;
+    }
+
+    TAccount update_account(const TRequestMetadata& request_metadata,
+        const int32_t account_id, const std::string& password,
+        const std::string& first_name, const std::string& last_name) {
+      TAccount _return;
+      _client->update_account(_return, request_metadata, account_id, password,
+          first_name, last_name);
+      return _return;
+    }
+
+    void delete_account(const TRequestMetadata& request_metadata,
+        const int32_t account_id) {
+      _client->delete_account(request_metadata, account_id);
     }
   };
 }
