@@ -54,9 +54,11 @@ thrift_client_factory = ThriftClientFactory()
 
 @auth.verify_password
 def verify_password(username, password):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"])
   with thrift_client_factory.get_account_client() as account_client:
     try:
-      account = account_client.authenticate_user(username=username,
+      account = account_client.authenticate_user(
+          request_metadata=request_metadata, username=username,
           password=password)
     except:
       account = None
@@ -65,6 +67,7 @@ def verify_password(username, password):
 
 @app.route("/account", methods=["POST"])
 def create_account():
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"])
   params = flask.request.get_json()
   try:
     username = params["username"]
@@ -75,8 +78,9 @@ def create_account():
     return ({}, 400)
   with thrift_client_factory.get_account_client() as account_client:
     try:
-      account = account_client.create_account(username=username,
-          password=password, first_name=first_name, last_name=last_name)
+      account = account_client.create_account(request_metadata=request_metadata,
+          username=username, password=password, first_name=first_name,
+          last_name=last_name)
     except TAccountInvalidAttributesException:
       return ({}, 400)
     except TAccountUsernameAlreadyExistsException:
@@ -96,10 +100,12 @@ def create_account():
 @app.route("/account/<int:account_id>", methods=["GET"])
 @auth.login_required
 def retrieve_account(account_id):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   with thrift_client_factory.get_account_client() as account_client:
     try:
       account = account_client.retrieve_expanded_account(
-          requester_id=auth.current_user().id, account_id=account_id)
+          request_metadata=request_metadata, account_id=account_id)
     except TAccountNotFoundException:
       return ({}, 404)
   return {
@@ -123,6 +129,8 @@ def retrieve_account(account_id):
 @app.route("/account/<int:account_id>", methods=["PUT"])
 @auth.login_required
 def update_account(account_id):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   params = flask.request.get_json()
   try:
     password = params["password"]
@@ -133,7 +141,7 @@ def update_account(account_id):
   with thrift_client_factory.get_account_client() as account_client:
     try:
       account = account_client.update_account(
-          requester_id=auth.current_user().id, account_id=account_id,
+          request_metadata=request_metadata, account_id=account_id,
           password=password, first_name=first_name, last_name=last_name)
     except TAccountInvalidAttributesException:
       return ({}, 400)
@@ -156,9 +164,11 @@ def update_account(account_id):
 @app.route("/account/<int:account_id>", methods=["DELETE"])
 @auth.login_required
 def delete_account(account_id):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   with thrift_client_factory.get_account_client() as account_client:
     try:
-      account_client.delete_account(requester_id=auth.current_user().id,
+      account_client.delete_account(request_metadata=request_metadata,
           account_id=account_id)
     except TAccountNotAuthorizedException:
       return ({}, 403)
@@ -170,6 +180,8 @@ def delete_account(account_id):
 @app.route("/follow", methods=["POST"])
 @auth.login_required
 def follow_account():
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   params = flask.request.get_json()
   try:
     account_id = params["account_id"]
@@ -177,7 +189,7 @@ def follow_account():
     return ({}, 400)
   with thrift_client_factory.get_follow_client() as follow_client:
     try:
-      follow = follow_client.follow_account(requester_id=auth.current_user().id,
+      follow = follow_client.follow_account(request_metadata=request_metadata,
           account_id=account_id)
     except TFollowAlreadyExistsException:
       return ({}, 400)
@@ -194,10 +206,12 @@ def follow_account():
 @app.route("/follow/<int:follow_id>", methods=["GET"])
 @auth.login_required
 def retrieve_follow(follow_id):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   with thrift_client_factory.get_follow_client() as follow_client:
     try:
       follow = follow_client.retrieve_expanded_follow(
-          requester_id=auth.current_user().id, follow_id=follow_id)
+          request_metadata=request_metadata, follow_id=follow_id)
     except TFollowNotFoundException:
       return ({}, 404)
   return {
@@ -233,9 +247,11 @@ def retrieve_follow(follow_id):
 @app.route("/follow/<int:follow_id>", methods=["DELETE"])
 @auth.login_required
 def delete_follow(follow_id):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   with thrift_client_factory.get_follow_client() as follow_client:
     try:
-      follow_client.delete_follow(requester_id=auth.current_user().id,
+      follow_client.delete_follow(request_metadata=request_metadata,
           follow_id=follow_id)
     except TFollowNotAuthorizedException:
       return ({}, 403)
@@ -247,6 +263,8 @@ def delete_follow(follow_id):
 @app.route("/follow", methods=["GET"])
 @auth.login_required
 def list_follows():
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   params = flask.request.get_json()
   try:
     limit = params["limit"]
@@ -260,7 +278,7 @@ def list_follows():
   query = TFollowQuery(follower_id=follower_id, followee_id=followee_id)
   with thrift_client_factory.get_follow_client() as follow_client:
     try:
-      follows = follow_client.list_follows(requester_id=auth.current_user().id,
+      follows = follow_client.list_follows(request_metadata=request_metadata,
           query=query, limit=limit, offset=offset)
     except TAccountNotFoundException:
       return ({}, 400)
@@ -297,6 +315,8 @@ def list_follows():
 @app.route("/post", methods=["POST"])
 @auth.login_required
 def create_post():
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   params = flask.request.get_json()
   try:
     text = params["text"]
@@ -304,7 +324,7 @@ def create_post():
     return ({}, 400)
   with thrift_client_factory.get_post_client() as post_client:
     try:
-      post = post_client.create_post(requester_id=auth.current_user().id,
+      post = post_client.create_post(request_metadata=request_metadata,
           text=text)
     except TPostInvalidAttributesException:
       return ({}, 400)
@@ -322,10 +342,12 @@ def create_post():
 @app.route("/post/<int:post_id>", methods=["GET"])
 @auth.login_required
 def retrieve_post(post_id):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   with thrift_client_factory.get_post_client() as post_client:
     try:
       post = post_client.retrieve_expanded_post(
-          requester_id=auth.current_user().id, post_id=post_id)
+          request_metadata=request_metadata, post_id=post_id)
     except TPostNotFoundException:
       return ({}, 404)
   return {
@@ -353,9 +375,11 @@ def retrieve_post(post_id):
 @app.route("/post/<int:post_id>", methods=["DELETE"])
 @auth.login_required
 def delete_post(post_id):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   with thrift_client_factory.get_post_client() as post_client:
     try:
-      post_client.delete_post(requester_id=auth.current_user().id,
+      post_client.delete_post(request_metadata=request_metadata,
           post_id=post_id)
     except TPostNotAuthorizedException:
       return ({}, 403)
@@ -367,6 +391,8 @@ def delete_post(post_id):
 @app.route("/post", methods=["GET"])
 @auth.login_required
 def list_posts():
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   params = flask.request.get_json()
   try:
     limit = params["limit"]
@@ -378,7 +404,7 @@ def list_posts():
   query = TPostQuery(author_id=author_id)
   with thrift_client_factory.get_post_client() as post_client:
     try:
-      posts = post_client.list_posts(requester_id=auth.current_user().id,
+      posts = post_client.list_posts(request_metadata=request_metadata,
           query=query, limit=limit, offset=offset)
     except TAccountNotFoundException:
       return ({}, 400)
@@ -407,6 +433,8 @@ def list_posts():
 @app.route("/like", methods=["POST"])
 @auth.login_required
 def like_post():
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   params = flask.request.get_json()
   try:
     post_id = params["post_id"]
@@ -414,7 +442,7 @@ def like_post():
     return ({}, 400)
   with thrift_client_factory.get_like_client() as like_client:
     try:
-      like = like_client.like_post(requester_id=auth.current_user().id,
+      like = like_client.like_post(request_metadata=request_metadata,
           post_id=post_id)
     except TLikeAlreadyExistsException:
       return ({}, 400)
@@ -431,9 +459,11 @@ def like_post():
 @app.route("/like/<int:like_id>", methods=["GET"])
 @auth.login_required
 def retrieve_like(like_id):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      request_metadata=request_metadata)
   with thrift_client_factory.get_like_client() as like_client:
     try:
-      like = like_client.retrieve_like(requester_id=auth.current_user().id,
+      like = like_client.retrieve_like(request_metadata=request_metadata,
           like_id=like_id)
     except TLikeNotFoundException:
       return ({}, 404)
@@ -480,9 +510,11 @@ def retrieve_like(like_id):
 @app.route("/like/<int:like_id>", methods=["DELETE"])
 @auth.login_required
 def delete_like(like_id):
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   with thrift_client_factory.get_like_client() as like_client:
     try:
-      like_client.delete_like(requester_id=auth.current_user().id,
+      like_client.delete_like(request_metadata=request_metadata,
           like_id=like_id)
     except TLikeNotAuthorizedException:
       return ({}, 403)
@@ -494,6 +526,8 @@ def delete_like(like_id):
 @app.route("/like", methods=["GET"])
 @auth.login_required
 def list_likes():
+  request_metadata = TRequestMetadata(id=flask.request.args["request_id"],
+      requester_id=auth.current_user().id)
   params = flask.request.get_json()
   try:
     limit = params["limit"]
@@ -507,7 +541,7 @@ def list_likes():
   query = TLikeQuery(account_id=account_id, post_id=post_id)
   with thrift_client_factory.get_like_client() as like_client:
     try:
-      likes = like_client.list_likes(requester_id=auth.current_user().id,
+      likes = like_client.list_likes(request_metadata=request_metadata,
           query=query, limit=limit, offset=offset)
     except TAccountNotFoundException:
       return ({}, 400)
