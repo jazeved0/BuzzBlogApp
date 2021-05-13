@@ -85,16 +85,16 @@ class TRequestMetadata : public virtual ::apache::thrift::TBase {
 
   TRequestMetadata(const TRequestMetadata&);
   TRequestMetadata& operator=(const TRequestMetadata&);
-  TRequestMetadata() : id(0), requester_id(0) {
+  TRequestMetadata() : id(), requester_id(0) {
   }
 
   virtual ~TRequestMetadata() noexcept;
-  int32_t id;
+  std::string id;
   int32_t requester_id;
 
   _TRequestMetadata__isset __isset;
 
-  void __set_id(const int32_t val);
+  void __set_id(const std::string& val);
 
   void __set_requester_id(const int32_t val);
 

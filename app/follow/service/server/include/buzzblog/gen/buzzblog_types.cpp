@@ -18,7 +18,7 @@ TRequestMetadata::~TRequestMetadata() noexcept {
 }
 
 
-void TRequestMetadata::__set_id(const int32_t val) {
+void TRequestMetadata::__set_id(const std::string& val) {
   this->id = val;
 }
 
@@ -56,8 +56,8 @@ uint32_t TRequestMetadata::read(::apache::thrift::protocol::TProtocol* iprot) {
     switch (fid)
     {
       case 1:
-        if (ftype == ::apache::thrift::protocol::T_I32) {
-          xfer += iprot->readI32(this->id);
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->id);
           isset_id = true;
         } else {
           xfer += iprot->skip(ftype);
@@ -90,8 +90,8 @@ uint32_t TRequestMetadata::write(::apache::thrift::protocol::TProtocol* oprot) c
   ::apache::thrift::protocol::TOutputRecursionTracker tracker(*oprot);
   xfer += oprot->writeStructBegin("TRequestMetadata");
 
-  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_I32, 1);
-  xfer += oprot->writeI32(this->id);
+  xfer += oprot->writeFieldBegin("id", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->id);
   xfer += oprot->writeFieldEnd();
 
   if (this->__isset.requester_id) {
