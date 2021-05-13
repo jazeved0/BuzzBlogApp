@@ -44,7 +44,7 @@ public:
       postgres_dbname) {
   }
 
-  void create_post(TPost& _return, const int32_t requester_id,
+  void create_post(TPost& _return, const TRequestMetadata& request_metadata,
       const std::string& text) {
     // Validate attributes.
     if (!validate_attributes(text))
@@ -56,7 +56,7 @@ public:
         "INSERT INTO Posts (text, author_id, created_at) "
         "VALUES ('%s', %d, extract(epoch from now())) "
         "RETURNING id, created_at";
-    sprintf(query_str, query_fmt, text.c_str(), requester_id);
+    sprintf(query_str, query_fmt, text.c_str(), request_metadata.requester_id);
 
     // Execute query.
     pqxx::connection conn(post_db_conn_str);
@@ -70,11 +70,11 @@ public:
     _return.created_at = db_res[0][1].as<int>();
     _return.active = true;
     _return.text = text;
-    _return.author_id = requester_id;
+    _return.author_id = request_metadata.requester_id;
   }
 
-  void retrieve_standard_post(TPost& _return, const int32_t requester_id,
-      const int32_t post_id) {
+  void retrieve_standard_post(TPost& _return,
+      const TRequestMetadata& request_metadata, const int32_t post_id) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -102,20 +102,20 @@ public:
     _return.author_id = db_res[0][3].as<int>();
   }
 
-  void retrieve_expanded_post(TPost& _return, const int32_t requester_id,
-      const int32_t post_id) {
+  void retrieve_expanded_post(TPost& _return,
+      const TRequestMetadata& request_metadata, const int32_t post_id) {
     // Retrieve standard post.
-    retrieve_standard_post(_return, requester_id, post_id);
+    retrieve_standard_post(_return, request_metadata, post_id);
 
     // Retrieve author.
     auto account_client = get_account_client();
-    auto author = account_client->retrieve_standard_account(requester_id,
+    auto author = account_client->retrieve_standard_account(request_metadata,
         _return.author_id);
     account_client->close();
 
     // Retrieve like activity.
     auto like_client = get_like_client();
-    auto n_likes = like_client->count_likes_of_post(requester_id, post_id);
+    auto n_likes = like_client->count_likes_of_post(request_metadata, post_id);
     like_client->close();
 
     // Build post (expanded mode).
@@ -123,14 +123,15 @@ public:
     _return.__set_n_likes(n_likes);
   }
 
-  void delete_post(const int32_t requester_id, const int32_t post_id) {
+  void delete_post(const TRequestMetadata& request_metadata,
+      const int32_t post_id) {
     {
       // Retrieve standard post.
       TPost post;
-      retrieve_standard_post(post, requester_id, post_id);
+      retrieve_standard_post(post, request_metadata, post_id);
 
       // Check if requester is authorized.
-      if (requester_id != post.author_id)
+      if (request_metadata.requester_id != post.author_id)
         throw TPostNotAuthorizedException();
     }
 
@@ -150,8 +151,9 @@ public:
     conn.disconnect();
   }
 
-  void list_posts(std::vector<TPost>& _return, const int32_t requester_id,
-      const TPostQuery& query, const int32_t limit, const int32_t offset) {
+  void list_posts(std::vector<TPost>& _return,
+      const TRequestMetadata& request_metadata, const TPostQuery& query,
+      const int32_t limit, const int32_t offset) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -176,11 +178,11 @@ public:
     auto like_client = get_like_client();
     for (auto row : db_res) {
       // Retrieve author.
-      auto author = account_client->retrieve_standard_account(requester_id,
+      auto author = account_client->retrieve_standard_account(request_metadata,
           row["author_id"].as<int>());
 
       // Retrieve like activity.
-      auto n_likes = like_client->count_likes_of_post(requester_id,
+      auto n_likes = like_client->count_likes_of_post(request_metadata,
           row["id"].as<int>());
 
       // Build post (expanded mode).
@@ -198,7 +200,7 @@ public:
     like_client->close();
   }
 
-  int32_t count_posts_by_author (const int32_t requester_id,
+  int32_t count_posts_by_author(const TRequestMetadata& request_metadata,
       const int32_t author_id) {
     // Build query string.
     char query_str[1024];

@@ -30,13 +30,14 @@ public:
       postgres_dbname) {
   }
 
-  void like_post(TLike& _return, const int32_t requester_id,
+  void like_post(TLike& _return, const TRequestMetadata& request_metadata,
       const int32_t post_id) {
     // Add unique pair (account, post).
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
     try {
-      uniquepair = uniquepair_client->add("like", requester_id, post_id);
+      uniquepair = uniquepair_client->add(request_metadata, "like",
+          request_metadata.requester_id, post_id);
     }
     catch (TUniquepairAlreadyExistsException e) {
       throw TLikeAlreadyExistsException();
@@ -46,17 +47,17 @@ public:
     // Build like (standard mode).
     _return.id = uniquepair.id;
     _return.created_at = uniquepair.created_at;
-    _return.account_id = requester_id;
+    _return.account_id = request_metadata.requester_id;
     _return.post_id = post_id;
   }
 
-  void retrieve_standard_like(TLike& _return, const int32_t requester_id,
-      const int32_t like_id) {
+  void retrieve_standard_like(TLike& _return,
+      const TRequestMetadata& request_metadata, const int32_t like_id) {
     // Get unique pair.
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
     try {
-      uniquepair = uniquepair_client->get(like_id);
+      uniquepair = uniquepair_client->get(request_metadata, like_id);
     }
     catch (TUniquepairNotFoundException e) {
       throw TLikeNotFoundException();
@@ -70,20 +71,20 @@ public:
     _return.post_id = uniquepair.second_elem;
   }
 
-  void retrieve_expanded_like(TLike& _return, const int32_t requester_id,
-      const int32_t like_id) {
+  void retrieve_expanded_like(TLike& _return,
+      const TRequestMetadata& request_metadata, const int32_t like_id) {
     // Retrieve standard like.
-    retrieve_standard_like(_return, requester_id, like_id);
+    retrieve_standard_like(_return, request_metadata, like_id);
 
     // Retrieve account.
     auto account_client = get_account_client();
-    auto account = account_client->retrieve_standard_account(requester_id,
+    auto account = account_client->retrieve_standard_account(request_metadata,
         _return.account_id);
     account_client->close();
 
     // Retrieve post.
     auto post_client = get_post_client();
-    auto post = post_client->retrieve_expanded_post(requester_id,
+    auto post = post_client->retrieve_expanded_post(request_metadata,
         _return.post_id);
     post_client->close();
 
@@ -92,13 +93,14 @@ public:
     _return.__set_post(post);
   }
 
-  void delete_like(const int32_t requester_id, const int32_t like_id) {
+  void delete_like(const TRequestMetadata& request_metadata,
+      const int32_t like_id) {
     {
       // Get unique pair.
       auto uniquepair_client = get_uniquepair_client();
       TUniquepair uniquepair;
       try {
-        uniquepair = uniquepair_client->get(like_id);
+        uniquepair = uniquepair_client->get(request_metadata, like_id);
       }
       catch (TUniquepairNotFoundException e) {
         throw TLikeNotFoundException();
@@ -106,14 +108,14 @@ public:
       uniquepair_client->close();
 
       // Check if requester is authorized.
-      if (requester_id != uniquepair.first_elem)
+      if (request_metadata.requester_id != uniquepair.first_elem)
         throw TLikeNotAuthorizedException();
     }
 
     // Remove unique pair.
     auto uniquepair_client = get_uniquepair_client();
     try {
-      uniquepair_client->remove(like_id);
+      uniquepair_client->remove(request_metadata, like_id);
     }
     catch (TUniquepairNotFoundException e) {
       throw TLikeNotFoundException();
@@ -121,8 +123,9 @@ public:
     uniquepair_client->close();
   }
 
-  void list_likes(std::vector<TLike>& _return, const int32_t requester_id,
-      const TLikeQuery& query, const int32_t limit, const int32_t offset) {
+  void list_likes(std::vector<TLike>& _return,
+      const TRequestMetadata& request_metadata, const TLikeQuery& query,
+      const int32_t limit, const int32_t offset) {
     // Build query struct.
     TUniquepairQuery uniquepair_query;
     uniquepair_query.__set_domain("like");
@@ -134,7 +137,7 @@ public:
     // Fetch unique pairs.
     auto uniquepair_client = get_uniquepair_client();
     std::vector<TUniquepair> uniquepairs = uniquepair_client->fetch(
-        uniquepair_query, limit, offset);
+        request_metadata, uniquepair_query, limit, offset);
     uniquepair_client->close();
 
     // Build likes.
@@ -142,11 +145,11 @@ public:
     auto post_client = get_post_client();
     for (auto it : uniquepairs) {
       // Retrieve account.
-      auto account = account_client->retrieve_standard_account(requester_id,
+      auto account = account_client->retrieve_standard_account(request_metadata,
           it.first_elem);
 
       // Retrieve post.
-      auto post = post_client->retrieve_expanded_post(requester_id,
+      auto post = post_client->retrieve_expanded_post(request_metadata,
           it.second_elem);
 
       // Build like (expanded mode).
@@ -163,7 +166,7 @@ public:
     post_client->close();
   }
 
-  int32_t count_likes_by_account(const int32_t requester_id,
+  int32_t count_likes_by_account(const TRequestMetadata& request_metadata,
       const int32_t account_id) {
     // Build query struct.
     TUniquepairQuery query;
@@ -172,12 +175,12 @@ public:
 
     // Count unique pairs.
     auto uniquepair_client = get_uniquepair_client();
-    auto count = uniquepair_client->count(query);
+    auto count = uniquepair_client->count(request_metadata, query);
     uniquepair_client->close();
     return count;
   }
 
-  int32_t count_likes_of_post(const int32_t requester_id,
+  int32_t count_likes_of_post(const TRequestMetadata& request_metadata,
       const int32_t post_id) {
     // Build query struct.
     TUniquepairQuery query;
@@ -186,7 +189,7 @@ public:
 
     // Count unique pairs.
     auto uniquepair_client = get_uniquepair_client();
-    auto count = uniquepair_client->count(query);
+    auto count = uniquepair_client->count(request_metadata, query);
     uniquepair_client->close();
     return count;
   }

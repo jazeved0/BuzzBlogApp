@@ -44,7 +44,8 @@ public:
       postgres_dbname) {
   }
 
-  void get(TUniquepair& _return, const int32_t uniquepair_id) {
+  void get(TUniquepair& _return, const TRequestMetadata& request_metadata,
+      const int32_t uniquepair_id) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -72,8 +73,9 @@ public:
     _return.second_elem = db_res[0][3].as<int>();
   }
 
-  void add(TUniquepair& _return, const std::string& domain,
-      const int32_t first_elem, const int32_t second_elem) {
+  void add(TUniquepair& _return, const TRequestMetadata& request_metadata,
+      const std::string& domain, const int32_t first_elem,
+      const int32_t second_elem) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -103,7 +105,8 @@ public:
     _return.second_elem = second_elem;
   }
 
-  void remove(const int32_t uniquepair_id) {
+  void remove(const TRequestMetadata& request_metadata,
+      const int32_t uniquepair_id) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -124,8 +127,9 @@ public:
       throw TUniquepairNotFoundException();
   }
 
-  void find(TUniquepair& _return, const std::string& domain,
-      const int32_t first_elem, const int32_t second_elem) {
+  void find(TUniquepair& _return, const TRequestMetadata& request_metadata,
+      const std::string& domain, const int32_t first_elem,
+      const int32_t second_elem) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -153,7 +157,8 @@ public:
     _return.second_elem = second_elem;
   }
 
-  void fetch(std::vector<TUniquepair>& _return, const TUniquepairQuery& query,
+  void fetch(std::vector<TUniquepair>& _return,
+      const TRequestMetadata& request_metadata, const TUniquepairQuery& query,
       const int32_t limit, const int32_t offset) {
     // Build query string.
     char query_str[1024];
@@ -187,7 +192,8 @@ public:
     }
   }
 
-  int32_t count(const TUniquepairQuery& query) {
+  int32_t count(const TRequestMetadata& request_metadata,
+      const TUniquepairQuery& query) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \

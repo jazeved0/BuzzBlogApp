@@ -41,7 +41,8 @@ public:
       postgres_dbname) {
   }
 
-  void authenticate_user(TAccount& _return, const std::string& username,
+  void authenticate_user(TAccount& _return,
+      const TRequestMetadata& request_metadata, const std::string& username,
       const std::string& password) {
     // Build query string.
     char query_str[1024];
@@ -79,7 +80,8 @@ public:
     _return.last_name = db_res[0][5].as<std::string>();
   }
 
-  void create_account(TAccount& _return, const std::string& username,
+  void create_account(TAccount& _return,
+      const TRequestMetadata& request_metadata, const std::string& username,
       const std::string& password, const std::string& first_name,
       const std::string& last_name) {
     // Validate attributes.
@@ -118,8 +120,8 @@ public:
     _return.last_name = last_name;
   }
 
-  void retrieve_standard_account(TAccount& _return, int32_t requester_id,
-      int32_t account_id) {
+  void retrieve_standard_account(TAccount& _return,
+      const TRequestMetadata& request_metadata, int32_t account_id) {
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -148,29 +150,32 @@ public:
     _return.last_name = db_res[0][4].as<std::string>();
   }
 
-  void retrieve_expanded_account(TAccount& _return, int32_t requester_id,
-      int32_t account_id) {
+  void retrieve_expanded_account(TAccount& _return,
+      const TRequestMetadata& request_metadata, int32_t account_id) {
     // Retrieve standard account.
-    retrieve_standard_account(_return, requester_id, account_id);
+    retrieve_standard_account(_return, request_metadata, account_id);
 
     // Retrieve follow activity.
     auto follow_client = get_follow_client();
-    auto follows_you = follow_client->check_follow(requester_id, account_id,
-        requester_id);
-    auto followed_by_you = follow_client->check_follow(requester_id,
-        requester_id, account_id);
-    auto n_followers = follow_client->count_followers(requester_id, account_id);
-    auto n_following = follow_client->count_followees(requester_id, account_id);
+    auto follows_you = follow_client->check_follow(request_metadata, account_id,
+        request_metadata.requester_id);
+    auto followed_by_you = follow_client->check_follow(request_metadata,
+        request_metadata.requester_id, account_id);
+    auto n_followers = follow_client->count_followers(request_metadata,
+        account_id);
+    auto n_following = follow_client->count_followees(request_metadata,
+        account_id);
     follow_client->close();
 
     // Retrieve post activity.
     auto post_client = get_post_client();
-    auto n_posts = post_client->count_posts_by_author(requester_id, account_id);
+    auto n_posts = post_client->count_posts_by_author(request_metadata,
+        account_id);
     post_client->close();
 
     // Retrieve like activity.
     auto like_client = get_like_client();
-    auto n_likes = like_client->count_likes_by_account(requester_id,
+    auto n_likes = like_client->count_likes_by_account(request_metadata,
         account_id);
     like_client->close();
 
@@ -183,11 +188,12 @@ public:
     _return.__set_n_likes(n_likes);
   }
 
-  void update_account(TAccount& _return, const int32_t requester_id,
-        const int32_t account_id, const std::string& password,
-        const std::string& first_name, const std::string& last_name) {
+  void update_account(TAccount& _return,
+      const TRequestMetadata& request_metadata, const int32_t account_id,
+      const std::string& password, const std::string& first_name,
+      const std::string& last_name) {
     // Check if requester is authorized.
-    if (requester_id != account_id)
+    if (request_metadata.requester_id != account_id)
       throw TAccountNotAuthorizedException();
 
     // Validate attributes.
@@ -226,9 +232,10 @@ public:
     _return.last_name = last_name;
   }
 
-  void delete_account(const int32_t requester_id, const int32_t account_id) {
+  void delete_account(const TRequestMetadata& request_metadata,
+      const int32_t account_id) {
     // Check if requester is authorized.
-    if (requester_id != account_id)
+    if (request_metadata.requester_id != account_id)
       throw TAccountNotAuthorizedException();
 
     // Build query string.

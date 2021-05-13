@@ -30,13 +30,14 @@ public:
       postgres_dbname) {
   }
 
-  void follow_account(TFollow& _return, const int32_t requester_id,
-      const int32_t account_id) {
+  void follow_account(TFollow& _return,
+      const TRequestMetadata& request_metadata, const int32_t account_id) {
     // Add unique pair (follower, followee).
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
     try {
-      uniquepair = uniquepair_client->add("follow", requester_id, account_id);
+      uniquepair = uniquepair_client->add(request_metadata, "follow",
+          request_metadata.requester_id, account_id);
     }
     catch (TUniquepairAlreadyExistsException e) {
       throw TFollowAlreadyExistsException();
@@ -46,17 +47,17 @@ public:
     // Build follow (standard mode).
     _return.id = uniquepair.id;
     _return.created_at = uniquepair.created_at;
-    _return.follower_id = requester_id;
+    _return.follower_id = request_metadata.requester_id;
     _return.followee_id = account_id;
   }
 
-  void retrieve_standard_follow(TFollow& _return, const int32_t requester_id,
-      const int32_t follow_id) {
+  void retrieve_standard_follow(TFollow& _return,
+      const TRequestMetadata& request_metadata, const int32_t follow_id) {
     // Get unique pair.
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
     try {
-      uniquepair = uniquepair_client->get(follow_id);
+      uniquepair = uniquepair_client->get(request_metadata, follow_id);
     }
     catch (TUniquepairNotFoundException e) {
       throw TFollowNotFoundException();
@@ -70,16 +71,16 @@ public:
     _return.followee_id = uniquepair.second_elem;
   }
 
-  void retrieve_expanded_follow(TFollow& _return, const int32_t requester_id,
-      const int32_t follow_id) {
+  void retrieve_expanded_follow(TFollow& _return,
+      const TRequestMetadata& request_metadata, const int32_t follow_id) {
     // Retrieve standard follow.
-    retrieve_standard_follow(_return, requester_id, follow_id);
+    retrieve_standard_follow(_return, request_metadata, follow_id);
 
     // Retrieve accounts.
     auto account_client = get_account_client();
-    auto follower = account_client->retrieve_standard_account(requester_id,
+    auto follower = account_client->retrieve_standard_account(request_metadata,
         _return.follower_id);
-    auto followee = account_client->retrieve_standard_account(requester_id,
+    auto followee = account_client->retrieve_standard_account(request_metadata,
         _return.followee_id);
     account_client->close();
 
@@ -88,13 +89,14 @@ public:
     _return.__set_followee(followee);
   }
 
-  void delete_follow(const int32_t requester_id, const int32_t follow_id) {
+  void delete_follow(const TRequestMetadata& request_metadata,
+      const int32_t follow_id) {
     {
       // Get unique pair.
       auto uniquepair_client = get_uniquepair_client();
       TUniquepair uniquepair;
       try {
-        uniquepair = uniquepair_client->get(follow_id);
+        uniquepair = uniquepair_client->get(request_metadata, follow_id);
       }
       catch (TUniquepairNotFoundException e) {
         throw TFollowNotFoundException();
@@ -102,14 +104,14 @@ public:
       uniquepair_client->close();
 
       // Check if requester is authorized.
-      if (requester_id != uniquepair.first_elem)
+      if (request_metadata.requester_id != uniquepair.first_elem)
         throw TFollowNotAuthorizedException();
     }
 
     // Remove unique pair.
     auto uniquepair_client = get_uniquepair_client();
     try {
-      uniquepair_client->remove(follow_id);
+      uniquepair_client->remove(request_metadata, follow_id);
     }
     catch (TUniquepairNotFoundException e) {
       throw TFollowNotFoundException();
@@ -117,8 +119,9 @@ public:
     uniquepair_client->close();
   }
 
-  void list_follows(std::vector<TFollow>& _return, const int32_t requester_id,
-      const TFollowQuery& query, const int32_t limit, const int32_t offset) {
+  void list_follows(std::vector<TFollow>& _return,
+      const TRequestMetadata& request_metadata, const TFollowQuery& query,
+      const int32_t limit, const int32_t offset) {
     // Build query struct.
     TUniquepairQuery uniquepair_query;
     uniquepair_query.__set_domain("follow");
@@ -130,17 +133,17 @@ public:
     // Fetch unique pairs.
     auto uniquepair_client = get_uniquepair_client();
     std::vector<TUniquepair> uniquepairs = uniquepair_client->fetch(
-        uniquepair_query, limit, offset);
+        request_metadata, uniquepair_query, limit, offset);
     uniquepair_client->close();
 
     // Build follows.
     auto account_client = get_account_client();
     for (auto it : uniquepairs) {
       // Retrieve accounts.
-      auto follower = account_client->retrieve_standard_account(requester_id,
-          it.first_elem);
-      auto followee = account_client->retrieve_standard_account(requester_id,
-          it.second_elem);
+      auto follower = account_client->retrieve_standard_account(
+          request_metadata, it.first_elem);
+      auto followee = account_client->retrieve_standard_account(
+          request_metadata, it.second_elem);
 
       // Build follow (expanded mode).
       TFollow follow;
@@ -155,12 +158,13 @@ public:
     account_client->close();
   }
 
-  bool check_follow(const int32_t requester_id, const int32_t follower_id,
-      const int32_t followee_id) {
+  bool check_follow(const TRequestMetadata& request_metadata,
+      const int32_t follower_id, const int32_t followee_id) {
     bool follow_exists;
     auto uniquepair_client = get_uniquepair_client();
     try {
-      uniquepair_client->find("follow", follower_id, followee_id);
+      uniquepair_client->find(request_metadata, "follow", follower_id,
+          followee_id);
       follow_exists = true;
     }
     catch (TUniquepairNotFoundException e) {
@@ -170,7 +174,7 @@ public:
     return follow_exists;
   }
 
-  int32_t count_followers(const int32_t requester_id,
+  int32_t count_followers(const TRequestMetadata& request_metadata,
       const int32_t account_id) {
     // Build query struct.
     TUniquepairQuery query;
@@ -179,12 +183,12 @@ public:
 
     // Count unique pairs.
     auto uniquepair_client = get_uniquepair_client();
-    auto count = uniquepair_client->count(query);
+    auto count = uniquepair_client->count(request_metadata, query);
     uniquepair_client->close();
     return count;
   }
 
-  int32_t count_followees(const int32_t requester_id,
+  int32_t count_followees(const TRequestMetadata& request_metadata,
       const int32_t account_id) {
     // Build query struct.
     TUniquepairQuery query;
@@ -193,7 +197,7 @@ public:
 
     // Count unique pairs.
     auto uniquepair_client = get_uniquepair_client();
-    auto count = uniquepair_client->count(query);
+    auto count = uniquepair_client->count(request_metadata, query);
     uniquepair_client->close();
     return count;
   }
