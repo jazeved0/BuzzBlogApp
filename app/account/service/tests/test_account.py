@@ -16,14 +16,16 @@ class TestService(unittest.TestCase):
   def test_create_and_retrieve_standard_account(self):
     with AccountClient(IP_ADDRESS, PORT) as client:
       # Create account and check its attributes.
-      account = client.create_account("john_doe", "strongpasswd", "John", "Doe")
+      account = client.create_account(TRequestMetadata(id="1"), "john_doe",
+          "strongpasswd", "John", "Doe")
       self.assertAlmostEqual(time.time(), account.created_at, delta=60)
       self.assertTrue(account.active)
       self.assertEqual("john_doe", account.username)
       self.assertEqual("John", account.first_name)
       self.assertEqual("Doe", account.last_name)
       # Retrieve that account and check its attributes.
-      retrieved_account = client.retrieve_standard_account(1, account.id)
+      retrieved_account = client.retrieve_standard_account(
+          TRequestMetadata(id="2", requester_id=account.id), account.id)
       self.assertEqual(account.id, retrieved_account.id)
       self.assertEqual(account.created_at, retrieved_account.created_at)
       self.assertEqual(account.active, retrieved_account.active)

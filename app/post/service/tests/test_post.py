@@ -16,13 +16,15 @@ class TestService(unittest.TestCase):
   def test_create_and_retrieve_standard_post(self):
     with PostClient(IP_ADDRESS, PORT) as client:
       # Create post and check its attributes.
-      post = client.create_post(1, "Test message")
+      post = client.create_post(TRequestMetadata(id="1", requester_id=1),
+          "Test message")
       self.assertAlmostEqual(time.time(), post.created_at, delta=60)
       self.assertTrue(post.active)
       self.assertEqual("Test message", post.text)
       self.assertEqual(1, post.author_id)
       # Retrieve that post and check its attributes.
-      retrieved_post = client.retrieve_standard_post(1, post.id)
+      retrieved_post = client.retrieve_standard_post(
+          TRequestMetadata(id="2", requester_id=1), post.id)
       self.assertEqual(post.id, retrieved_post.id)
       self.assertEqual(post.created_at, retrieved_post.created_at)
       self.assertEqual(post.active, retrieved_post.active)

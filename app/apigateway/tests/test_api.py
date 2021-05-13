@@ -16,6 +16,7 @@ URL = "{hostname}:{port}".format(hostname=SERVER_HOSTNAME, port=SERVER_PORT)
 class TestService(unittest.TestCase):
   def test_create_account_200(self):
     r = requests.post("http://{url}/account".format(url=URL),
+        params={"request_id": "1"},
         json={
           "username": "john.doe",
           "password": "strongpasswd",

@@ -16,12 +16,13 @@ class TestService(unittest.TestCase):
   def test_like_post_and_retrieve_standard_like(self):
     with LikeClient(IP_ADDRESS, PORT) as client:
       # Like a post and check the returned object's attributes.
-      like = client.like_post(1, 2)
+      like = client.like_post(TRequestMetadata(id="1", requester_id=1), 2)
       self.assertAlmostEqual(time.time(), like.created_at, delta=60)
       self.assertEqual(1, like.account_id)
       self.assertEqual(2, like.post_id)
       # Retrieve that like and check its attributes.
-      retrieved_like = client.retrieve_standard_like(1, like.id)
+      retrieved_like = client.retrieve_standard_like(
+          TRequestMetadata(id="2", requester_id=1), like.id)
       self.assertEqual(like.id, retrieved_like.id)
       self.assertEqual(like.created_at, retrieved_like.created_at)
       self.assertEqual(like.account_id, retrieved_like.account_id)
