@@ -2,7 +2,7 @@
 This running example shows how to deploy BuzzBlog in your local machine with
 a simple topology:
 * Load Balancer: 1 NGINX server
-* API Gateway: 1 uWSGI server
+* API Gateway: 4 uWSGI servers
 * Account service: 1 Thrift multithreaded server
 * Account database: 1 PostgreSQL database server
 * Follow service: 1 Thrift multithreaded server
@@ -45,8 +45,8 @@ uniquepair:
 In `conf/nginx.conf`, configure the NGINX server used as a load balancer. Here
 we set the server to listen on port 80, use 8 worker processes, and limit the
 number of simultaneous connections that can be opened by a worker process to
-512. Also, define the hostname and port of the API Gateway server to which
-client requests are forwarded (here we use `172.17.0.1:8080`).
+512. Also, define the hostname and port of the API Gateway servers to which
+client requests are forwarded.
 ```
 worker_processes 8;
 
@@ -60,6 +60,9 @@ http {
   keepalive_timeout 0;
   upstream backend {
     server 172.17.0.1:8080;
+    server 172.17.0.1:8081;
+    server 172.17.0.1:8082;
+    server 172.17.0.1:8083;
   }
   server {
     listen 80;
@@ -72,12 +75,22 @@ http {
 
 ### `conf/uwsgi.ini`
 In `conf/uwsgi.ini`, configure the uWSGI server on which the Python application
-that implements the API Gateway runs. Here we only set the server to listen on
-port 81. To learn more about the uWSGI configuration parameters, check the
+that implements the API Gateway runs. Here we set the server to listen on port
+81 and configure its cheaper subsystem. To learn more about the uWSGI
+configuration parameters, check the
 [documentation](https://uwsgi-docs.readthedocs.io/en/latest/Configuration.html).
 ```
 [uwsgi]
 http-socket = 0.0.0.0:81
+# uWSGI cheaper subsystem docs:
+# https://uwsgi-docs.readthedocs.io/en/latest/Cheaper.html
+cheaper-busyness-verbose = true
+# min workers
+cheaper = 1
+# initial workers
+cheaper-initial = 1
+# max workers
+workers = 1
 ```
 
 ## Deployment
@@ -104,14 +117,36 @@ sudo docker run \
 cd app/apigateway/server
 sudo docker build -t apigateway:latest .
 ```
-3. Run a Docker container based on the newly built image. Here we name the
-container `apigateway`, publish its port 81 to the host port 8080, and
-bind-mount `conf/backend.yml` and `conf/uwsgi.ini` configuration files.
+3. Run 4 Docker containers based on the newly built image. Here we name the
+containers `apigateway1`, ..., `apigateway4`, publish port 81 to the host ports
+8080, ..., 8083, and bind-mount `conf/backend.yml` and `conf/uwsgi.ini`
+configuration files.
 ```
 cd ../../..
 sudo docker run \
-    --name apigateway \
+    --name apigateway1 \
     --publish 8080:81 \
+    --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
+    --volume $(pwd)/conf/uwsgi.ini:/etc/uwsgi/uwsgi.ini \
+    --detach \
+    apigateway:latest
+sudo docker run \
+    --name apigateway2 \
+    --publish 8081:81 \
+    --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
+    --volume $(pwd)/conf/uwsgi.ini:/etc/uwsgi/uwsgi.ini \
+    --detach \
+    apigateway:latest
+sudo docker run \
+    --name apigateway3 \
+    --publish 8082:81 \
+    --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
+    --volume $(pwd)/conf/uwsgi.ini:/etc/uwsgi/uwsgi.ini \
+    --detach \
+    apigateway:latest
+sudo docker run \
+    --name apigateway4 \
+    --publish 8083:81 \
     --volume $(pwd)/conf/backend.yml:/etc/opt/BuzzBlogApp/backend.yml \
     --volume $(pwd)/conf/uwsgi.ini:/etc/uwsgi/uwsgi.ini \
     --detach \
