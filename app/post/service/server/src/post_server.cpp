@@ -5,6 +5,7 @@
 
 #include <cxxopts.hpp>
 #include <pqxx/pqxx>
+#include <spdlog/sinks/basic_file_sink.h>
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TThreadedServer.h>
 #include <thrift/transport/TBufferTransports.h>
@@ -247,6 +248,10 @@ int main(int argc, char** argv) {
   std::string postgres_user = result["postgres_user"].as<std::string>();
   std::string postgres_password = result["postgres_password"].as<std::string>();
   std::string postgres_dbname = result["postgres_dbname"].as<std::string>();
+
+  // Initialize logger.
+  auto logger = spdlog::basic_logger_mt("logger", "/tmp/calls.log");
+  logger->set_pattern("[%H:%M:%S.%F] pid=%P tid=%t %v");
 
   // Create server.
   TThreadedServer server(
