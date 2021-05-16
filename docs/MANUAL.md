@@ -86,7 +86,7 @@ http-socket = 0.0.0.0:81
 # https://uwsgi-docs.readthedocs.io/en/latest/Cheaper.html
 cheaper-busyness-verbose = true
 # min workers
-cheaper = 1
+cheaper = 0
 # initial workers
 cheaper-initial = 1
 # max workers
