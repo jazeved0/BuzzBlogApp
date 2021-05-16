@@ -5,6 +5,7 @@ import random
 
 import flask
 import flask_httpauth
+import spdlog as spd
 import yaml
 
 from buzzblog.account_client import Client as AccountClient
@@ -46,10 +47,15 @@ def setup_app():
   app.url_map.strict_slashes = False
   return app
 
+def setup_logger():
+  logger = spd.FileLogger("logger", "/tmp/calls.log")
+  logger.set_pattern("[%H:%M:%S.%F] pid=%P tid=%t %v")
+
 
 app = setup_app()
 auth = flask_httpauth.HTTPBasicAuth()
 thrift_client_factory = ThriftClientFactory()
+logger = setup_logger()
 
 
 @auth.verify_password
