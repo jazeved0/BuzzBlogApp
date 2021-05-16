@@ -26,6 +26,7 @@ RUN apt-get update \
     gnupg2 \
     libboost-all-dev \
     libevent-dev \
+    libspdlog-dev \
     libssl-dev \
     libtool \
     lsb-core \
