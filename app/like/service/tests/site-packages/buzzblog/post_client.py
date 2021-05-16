@@ -13,13 +13,16 @@ from buzzblog.gen import TPostService
 
 def instrumented(func):
   def func_wrapper(self, request_metadata, *args, **kwargs):
-    logger = spd.get("logger")
     start_time = time.monotonic()
     ret = func(self, request_metadata, *args, **kwargs)
     latency = time.monotonic() - start_time
-    logger.info("request_id=%s server=%s:%s function=post:%s latency=%.9f" %
-        (request_metadata.id, self._ip_address, self._port, func.__name__,
-            latency))
+    try:
+      logger = spd.get("logger")
+      logger.info("request_id=%s server=%s:%s function=post:%s latency=%.9f" %
+          (request_metadata.id, self._ip_address, self._port, func.__name__,
+              latency))
+    except:
+      pass
     return ret
   return func_wrapper
 
