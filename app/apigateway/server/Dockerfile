@@ -13,6 +13,7 @@ RUN apt-get update \
 RUN pip3 install --no-cache-dir uWSGI==2.0.19.1 && \
     pip3 install --no-cache-dir Flask-HTTPAuth==4.2.0 && \
     pip3 install --no-cache-dir PyYaml==5.3.1 && \
+    pip3 install --no-cache-dir spdlog==2.0.4 && \
     pip3 install --no-cache-dir thrift==0.13.0
 
 # Copy service client libraries.

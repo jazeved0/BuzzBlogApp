@@ -1,6 +1,9 @@
 # Copyright (C) 2020 Georgia Tech Center for Experimental Research in Computer
 # Systems
 
+import time
+
+import spdlog as spd
 from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
@@ -8,8 +11,23 @@ from thrift.protocol import TBinaryProtocol
 from buzzblog.gen import TUniquepairService
 
 
+def instrumented(func):
+  def func_wrapper(self, request_metadata, *args, **kwargs):
+    logger = spd.get("logger")
+    start_time = time.monotonic()
+    ret = func(self, request_metadata, *args, **kwargs)
+    latency = time.monotonic() - start_time
+    logger.info("request_id=%s server=%s:%s function=uniquepair:%s latency=%.9f" %
+        (request_metadata.id, self._ip_address, self._port, func.__name__,
+            latency))
+    return ret
+  return func_wrapper
+
+
 class Client:
   def __init__(self, ip_address, port, timeout=10000):
+    self._ip_address = ip_address
+    self._port = port
     self._socket = TSocket.TSocket(ip_address, port)
     self._socket.setTimeout(timeout)
     self._transport = TTransport.TBufferedTransport(self._socket)
@@ -30,25 +48,31 @@ class Client:
     if self._transport.isOpen():
       self._transport.close()
 
+  @instrumented
   def get(self, request_metadata, uniquepair_id):
     return self._tclient.get(request_metadata=request_metadata,
         uniquepair_id=uniquepair_id)
 
+  @instrumented
   def add(self, request_metadata, domain, first_elem, second_elem):
     return self._tclient.add(request_metadata=request_metadata, domain=domain,
         first_elem=first_elem, second_elem=second_elem)
 
+  @instrumented
   def remove(self, request_metadata, uniquepair_id):
     return self._tclient.remove(request_metadata=request_metadata,
         uniquepair_id=uniquepair_id)
 
+  @instrumented
   def find(self, request_metadata, domain, first_elem, second_elem):
     return self._tclient.find(request_metadata=request_metadata, domain=domain,
         first_elem=first_elem, second_elem=second_elem)
 
+  @instrumented
   def fetch(self, request_metadata, query, limit, offset):
     return self._tclient.fetch(request_metadata=request_metadata, query=query,
         limit=limit, offset=offset)
 
+  @instrumented
   def count(self, request_metadata, query):
     return self._tclient.count(request_metadata=request_metadata, query=query)
