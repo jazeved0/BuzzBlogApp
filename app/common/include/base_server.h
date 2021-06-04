@@ -5,6 +5,8 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <sstream>
 
 #include <yaml-cpp/yaml.h>
 
@@ -13,6 +15,7 @@
 #include <buzzblog/like_client.h>
 #include <buzzblog/post_client.h>
 #include <buzzblog/uniquepair_client.h>
+#include <buzzblog/gen/buzzblog_types.h>
 
 
 class BaseServer {
@@ -172,4 +175,51 @@ protected:
   std::string account_db_conn_str;
   std::string post_db_conn_str;
   std::string uniquepair_db_conn_str;
+
+  #define ENABLE_TRACING 1
+
+  // TraceHandle is a scoped resource that manages the trace of an operation.
+  // When it goes out of scope, it automatically prints out the timing.
+  class TraceHandle {
+    private:
+      std::chrono::time_point<std::chrono::high_resolution_clock> start;
+      const char* file_name;
+      const char* function_name;
+      const TRequestMetadata& request_metadata;
+      static std::chrono::time_point<std::chrono::high_resolution_clock> ts_base;
+
+    public:
+      TraceHandle(
+        const char* file_name,
+        const char* function_name,
+        const TRequestMetadata& request_metadata
+      ) : file_name(file_name),
+          function_name(function_name),
+          request_metadata(request_metadata) {
+        #if ENABLE_TRACING
+          this->start = std::chrono::high_resolution_clock::now();
+        #endif
+      }
+
+      ~TraceHandle() {
+        #if ENABLE_TRACING
+          auto end = std::chrono::high_resolution_clock::now();
+          auto ts = std::chrono::duration_cast<std::chrono::nanoseconds>(this->start - ts_base);
+          auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(end - this->start);
+          auto log = std::stringstream();
+          log <<
+              "[trace] " << ts.count() <<
+              " " << this->file_name <<
+              " " << this->function_name <<
+              " " << ns.count() <<
+              " " << this->request_metadata.requester_id <<
+              " " << this->request_metadata.id <<
+              std::endl;
+          std::cout << log.str();
+        #endif
+      }
+  };
 };
+
+std::chrono::time_point<std::chrono::high_resolution_clock> BaseServer::TraceHandle::ts_base
+  = std::chrono::high_resolution_clock::now();

@@ -47,6 +47,7 @@ public:
 
   void create_post(TPost& _return, const TRequestMetadata& request_metadata,
       const std::string& text) {
+    auto _trace = BaseServer::TraceHandle("post_server", __FUNCTION__, request_metadata);
     // Validate attributes.
     if (!validate_attributes(text))
       throw TPostInvalidAttributesException();
@@ -76,6 +77,7 @@ public:
 
   void retrieve_standard_post(TPost& _return,
       const TRequestMetadata& request_metadata, const int32_t post_id) {
+    auto _trace = BaseServer::TraceHandle("post_server", __FUNCTION__, request_metadata);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -105,6 +107,7 @@ public:
 
   void retrieve_expanded_post(TPost& _return,
       const TRequestMetadata& request_metadata, const int32_t post_id) {
+    auto _trace = BaseServer::TraceHandle("post_server", __FUNCTION__, request_metadata);
     // Retrieve standard post.
     retrieve_standard_post(_return, request_metadata, post_id);
 
@@ -126,6 +129,7 @@ public:
 
   void delete_post(const TRequestMetadata& request_metadata,
       const int32_t post_id) {
+    auto _trace = BaseServer::TraceHandle("post_server", __FUNCTION__, request_metadata);
     {
       // Retrieve standard post.
       TPost post;
@@ -155,6 +159,7 @@ public:
   void list_posts(std::vector<TPost>& _return,
       const TRequestMetadata& request_metadata, const TPostQuery& query,
       const int32_t limit, const int32_t offset) {
+    auto _trace = BaseServer::TraceHandle("post_server", __FUNCTION__, request_metadata);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -203,6 +208,7 @@ public:
 
   int32_t count_posts_by_author(const TRequestMetadata& request_metadata,
       const int32_t author_id) {
+    auto _trace = BaseServer::TraceHandle("post_server", __FUNCTION__, request_metadata);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \

@@ -33,6 +33,7 @@ public:
 
   void follow_account(TFollow& _return,
       const TRequestMetadata& request_metadata, const int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__, request_metadata);
     // Add unique pair (follower, followee).
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
@@ -54,6 +55,7 @@ public:
 
   void retrieve_standard_follow(TFollow& _return,
       const TRequestMetadata& request_metadata, const int32_t follow_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__, request_metadata);
     // Get unique pair.
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
@@ -74,6 +76,7 @@ public:
 
   void retrieve_expanded_follow(TFollow& _return,
       const TRequestMetadata& request_metadata, const int32_t follow_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__, request_metadata);
     // Retrieve standard follow.
     retrieve_standard_follow(_return, request_metadata, follow_id);
 
@@ -92,6 +95,7 @@ public:
 
   void delete_follow(const TRequestMetadata& request_metadata,
       const int32_t follow_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__, request_metadata);
     {
       // Get unique pair.
       auto uniquepair_client = get_uniquepair_client();
@@ -123,6 +127,7 @@ public:
   void list_follows(std::vector<TFollow>& _return,
       const TRequestMetadata& request_metadata, const TFollowQuery& query,
       const int32_t limit, const int32_t offset) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__, request_metadata);
     // Build query struct.
     TUniquepairQuery uniquepair_query;
     uniquepair_query.__set_domain("follow");
@@ -161,6 +166,7 @@ public:
 
   bool check_follow(const TRequestMetadata& request_metadata,
       const int32_t follower_id, const int32_t followee_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__, request_metadata);
     bool follow_exists;
     auto uniquepair_client = get_uniquepair_client();
     try {
@@ -177,6 +183,7 @@ public:
 
   int32_t count_followers(const TRequestMetadata& request_metadata,
       const int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__, request_metadata);
     // Build query struct.
     TUniquepairQuery query;
     query.__set_domain("follow");
@@ -191,6 +198,7 @@ public:
 
   int32_t count_followees(const TRequestMetadata& request_metadata,
       const int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("follow_server", __FUNCTION__, request_metadata);
     // Build query struct.
     TUniquepairQuery query;
     query.__set_domain("follow");

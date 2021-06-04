@@ -33,6 +33,7 @@ public:
 
   void like_post(TLike& _return, const TRequestMetadata& request_metadata,
       const int32_t post_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__, request_metadata);
     // Add unique pair (account, post).
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
@@ -54,6 +55,7 @@ public:
 
   void retrieve_standard_like(TLike& _return,
       const TRequestMetadata& request_metadata, const int32_t like_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__, request_metadata);
     // Get unique pair.
     auto uniquepair_client = get_uniquepair_client();
     TUniquepair uniquepair;
@@ -74,6 +76,7 @@ public:
 
   void retrieve_expanded_like(TLike& _return,
       const TRequestMetadata& request_metadata, const int32_t like_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__, request_metadata);
     // Retrieve standard like.
     retrieve_standard_like(_return, request_metadata, like_id);
 
@@ -96,6 +99,7 @@ public:
 
   void delete_like(const TRequestMetadata& request_metadata,
       const int32_t like_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__, request_metadata);
     {
       // Get unique pair.
       auto uniquepair_client = get_uniquepair_client();
@@ -127,6 +131,7 @@ public:
   void list_likes(std::vector<TLike>& _return,
       const TRequestMetadata& request_metadata, const TLikeQuery& query,
       const int32_t limit, const int32_t offset) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__, request_metadata);
     // Build query struct.
     TUniquepairQuery uniquepair_query;
     uniquepair_query.__set_domain("like");
@@ -169,6 +174,7 @@ public:
 
   int32_t count_likes_by_account(const TRequestMetadata& request_metadata,
       const int32_t account_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__, request_metadata);
     // Build query struct.
     TUniquepairQuery query;
     query.__set_domain("like");
@@ -183,6 +189,7 @@ public:
 
   int32_t count_likes_of_post(const TRequestMetadata& request_metadata,
       const int32_t post_id) {
+    auto _trace = BaseServer::TraceHandle("like_server", __FUNCTION__, request_metadata);
     // Build query struct.
     TUniquepairQuery query;
     query.__set_domain("like");

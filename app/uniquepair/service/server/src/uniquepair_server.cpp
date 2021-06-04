@@ -47,6 +47,7 @@ public:
 
   void get(TUniquepair& _return, const TRequestMetadata& request_metadata,
       const int32_t uniquepair_id) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__, request_metadata);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -77,6 +78,7 @@ public:
   void add(TUniquepair& _return, const TRequestMetadata& request_metadata,
       const std::string& domain, const int32_t first_elem,
       const int32_t second_elem) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__, request_metadata);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -108,6 +110,7 @@ public:
 
   void remove(const TRequestMetadata& request_metadata,
       const int32_t uniquepair_id) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__, request_metadata);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -131,6 +134,7 @@ public:
   void find(TUniquepair& _return, const TRequestMetadata& request_metadata,
       const std::string& domain, const int32_t first_elem,
       const int32_t second_elem) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__, request_metadata);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -161,6 +165,7 @@ public:
   void fetch(std::vector<TUniquepair>& _return,
       const TRequestMetadata& request_metadata, const TUniquepairQuery& query,
       const int32_t limit, const int32_t offset) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__, request_metadata);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
@@ -195,6 +200,7 @@ public:
 
   int32_t count(const TRequestMetadata& request_metadata,
       const TUniquepairQuery& query) {
+    auto _trace = BaseServer::TraceHandle("uniquepair_server", __FUNCTION__, request_metadata);
     // Build query string.
     char query_str[1024];
     const char *query_fmt = \
